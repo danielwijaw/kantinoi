@@ -24,6 +24,7 @@
     });
 
     function hyperlinkajax(e, id) {
+        $('#dataajax').html("LOADING .......");
         e.preventDefault();
         var urlxz = $("#"+id+"").attr('href');
         var urlxx = urlxz.split("?");
@@ -34,16 +35,27 @@
             cache: true,
             processData: false,
             success: function(data) {
-                $('#dataajax').html(data);
+              $('#dataajax').html(data);
             },
-            error: function(error) {
-                $('#dataajax').html(error);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              $('#dataajax').html("ERROR :(");
+              console.log(XMLHttpRequest.responseText); 
+              if (XMLHttpRequest.status == 0) {
+              alert(' Check Your Network.');
+              } else if (XMLHttpRequest.status == 404) {
+              alert('Requested URL not found.');
+              } else if (XMLHttpRequest.status == 500) {
+              alert('Internel Server Error.');
+              }  else {
+              alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+              }  
             }
         });
         window.history.pushState({href: url}, '', url);
     }
 
     function hyperlinkajaxz(url) {
+        $('#dataajax').html("LOADING .......");
         $(".menunya active").attr('class', 'menunya');
         $.ajax({
             url: url+"?&ajax='true'",
@@ -53,8 +65,18 @@
             success: function(data) {
                 $('#dataajax').html(data);
             },
-            error: function(error) {
-                $('#dataajax').html(error);
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              $('#dataajax').html("ERROR :(");
+              console.log(XMLHttpRequest.responseText); 
+              if (XMLHttpRequest.status == 0) {
+              alert(' Check Your Network.');
+              } else if (XMLHttpRequest.status == 404) {
+              alert('Requested URL not found.');
+              } else if (XMLHttpRequest.status == 500) {
+              alert('Internel Server Error.');
+              }  else {
+              alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+              } 
             }
         });
     }
