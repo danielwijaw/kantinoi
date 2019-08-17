@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/skins/select2.min.css">
   <script src="<?php echo base_url('assets/') ?>/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="<?php echo base_url('assets/') ?>/bower_components/jquery/dist/select2.full.min.js"></script>
   <style>
     .dropdown-submenu {
       position: relative;
@@ -68,10 +70,11 @@
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Master Data <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a id="<?php echo "master-stokbarang" ?>" href="<?php echo base_url("master/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Stok Barang</a></li>
-                <li><a id="<?php echo "master-datadepartemen" ?>" href="<?php echo base_url("master/datadepartemen") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Departemen</a></li>
                 <li><a id="<?php echo "master-datasupplier" ?>" href="<?php echo base_url("master/datasupplier") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Supplier</a></li>
+                <li><a id="<?php echo "master-stokbarang" ?>" href="<?php echo base_url("master/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Stok Barang</a></li>
+                <li><a id="<?php echo "master-hargabarang" ?>" href="<?php echo base_url("master/hargabarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Harga Barang</a></li>
                 <li><a id="<?php echo "master-datapelanggan" ?>" href="<?php echo base_url("master/datapelanggan") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Pelanggan</a></li>
+                <li><a id="<?php echo "master-datadepartemen" ?>" href="<?php echo base_url("master/datadepartemen") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Departemen</a></li>
               </ul>
             </li>
             <li class="dropdown">

@@ -37,4 +37,10 @@ class Master extends CI_Controller {
 		$_GET['asdx'] = 'master/datapelanggan';
 		doViews($_GET);
 	}
+
+	public function hargabarang()
+	{
+		$_GET['asdx'] = 'master/hargabarang';
+		doViews($_GET);
+	}
 }
