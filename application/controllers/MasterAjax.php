@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MasterAjax extends CI_Controller {
 
-	public function stokbarang()
+	public function supplier()
 	{
 		$this->load->model('mastermodel');
 		$total = $this->mastermodel->getdatasuppliercount('1');
@@ -12,7 +12,7 @@ class MasterAjax extends CI_Controller {
 		for ($x = 0; $x < $row; $x++) {
 			$xz = $x + 1;
 			$xxz = ($xz*5)-5;
-		    $button .= "<li><a onclick='ajaxpaging(`".base_url('/masterajax/stokbarang?page='.$xxz)."`)' href='javascript:void(0)'>$xz</a></li>";
+		    $button .= "<li><a onclick='ajaxpaging(`".base_url('/masterajax/supplier?page='.$xxz)."`, `mastersupplierajax`)' href='javascript:void(0)'>$xz</a></li>";
 		} 
 		$button .= "</ul>";
 		if($total <= 5){
@@ -27,7 +27,6 @@ class MasterAjax extends CI_Controller {
 		}
 		$data = $this->mastermodel->getdatasupplier('1',$datapage,'5');
 		$data = array('data' => $data,'button'=>$button);
-		// $this->load->view('/front/suratmasuk', $data);
-		print_r($data);
+		$this->load->view('/master/ajaxsupplier', $data);
 	}
 }

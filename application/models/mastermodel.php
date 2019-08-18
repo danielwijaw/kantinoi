@@ -7,6 +7,12 @@ class mastermodel extends CI_Model {
         return $data->result_array();
     }
 
+    public function getkelurahanlist($id)
+    {
+        $data = $this->db->query("select id_kelurahan, nama_provinsi, nama_kabupaten, nama_kecamatan, nama_kelurahan from t_lokasi where id_kelurahan = '".$id."' order by id_kelurahan DESC limit 1");
+        return $data->result_array();
+    }
+
     public function getdatasuppliercount($validasi) {
 
         $this->db->select('count(reg_supplier) as allcount');
@@ -25,8 +31,20 @@ class mastermodel extends CI_Model {
         $this->db->join('t_lokasi b', 'a.id_kelurahan = b.id_kelurahan', 'left');
         $this->db->where('status_muncul =', $validasi);
         $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_supplier', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
+    }
+
+    public function deletesupplier($id)
+    {
+        $data = array(
+            'status_muncul' => '2',
+            'deleted_at'  => date('Y-m-d H:i:s')
+        );
+        $this->db->where('reg_supplier', $id);
+        $this->db->update('tm_supplier', $data);
+        return true;
     }
 
 

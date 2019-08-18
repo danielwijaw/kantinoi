@@ -80,7 +80,28 @@
             }
         });
     }
-
+    function ajaxpaging(url, id)
+    {
+        $( "#"+id ).html( "LOADING....." );
+        $.ajax({
+        url: url,
+        success: function(data) {
+            $("#"+id).html(data);        
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
     $(document).ready(function() {
         $(window).on('popstate', function() {
           hyperlinkajaxz(window.location.href)

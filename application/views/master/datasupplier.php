@@ -4,24 +4,8 @@
     </div>
     <div class="box-body">
         <div class="col-md-12">
-        	<div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Supplier</th>
-                            <th>Jumlah Supply Barang</th>
-                            <th>Atasnama & Kontak</th>
-                            <th>Alamat</th>
-                            <th><center>
-                                <div>
-                                <button data-toggle="modal" data-target="#modalsupplier" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></button> &nbsp; <button data-toggle="modal" data-target="#modalsupplier" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                </div></center>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="masterstokbarangajax"></tbody>
-                </table>
+        	<div class="table-responsive" id="mastersupplierajax">
+                
             </div>
         </div>
     </div>
@@ -38,6 +22,7 @@
         <h4 class="modal-title">Tambah Data Master Supplier</h4>
       </div>
       <div class="modal-body">
+        <form action="javascript:void(0)" method="POST" id="formdatasupplier">
         <div class="col-md-12">
             <label>Nama Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Perusahaan Supplier , Ex = PT Supplier Indonesia " name="nama_supplier" /><br/>
@@ -46,13 +31,14 @@
             <label>Kontak Atas Nama Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Kontak Atas Nama Supplier, Ex = 0822673893790" name="kontak_nama" /><br/>
             <label>Alamat Supplier</label>
-            <input type="text" class="form-control" placeholder="Masukan Alamat Supplier, Ex = 0822673893790" name="alamat_supplier" /><br/>
+            <input type="text" class="form-control" placeholder="Masukan Alamat Supplier, Ex = Gang Sanggar RT. 04 RW. 01" name="alamat_supplier" /><br/>
             <label>Kelurahan, Kecamatan, Provinsi Supplier</label>
-            <select class="js-data-example-ajax form-control" width="100%" name="kelurahan_supplier"></select>
+            <select class="js-data-example-ajax form-control" width="100%" name="kelurahan_supplier" id="kelurahan_supplier"></select>
         </div><br/>&nbsp;
       </div>
+      </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="tambahdata()">Tambah Data</button>
+        <button type="button" class="btn btn-primary" onclick="tambahdatasupplier()">Tambah Data</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -64,11 +50,11 @@
     loaddatastokbarang();
     function loaddatastokbarang()
     {
-        $( "#masterstokbarangajax" ).html( "LOADING....." );
+        $( "#mastersupplierajax" ).html( "LOADING....." );
         $.ajax({
-        url: "<?php echo base_url('/masterajax/stokbarang') ?>",
+        url: "<?php echo base_url('/masterajax/supplier') ?>",
         success: function(data) {
-            $('#masterstokbarangajax').html(data);        
+            $('#mastersupplierajax').html(data);        
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText); 
@@ -83,7 +69,8 @@
             }     
         }
         });
-        $('.js-data-example-ajax').select2({
+    }
+    $('.js-data-example-ajax').select2({
            minimumInputLength: 3,
            allowClear: true,
            placeholder: 'Masukan Nama Kelurahan / Kecamatan / Kabupaten / Provinsi',
@@ -102,6 +89,58 @@
               };
             },
           }
-      })
+      });
+  function tambahdatasupplier()
+  {
+    if($("input[name='nama_supplier']").val().length===0){
+      alert("Nama Supplier Wajib Diisi");
+      return false;
     }
+    if($("input[name='atas_nama']").val().length===0){
+      alert("Atas Nama Supplier Wajib Diisi");
+      return false;
+    }
+    if($("input[name='kontak_nama']").val().length===0){
+      alert("Kontak Atas Nama Wajib Diisi");
+      return false;
+    }
+    if($("input[name='alamat_supplier']").val().length===0){
+      alert("Alamat Supplier Wajib Diisi");
+      return false;
+    }
+    // if($("#kelurahan_supplier").val().length===0){
+    //   alert("Pilihan Kelurahan Supplier Diisi");
+    //   return false;
+    // }
+    var a = new FormData(document.getElementById("formdatasupplier"));
+      $.ajax({
+        url: "<?php echo base_url('/mastertr/insertdatasupplier') ?>",
+        type: "POST",
+        data: a,
+        contentType: false,       
+        cache: false,             
+        processData:false,
+        success: function(data) {
+          if(data == "Berhasil"){
+            alert("Berhasil Input Data Supplier");
+            window.location.reload(true);
+            return false;
+          }else{
+            alert(data);
+          }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          console.log(XMLHttpRequest.responseText); 
+          if (XMLHttpRequest.status == 0) {
+          alert(' Check Your Network.');
+          } else if (XMLHttpRequest.status == 404) {
+          alert('Requested URL not found.');
+          } else if (XMLHttpRequest.status == 500) {
+          alert('Internel Server Error.');
+          }  else {
+          alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+          }     
+        }
+    });
+  }
 </script>
