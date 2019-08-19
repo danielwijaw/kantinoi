@@ -108,10 +108,10 @@
       alert("Alamat Supplier Wajib Diisi");
       return false;
     }
-    // if($("#kelurahan_supplier").val().length===0){
-    //   alert("Pilihan Kelurahan Supplier Diisi");
-    //   return false;
-    // }
+    if(null==$("#kelurahan_supplier").val()){
+      alert("Pilihan Kelurahan Supplier Diisi");
+      return false;
+    }
     var a = new FormData(document.getElementById("formdatasupplier"));
       $.ajax({
         url: "<?php echo base_url('/mastertr/insertdatasupplier') ?>",

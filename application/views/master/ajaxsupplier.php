@@ -108,10 +108,10 @@ function updatedatasupplier<?php echo $value['reg_supplier'] ?>()
       alert("Alamat Supplier Wajib Diisi");
       return false;
     }
-    // if($("#kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>").val().length===0){
-    //   alert("Pilihan Kelurahan Supplier Diisi");
-    //   return false;
-    // }
+     if(null==$("#kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>").val()){
+       alert("Pilihan Kelurahan Supplier Diisi");
+       return false;
+     }
     var a = new FormData(document.getElementById("formupdate<?php echo $value['reg_supplier'] ?>"));
       $.ajax({
         url: "<?php echo base_url('/mastertr/updatedatasupplier?id='.$value['reg_supplier']) ?>",
