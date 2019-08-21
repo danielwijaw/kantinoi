@@ -46,6 +46,31 @@ class mastermodel extends CI_Model {
         $this->db->update('tm_supplier', $data);
         return true;
     }
+    
+    public function getdatasuppliercountsearch($validasi, $cari) {
+        $where = "status_muncul = '".$validasi."' and (a.reg_supplier like '%".$cari."%' or a.nama_supplier like '%".$cari."%' or a.atas_nama like '%".$cari."%' or a.kontak_supplier like '%".$cari."%' or a.alamat like '%".$cari."%' or b.nama_provinsi like '%".$cari."%' or b.nama_kabupaten like '%".$cari."%' or b.nama_kecamatan like '%".$cari."%' or b.nama_kelurahan like '%".$cari."%') ";
+        $this->db->select('count(a.reg_supplier) as allcount');
+        $this->db->from('tm_supplier as a');
+        $this->db->join('t_lokasi b', 'a.id_kelurahan = b.id_kelurahan', 'left');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatasuppliersearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (a.reg_supplier like '%".$cari."%' or a.nama_supplier like '%".$cari."%' or a.atas_nama like '%".$cari."%' or a.kontak_supplier like '%".$cari."%' or a.alamat like '%".$cari."%' or b.nama_provinsi like '%".$cari."%' or b.nama_kabupaten like '%".$cari."%' or b.nama_kecamatan like '%".$cari."%' or b.nama_kelurahan like '%".$cari."%') ";
+        $this->db->select('a.reg_supplier, a.nama_supplier, a.atas_nama, a.kontak_supplier, a.alamat, a.id_kelurahan, b.nama_provinsi, b.nama_kabupaten, b.nama_kecamatan, b.nama_kelurahan');
+        $this->db->from('tm_supplier as a');
+        $this->db->join('t_lokasi b', 'a.id_kelurahan = b.id_kelurahan', 'left');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_supplier', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 
 
 

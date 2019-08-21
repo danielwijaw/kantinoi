@@ -7,7 +7,8 @@
             <th>Atasnama & Kontak</th>
             <th>Alamat</th>
             <td width="7%"><center>
-                <button data-toggle="modal" data-target="#modalsupplier" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i></button></center>
+                <button data-toggle="modal" data-target="#modalsuppliercari" class="btn btn-primary btn-xs"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button data-toggle="modal" data-target="#modalsupplier" class="btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </td>
         </tr>
     </thead>
