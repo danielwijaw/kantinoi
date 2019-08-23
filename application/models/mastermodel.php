@@ -13,6 +13,8 @@ class mastermodel extends CI_Model {
         return $data->result_array();
     }
 
+    // START DATA SUPPLIER
+
     public function getdatasuppliercount($validasi) {
 
         $this->db->select('count(reg_supplier) as allcount');
@@ -34,17 +36,6 @@ class mastermodel extends CI_Model {
         $this->db->order_by('a.reg_supplier', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
-    }
-
-    public function deletesupplier($id)
-    {
-        $data = array(
-            'status_muncul' => '2',
-            'deleted_at'  => date('Y-m-d H:i:s')
-        );
-        $this->db->where('reg_supplier', $id);
-        $this->db->update('tm_supplier', $data);
-        return true;
     }
     
     public function getdatasuppliercountsearch($validasi, $cari) {
@@ -71,6 +62,204 @@ class mastermodel extends CI_Model {
         $query = $this->db->get();
         return $query->result_array();
     }
+
+    // END DATA SUPPLIER
+
+    // START DATA JENIS BARANG
+
+    public function getdatajenisbarangcount($validasi) {
+
+        $this->db->select('count(reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang');
+        $this->db->where('status_muncul =', $validasi);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatajenisbarang($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatajenisbarangcountsearch($validasi, $cari) {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('count(a.reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatajenisbarangsearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA JENIS BARANG
+
+    // START DATA STOK BARANG
+
+    public function getdatastokbarangcount($validasi) {
+
+        $this->db->select('count(reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang');
+        $this->db->where('status_muncul =', $validasi);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatastokbarang($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatastokbarangcountsearch($validasi, $cari) {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('count(a.reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatastokbarangsearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA STOK BARANG
+
+    // START DATA HARGA BARANG
+
+    public function getdatahargabarangcount($validasi) {
+
+        $this->db->select('count(reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang');
+        $this->db->where('status_muncul =', $validasi);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatahargabarang($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatahargabarangcountsearch($validasi, $cari) {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('count(a.reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatahargabarangsearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA HARGA BARANG
+
+    // START DATA PELANGGAN
+
+    public function getdatapelanggancount($validasi) {
+
+        $this->db->select('count(reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang');
+        $this->db->where('status_muncul =', $validasi);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapelanggan($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatapelanggancountsearch($validasi, $cari) {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('count(a.reg_jenisbarang) as allcount');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+     
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapelanggansearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
+        $this->db->select('a.reg_jenisbarang, a.jenisbarang');
+        $this->db->from('tm_jenisbarang as a');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('a.reg_jenisbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA PELANGGAN
 
 
 

@@ -71,10 +71,10 @@
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Master Data <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a id="<?php echo "master-datasupplier" ?>" href="<?php echo base_url("master/datasupplier") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Supplier</a></li>
+                <li><a id="<?php echo "master-jenisbarang" ?>" href="<?php echo base_url("master/jenisbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Jenis Barang / Departemen</a></li>
                 <li><a id="<?php echo "master-stokbarang" ?>" href="<?php echo base_url("master/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Stok Barang</a></li>
                 <li><a id="<?php echo "master-hargabarang" ?>" href="<?php echo base_url("master/hargabarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Harga Barang</a></li>
                 <li><a id="<?php echo "master-datapelanggan" ?>" href="<?php echo base_url("master/datapelanggan") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Pelanggan</a></li>
-                <li><a id="<?php echo "master-datadepartemen" ?>" href="<?php echo base_url("master/datadepartemen") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Departemen</a></li>
               </ul>
             </li>
             <li class="dropdown">
