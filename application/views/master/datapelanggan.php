@@ -24,7 +24,9 @@
       <div class="modal-body">
         <form action="javascript:void(0)" method="POST" id="formdatapelanggan">
         <div class="col-md-12">
-            <label>Data Pelanggan</label>
+            <label>Nomor ID Pelanggan</label>
+            <input type="text" class="form-control" placeholder="Kosongkan untuk mendapat nomor ID secara acak " name="reg_pelanggan" /><br/>
+            <label>Nama Pelanggan</label>
             <input type="text" class="form-control" placeholder="Masukan Data Pelanggan " name="pelanggan" /><br/>
         </div><br/>&nbsp;
       </div>

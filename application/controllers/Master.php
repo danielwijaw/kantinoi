@@ -20,12 +20,6 @@ class Master extends CI_Controller {
 		doViews($_GET);
 	}
 
-	public function datadepartemen()
-	{
-		$_GET['asdx'] = 'master/datadepartemen';
-		doViews($_GET);
-	}
-
 	public function datasupplier()
 	{
 		$_GET['asdx'] = 'master/datasupplier';

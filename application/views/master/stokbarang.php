@@ -24,8 +24,16 @@
       <div class="modal-body">
         <form action="javascript:void(0)" method="POST" id="formdatastokbarang">
         <div class="col-md-12">
-            <label>Stok Barang</label>
-            <input type="text" class="form-control" placeholder="Masukan Stok Barang " name="stokbarang" /><br/>
+            <label>Nama Barang</label>
+            <input type="text" class="form-control" placeholder="Masukan Nama Barang" name="stokbarang" /><br/>
+            <label>Jumlah Barang</label>
+            <input type="text" class="form-control" placeholder="Masukan Jumlah Stok Barang " name="jumlahbarang" /><br/>
+            <label>Satuan</label>
+            <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " name="satuan" /><br/>
+            <label>Supplier</label><br/>
+            <select class="select-supplier form-control" width="100%" name="reg_supplier" id="reg_supplier"></select><br/><br/>
+            <label>Jenis Barang</label><br/>
+            <select class="select-jbar form-control" width="100%" name="reg_jenisbarang" id="reg_jenisbarang"></select><br/><br/>
         </div><br/>&nbsp;
       </div>
       </form>
@@ -62,6 +70,44 @@
 </div>
 
 <script>
+    $('#reg_jenisbarang').select2({
+           allowClear: true,
+           placeholder: 'Pilih Jenis Barang',
+           ajax: {
+              dataType: 'json',
+              url: '<?php echo base_url('/attribute/getjenisbarang') ?>',
+              delay: 800,
+              data: function(params) {
+                return {
+                  search: params.term
+                }
+              },
+              processResults: function (data, page) {
+              return {
+                results: data
+              };
+            },
+          }
+      });
+    $('#reg_supplier').select2({
+           allowClear: true,
+           placeholder: 'Pilih Nama Supplier',
+           ajax: {
+              dataType: 'json',
+              url: '<?php echo base_url('/attribute/getsupplier') ?>',
+              delay: 800,
+              data: function(params) {
+                return {
+                  search: params.term
+                }
+              },
+              processResults: function (data, page) {
+              return {
+                results: data
+              };
+            },
+          }
+      });
     loaddatastokbarang();
     function loaddatastokbarang()
     {
@@ -88,7 +134,23 @@
   function tambahdatastokbarang()
   {
     if($("input[name='stokbarang']").val().length===0){
-      alert("Stok Barang Wajib Diisi");
+      alert("Nama Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='jumlahbarang']").val().length===0){
+      alert("Jumlah Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='satuan']").val().length===0){
+      alert("Satuan Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='reg_supplier']").val().length===0){
+      alert("Nama Supplier Wajib Diisi");
+      return false;
+    }
+    if($("input[name='reg_jenisbarang']").val().length===0){
+      alert("Jenis Barang Wajib Diisi");
       return false;
     }
     var a = new FormData(document.getElementById("formdatastokbarang"));

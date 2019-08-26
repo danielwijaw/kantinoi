@@ -17,7 +17,7 @@
     <tr>
         <td><?php echo $value['reg_supplier'] ?></td>
         <td><?php echo $value['nama_supplier'] ?></td>
-        <td>&nbsp;</td>
+        <td><?php echo $supply[$value['reg_supplier']]['jumlahbarang'] ?></td>
         <td><?php echo $value['atas_nama'] ?>, <?php echo $value['kontak_supplier'] ?></td>
         <td><?php echo $value['alamat'] ?>, Desa/Kel. <?php echo $value['nama_kelurahan'] ?>, Kec. <?php echo $value['nama_kecamatan'] ?>, Kab. <?php echo $value['nama_kabupaten'] ?>, Prov. <?php echo $value['nama_provinsi'] ?></td>
         <td>

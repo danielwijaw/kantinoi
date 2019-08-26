@@ -24,8 +24,12 @@
       <div class="modal-body">
         <form action="javascript:void(0)" method="POST" id="formdatahargabarang">
         <div class="col-md-12">
-            <label>Harga Barang</label>
-            <input type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang" /><br/>
+            <label>Nama Barang</label><br/>
+            <select class="js-data-example-ajax form-control" width="100%" name="reg_stokbarang" id="reg_stokbarang"></select><br/><br/>
+            <label>Harga Barang Grosir</label>
+            <input type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_grosir" /><br/>
+            <label>Harga Barang Retail</label>
+            <input type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_retail" /><br/>
         </div><br/>&nbsp;
       </div>
       </form>
@@ -62,6 +66,25 @@
 </div>
 
 <script>
+    $('#reg_stokbarang').select2({
+           allowClear: true,
+           placeholder: 'Pilih Nama Barang',
+           ajax: {
+              dataType: 'json',
+              url: '<?php echo base_url('/attribute/getnamabarang') ?>',
+              delay: 800,
+              data: function(params) {
+                return {
+                  search: params.term
+                }
+              },
+              processResults: function (data, page) {
+              return {
+                results: data
+              };
+            },
+          }
+      });
     loaddatastokbarang();
     function loaddatastokbarang()
     {
@@ -87,8 +110,16 @@
     }
   function tambahdatahargabarang()
   {
-    if($("input[name='hargabarang']").val().length===0){
-      alert("Harga Barang Wajib Diisi");
+    if($("#reg_stokbarang").val().length===0){
+      alert("Nama Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='hargabarang_grosir']").val().length===0){
+      alert("Harga Barang Grosir Wajib Diisi");
+      return false;
+    }
+    if($("input[name='hargabarang_retail']").val().length===0){
+      alert("Harga Barang Retail Wajib Diisi");
       return false;
     }
     var a = new FormData(document.getElementById("formdatahargabarang"));

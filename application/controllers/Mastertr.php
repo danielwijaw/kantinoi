@@ -114,7 +114,11 @@ class Mastertr extends CI_Controller {
     {
         if(isset($_POST)){
             $data = array(
-                    'stokbarang' 	=> escapeString($_POST['stokbarang'])
+                'stokbarang' => escapeString($_POST['stokbarang']),
+                'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
+                'satuan' 	=> escapeString($_POST['satuan']),
+                'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
+                'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang'])
             );
 
             $this->db->insert('tm_stokbarang', $data);
@@ -127,11 +131,24 @@ class Mastertr extends CI_Controller {
         if(isset($_POST)){
             $data = array(
                     'stokbarang' 	=> escapeString($_POST['stokbarang_updated_'.$_GET['id']]),
+                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
+                    'satuan' 	=> escapeString($_POST['satuan_updated_'.$_GET['id']]),
+                    'reg_supplier' 	=> escapeString($_POST['reg_supplier_updated_'.$_GET['id']]),
+                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang_updated_'.$_GET['id']]),
                     'status_muncul'     => '1',
                     'updated_at'        => date('Y-m-d H:i:s')
             );
             $this->db->where('reg_stokbarang', $_GET['id']);
             $this->db->update('tm_stokbarang', $data);
+            
+            $datax = array(
+                'stok_awal'         => escapeString($_POST['jumlahbarangawal_updated_'.$_GET['id']]),
+                'stok_perbarui' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
+                'reg_stokbarang' 	=> $_GET['id']
+            );
+
+            $this->db->insert('tr_stokbarang', $datax);
+
             echo "Berhasil";
         }
     }
@@ -156,12 +173,19 @@ class Mastertr extends CI_Controller {
     public function insertdatahargabarang()
     {
         if(isset($_POST)){
+            // CEK ID
+            $cekid = $this->mastermodel->getnamabarangid($_POST['reg_stokbarang']);
             $data = array(
-                    'jenisbarang' 	=> escapeString($_POST['hargabarang'])
+                    'reg_stokbarang' 	    => escapeString($_POST['reg_stokbarang']),
+                    'hargabarang_grosir' 	=> escapeString($_POST['hargabarang_grosir']),
+                    'hargabarang_retail' 	=> escapeString($_POST['hargabarang_retail']),
             );
-
-            $this->db->insert('tm_jenisbarang', $data);
-            echo "Berhasil";
+            if(empty($cekid)){
+                $this->db->insert('tm_hargabarang', $data);
+                echo "Berhasil";
+            }else{
+                echo "HARGA STOK BARANG SUDAH DIINPUT";
+            }
         }
     }
 
@@ -169,12 +193,23 @@ class Mastertr extends CI_Controller {
     {
         if(isset($_POST)){
             $data = array(
-                    'jenisbarang' 	=> escapeString($_POST['hargabarang_updated_'.$_GET['id']]),
-                    'status_muncul'     => '1',
-                    'updated_at'        => date('Y-m-d H:i:s')
+                    'hargabarang_grosir' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
+                    'hargabarang_retail'    => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']]),
+                    'status_muncul'         => '1',
+                    'updated_at'            => date('Y-m-d H:i:s')
             );
-            $this->db->where('reg_jenisbarang', $_GET['id']);
-            $this->db->update('tm_jenisbarang', $data);
+            $this->db->where('reg_hargabarang', $_GET['id']);
+            $this->db->update('tm_hargabarang', $data);
+
+            $datax = array(
+                'reg_hargabarang'               => $_GET['id'],
+                'hargabarang_grosir_awal' 	    => escapeString($_POST['hargabarang_awal_retail_updated_'.$_GET['id']]),
+                'hargabarang_retail_awal'       => escapeString($_POST['hargabarang_awal_grosir_updated_'.$_GET['id']]),
+                'hargabarang_grosir_perbarui' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
+                'hargabarang_retail_perbarui'   => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']])
+            );
+            $this->db->insert('tr_hargabarang', $datax);
+
             echo "Berhasil";
         }
     }
@@ -186,8 +221,8 @@ class Mastertr extends CI_Controller {
                 'status_muncul' => '2',
                 'deleted_at'  => date('Y-m-d H:i:s')
             );
-            $this->db->where('reg_jenisbarang', $_GET['id']);
-            $this->db->update('tm_jenisbarang', $data);
+            $this->db->where('reg_hargabarang', $_GET['id']);
+            $this->db->update('tm_hargabarang', $data);
             redirect('/master/hargabarang/');
         }
     }
@@ -199,11 +234,19 @@ class Mastertr extends CI_Controller {
     public function insertdatapelanggan()
     {
         if(isset($_POST)){
-            $data = array(
-                    'jenisbarang' 	=> escapeString($_POST['pelanggan'])
-            );
+            if(empty($_POST['reg_pelanggan'])){
+                $data = array(
+                    'reg_pelanggan' => rand(1231, 1230981),
+                    'pelanggan' 	=> escapeString($_POST['pelanggan'])
+                );
+            }else{
+                $data = array(
+                    'reg_pelanggan' => escapeString($_POST['reg_pelanggan']),
+                    'pelanggan' 	=> escapeString($_POST['pelanggan'])
+                );
+            }
 
-            $this->db->insert('tm_jenisbarang', $data);
+            $this->db->insert('tm_pelanggan', $data);
             echo "Berhasil";
         }
     }
@@ -212,12 +255,13 @@ class Mastertr extends CI_Controller {
     {
         if(isset($_POST)){
             $data = array(
-                    'jenisbarang' 	=> escapeString($_POST['pelanggan_updated_'.$_GET['id']]),
+                    'reg_pelanggan' 	=> escapeString($_POST['reg_pelanggan_updated_'.$_GET['id']]),
+                    'pelanggan' 	=> escapeString($_POST['pelanggan_updated_'.$_GET['id']]),
                     'status_muncul'     => '1',
                     'updated_at'        => date('Y-m-d H:i:s')
             );
-            $this->db->where('reg_jenisbarang', $_GET['id']);
-            $this->db->update('tm_jenisbarang', $data);
+            $this->db->where('reg_pelanggan', $_GET['id']);
+            $this->db->update('tm_pelanggan', $data);
             echo "Berhasil";
         }
     }
@@ -229,8 +273,8 @@ class Mastertr extends CI_Controller {
                 'status_muncul' => '2',
                 'deleted_at'  => date('Y-m-d H:i:s')
             );
-            $this->db->where('reg_jenisbarang', $_GET['id']);
-            $this->db->update('tm_jenisbarang', $data);
+            $this->db->where('reg_pelanggan', $_GET['id']);
+            $this->db->update('tm_pelanggan', $data);
             redirect('/master/datapelanggan/');
         }
     }

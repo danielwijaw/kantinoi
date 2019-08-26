@@ -2,6 +2,92 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Attribute extends CI_Controller {
+	
+	public function getjenisbarangupdated()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = '';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getjenisbarangsearch($_GET['search']);
+		$datax = $this->mastermodel->getjenisbaranglist($_GET['reg']);
+		$list[0]['id'] = $datax[0]['reg_jenisbarang'];
+		$list[0]['text'] = $datax[0]['jenisbarang'];
+		foreach($data as $key => $value){
+			$list[$key+1]['id'] = $value['reg_jenisbarang'];
+			$list[$key+1]['text'] = $value['jenisbarang'];
+		};
+		echo json_encode($list);
+	}
+
+	public function getsupplierupdated()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = '';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getsuppliersearch($_GET['search']);
+		$datax = $this->mastermodel->getsupplierlist($_GET['reg']);
+		$list[0]['id'] = $datax[0]['reg_supplier'];
+		$list[0]['text'] = $datax[0]['nama_supplier'];
+		foreach($data as $key => $value){
+			$list[$key+1]['id'] = $value['reg_supplier'];
+			$list[$key+1]['text'] = $value['nama_supplier'];
+		};
+		echo json_encode($list);
+	}
+
+	public function getjenisbarang()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = '';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getjenisbarangsearch($_GET['search']);
+		foreach($data as $key => $value){
+			$list[$key]['id'] = $value['reg_jenisbarang'];
+			$list[$key]['text'] = $value['jenisbarang'];
+		};
+		echo json_encode($list);
+	}
+
+	public function getsupplier()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = '';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getsuppliersearch($_GET['search']);
+		foreach($data as $key => $value){
+			$list[$key]['id'] = $value['reg_supplier'];
+			$list[$key]['text'] = $value['nama_supplier'];
+		};
+		echo json_encode($list);
+	}
+
+	public function getnamabarang()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = '';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getnamabarang($_GET['search']);
+		foreach($data as $key => $value){
+			$list[$key]['id'] = $value['reg_stokbarang'];
+			$list[$key]['text'] = $value['stokbarang'];
+		};
+		echo json_encode($list);
+	}
 
 	public function getkelurahan()
 	{
