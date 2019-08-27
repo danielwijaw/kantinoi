@@ -20,9 +20,11 @@
                                     <td><select class="js-data-pelanggan-ajax form-control" width="100%" name="pelanggan_kasir" id="pelanggan_kasir"></select></td>
                                 </tr>
                                 <tr>
-                                    <td>Keterangan</td>
-                                    <td>:</td>
-                                    <td><input type="text" class="form-control"></td>
+                                    <td colspan="3" style="text-align:left">
+                                        <button class="btn btn-default" type="button">Pilih Transaksi</button>
+                                        <button class="btn btn-warning" type="button">Hold Transaksi</button>
+                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang">Tambah Barang</button>
+                                    </td>
                                 </tr>
                             </table>
                         </td>
@@ -32,24 +34,17 @@
                                 <tr>
                                     <td width="50%">Kode Barang / Barcode</td>
                                     <td width="5%">:</td>
-                                    <td width="45%"><input type="text" class="form-control"></td>
+                                    <td width="45%"><input type="text" class="form-control" name="kode_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Jumlah</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control"></td>
+                                    <td><input type="text" class="form-control" name="jumlah_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Diskon</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" style="text-align:right">
-                                        <button class="btn btn-default" type="button">Pilih Transaksi</button>
-                                        <button class="btn btn-warning" type="button">Hold Transaksi</button>
-                                        <button class="btn btn-primary" type="button">Tambah Barang</button>
-                                    </td>
+                                    <td><input type="text" class="form-control" name="diskon_harga"></td>
                                 </tr>
                             </table>
                         </td>
@@ -87,6 +82,31 @@
 	$("#tanggalnow").val(tanggallengkap);
 </script>
 <script>
+    $("input[name='kode_barang']").focus();
+    $(document).on('keyup', function(e){
+        if (e.keyCode === 27){
+            // ESC
+            $("#pelanggan_kasir").val('').change();
+        }
+    })
+    $("input[name='kode_barang']").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            // ENTER
+            $("input[name='jumlah_barang']").focus();
+        }
+    });
+    $("input[name='jumlah_barang']").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            // ENTER
+            $("#pelanggan_kasir").select2('open');
+        }
+    });
+    $("#pelanggan_kasir").on('select2:select', function (e) {
+        $("#btn-tambahbarang").focus();
+    });
+    $("#pelanggan_kasir").on('select2:close', function (e) {
+        $("#btn-tambahbarang").focus();
+    });
     $('.js-data-pelanggan-ajax').select2({
            minimumInputLength: 1,
            allowClear: true,
