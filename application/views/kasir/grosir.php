@@ -60,10 +60,11 @@
                 <table class="table table-bordered" width="100%">
                     <tr>
                         <td width="5%">No</td>
-                        <td width="70%">Nama Barang</td>
+                        <td width="65%">Nama Barang</td>
                         <td width="12.5%">Harga</td>
                         <td width="7.5%">Qty</td>
                         <td width="15%">Jumlah</td>
+                        <td width="5%">&nbsp;</td>
                     </tr>
                 </table>
             </div>
