@@ -2,6 +2,22 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Attribute extends CI_Controller {
+
+	public function getpelanggan()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = 'a';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getpelanggankasir($_GET['search']);
+		foreach($data as $key => $value){
+			$list[$key]['id'] = $value['reg_pelanggan'];
+			$list[$key]['text'] = $value['pelanggan']." (".$value['reg_pelanggan'].")";
+		};
+		echo json_encode($list);
+	}
 	
 	public function getjenisbarangupdated()
 	{
