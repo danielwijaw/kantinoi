@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Transaksi Penjualan #</h3>
+        <h3 class="box-title">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h3>
     </div>
     <div class="box-body">
         <div class="col-md-12">
@@ -14,6 +14,23 @@
                                     <td width="5%">:</td>
                                     <td width="45%"><input type="text" class="form-control" id="tanggalnow" readonly="readonly"></td>
                                 </tr>
+
+                                <!-- NOMOR TRANSAKSI PENJUALAN -->
+                                <input type="hidden" value="<?php echo $nomor_transaksi_penjualan ?>" name="nomor_transaksi_penjualan">
+                                <!-- TANGGAL TRANSAKSI PENJUALAN -->
+                                <input type="hidden" value="<?php echo date('Y-m-d') ?>" name="tanggal_transaksi_penjualan">
+                                <!-- ADMIN -->
+                                <input type="hidden" value="<?php echo $this->session->userdata('nip') ?>" name="admin_transaksi_penjualan">
+                                <!-- JUMLAH BARANG -->
+                                <input type="hidden" name="jumlah_barang_stok">
+                                <!-- HARGA BARANG -->
+                                <input type="hidden" name="harga_barang_retail">
+                                <input type="hidden" name="harga_barang_grosir">
+                                <!-- NAMA BARANG -->
+                                <input type="hidden" name="nama_barang_stok">
+                                <!-- SATUAN BARANG -->
+                                <input type="hidden" name="satuan_barang_stok">
+
                                 <tr>
                                     <td>Pelanggan</td>
                                     <td>:</td>
@@ -23,7 +40,7 @@
                                     <td colspan="3" style="text-align:left">
                                         <button class="btn btn-default" type="button">Pilih Transaksi</button>
                                         <button class="btn btn-warning" type="button">Hold Transaksi</button>
-                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang">Tambah Barang</button>
+                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang" onclick="submit()">Tambah Barang</button>
                                     </td>
                                 </tr>
                             </table>
@@ -92,16 +109,19 @@
     $("input[name='kode_barang']").on('keyup', function (e) {
         if (e.keyCode === 13) {
             // ENTER
+            kodebarangenter();
             $("input[name='jumlah_barang']").focus();
         }
     });
     $("input[name='jumlah_barang']").on('keyup', function (e) {
         if (e.keyCode === 13) {
             // ENTER
+            jumlahbarangenter();
             $("#pelanggan_kasir").select2('open');
         }
     });
     $("#pelanggan_kasir").on('select2:select', function (e) {
+        $("input[name='diskon_harga']").val($("input[name='harga_barang_retail']").val())
         $("#btn-tambahbarang").focus();
     });
     $("#pelanggan_kasir").on('select2:close', function (e) {
@@ -126,5 +146,65 @@
               };
             },
           }
-      });
+    });
+    $("#btn-tambahbarang").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            // ENTER
+            submit();
+        }
+    });
+    function submit(){
+        kodebarangenter();
+        jumlahbarangenter();
+    }
+    function kodebarangenter(){
+        var kodebarang = $("input[name='kode_barang']").val();
+        $.ajax({
+        url: '<?php echo base_url('/attribute/getbarang/?kodebarang=') ?>'+kodebarang,
+        success: function(data) {
+            var jsonget = $.parseJSON(data);
+            var jsonurl = jsonget[0];
+            if(jsonurl === null){
+                alert("KODE BARANG TIDAK TEPAT / BARANG BELUM DIMASUKAN");
+                return false;
+            }else{
+                if(jsonurl['jumlahbarang']==="HABIS"){
+                    alert("JUMLAH BARANG HABIS");
+                    $("input[name='kode_barang']").focus();
+                    return false;
+                }else{
+                    alert("Nama Barang = "+jsonurl['stokbarang']+" Harga Grosir = "+jsonurl['hargabarang_grosir']+" Harga Retail = "+jsonurl['hargabarang_retail']);
+                    $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
+                    $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
+                    $("input[name='harga_barang_retail']").val(jsonurl['hargabarang_retail']);
+                    $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
+                    $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
+                }
+            }
+            console.log(jsonurl);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
+    function jumlahbarangenter(){
+        if($("input[name='jumlah_barang']").val() >= $("input[name='jumlah_barang_stok']").val()){
+            alert("JUMLAH STOK TIDAK TERSEDIA, STOK TERSEDIA = "+$("input[name='jumlah_barang_stok']").val());
+            $("input[name='jumlah_barang']").focus();
+            return false;
+        }else{
+            // alert('lanjut');
+            console.log("LANJUT");
+        }
+    }
 </script>

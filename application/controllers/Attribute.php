@@ -3,6 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Attribute extends CI_Controller {
 
+	public function getbarang()
+	{
+		if(isset($_GET['kodebarang'])){
+			// print_r($_GET);
+			$this->load->model('dataletter');
+			$datax = $this->dataletter->getsokbarangbyid($_GET['kodebarang']);
+			if($datax['jumlahbarang']=='0'){
+				$datax = array(
+					'reg_stokbarang' 	=> $datax['reg_stokbarang'],
+					'stokbarang'		=> $datax['stokbarang'],
+					'jumlahbarang'		=> 'HABIS'
+				);
+			}
+			array_push($_GET, $datax);
+			echo json_encode($_GET);
+		}
+	}
+
 	public function getpelanggan()
 	{
 		if(!isset($_GET['search'])){
