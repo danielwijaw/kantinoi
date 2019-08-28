@@ -121,7 +121,7 @@
         }
     });
     $("#pelanggan_kasir").on('select2:select', function (e) {
-        $("input[name='diskon_harga']").val($("input[name='harga_barang_retail']").val())
+        $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val())
         $("#btn-tambahbarang").focus();
     });
     $("#pelanggan_kasir").on('select2:close', function (e) {
