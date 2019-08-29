@@ -1,6 +1,6 @@
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h3>
+        <h3 class="box-title titlealert">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h3>
     </div>
     <div class="box-body">
         <div class="col-md-12">
@@ -154,6 +154,8 @@
     function submitkasir()
     {
         // PROSES CARI ULANG KODE BARANG
+        $(".titlealert").html("LOADING");
+        $(".titlealert").html("PROSES CARI ULANG KODE BARANG");
         console.log("PROSES CARI ULANG KODE BARANG");
         var kodebarang = $("input[name='kode_barang']").val();
         $.ajax({
@@ -173,6 +175,7 @@
                     return false;
                 }else{
                     // PROSES INPUT KE VALUE
+                    $(".titlealert").html("PROSES INPUT KE VALUE");
                     console.log("PROSES INPUT KE VALUE");
                     $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
                     $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
@@ -180,6 +183,7 @@
                     $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
                     $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
                     // PROSES CHECKING STOK BARANG
+                    $(".titlealert").html("PROSES CHECKING STOK BARANG");
                     console.log("PROSES CHECKING STOK BARANG");
                     if(parseFloat($("input[name='jumlah_barang']").val()) > parseFloat($("input[name='jumlah_barang_stok']").val())){
                         alert("JUMLAH STOK TIDAK TERSEDIA, STOK TERSEDIA = "+$("input[name='jumlah_barang_stok']").val());
@@ -188,11 +192,12 @@
                     }else{
                         // PROSES CHECKING DISKON ATAU TIDAK
                         console.log("PROSES CHECKING DISKON ATAU TIDAK");
-                        if($("#pelanggan_kasir").val().length!=0){
-                            $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
-                        }else{
-                            $("input[name='diskon_harga']").val("");
-                        }
+                        $(".titlealert").html("PROSES CHECKING DISKON ATAU TIDAK");
+                        // if($("#pelanggan_kasir").val().length===0){
+                        //     $("input[name='diskon_harga']").val("");
+                        // }else{
+                        //     $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
+                        // }
                         var kasirpost = new FormData(document.getElementById("kasirpost"));
                         $.ajax({
                             url: "<?php echo base_url('/kasirtr/insert') ?>",
@@ -203,14 +208,17 @@
                             processData:false,
                             success: function(data) {
                                 if(data == "Berhasil"){
+                                    $(".titlealert").html("Berhasil");
                                     window.location.reload(true);
                                     return false;
                                 }else{
+                                    $(".titlealert").html("Some Mallfunction");
                                     alert(data);
                                 }
                             },
                             error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 console.log(XMLHttpRequest.responseText); 
+                                $(".titlealert").html("ERROR :(");
                                 if (XMLHttpRequest.status == 0) {
                                 alert(' Check Your Network.');
                                 } else if (XMLHttpRequest.status == 404) {
@@ -229,6 +237,7 @@
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText); 
+            $(".titlealert").html("ERROR :(");
             if (XMLHttpRequest.status == 0) {
             alert(' Check Your Network.');
             } else if (XMLHttpRequest.status == 404) {

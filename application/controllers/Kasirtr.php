@@ -16,12 +16,13 @@ class Kasirtr extends CI_Controller {
 
     public function insert()
     {
-        die();
+        error_reporting(0);
+        // die();
         if(isset($_POST)){
-            if($_POST['pelanggan_kasir']!=""){
+            if(isset($_POST['pelanggan_kasir'])){
                 $hargafix = escapeString($_POST['diskon_harga']);
             }else{
-                $hargafix = escapeString($_POST['harga_barang_grosir']);
+                $hargafix = escapeString($_POST['harga_barang_retail']);
             }
             $datains = array(
                 'nomor_tr_penjualan'            => escapeString($_POST['nomor_transaksi_penjualan']),
@@ -46,7 +47,8 @@ class Kasirtr extends CI_Controller {
                 'updated_at'                    => date('Y-m-d H:i:s')
             );
             $this->db->where('reg_stokbarang', $_POST['kode_barang']);
-            $this->db->update('tm_hargabarang', $dataupdate);
+            $this->db->update('tm_stokbarang', $dataupdate);
+            echo "Berhasil";
         }
     }
 }
