@@ -14,7 +14,7 @@
                                     <td width="5%">:</td>
                                     <td width="45%"><input type="text" class="form-control" id="tanggalnow" readonly="readonly"></td>
                                 </tr>
-
+                                <form id="kasirpost" action="javascript:void(0)" method="POST">
                                 <!-- NOMOR TRANSAKSI PENJUALAN -->
                                 <input type="hidden" value="<?php echo $nomor_transaksi_penjualan ?>" name="nomor_transaksi_penjualan">
                                 <!-- TANGGAL TRANSAKSI PENJUALAN -->
@@ -22,15 +22,14 @@
                                 <!-- ADMIN -->
                                 <input type="hidden" value="<?php echo $this->session->userdata('nip') ?>" name="admin_transaksi_penjualan">
                                 <!-- JUMLAH BARANG -->
-                                <input type="hidden" name="jumlah_barang_stok">
+                                <input type="hidden" name="jumlah_barang_stok" class="clean">
                                 <!-- HARGA BARANG -->
-                                <input type="hidden" name="harga_barang_retail">
-                                <input type="hidden" name="harga_barang_grosir">
+                                <input type="hidden" name="harga_barang_retail" class="clean">
+                                <input type="hidden" name="harga_barang_grosir" class="clean">
                                 <!-- NAMA BARANG -->
-                                <input type="hidden" name="nama_barang_stok">
+                                <input type="hidden" name="nama_barang_stok" class="clean">
                                 <!-- SATUAN BARANG -->
-                                <input type="hidden" name="satuan_barang_stok">
-
+                                <input type="hidden" name="satuan_barang_stok" class="clean">
                                 <tr>
                                     <td>Pelanggan</td>
                                     <td>:</td>
@@ -40,7 +39,7 @@
                                     <td colspan="3" style="text-align:left">
                                         <button class="btn btn-default" type="button">Pilih Transaksi</button>
                                         <button class="btn btn-warning" type="button">Hold Transaksi</button>
-                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang" onclick="submit()">Tambah Barang</button>
+                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
                                     </td>
                                 </tr>
                             </table>
@@ -51,18 +50,19 @@
                                 <tr>
                                     <td width="50%">Kode Barang / Barcode</td>
                                     <td width="5%">:</td>
-                                    <td width="45%"><input type="text" class="form-control" name="kode_barang"></td>
+                                    <td width="45%"><input type="text" class="form-control clean" name="kode_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Jumlah</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control" name="jumlah_barang"></td>
+                                    <td><input type="text" class="form-control clean" name="jumlah_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Diskon</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control" name="diskon_harga"></td>
+                                    <td><input type="text" class="form-control clean" name="diskon_harga"></td>
                                 </tr>
+                                </form>
                             </table>
                         </td>
                         <td width="2.5%">&nbsp;</td>
@@ -110,19 +110,17 @@
         if (e.keyCode === 13) {
             // ENTER
             kodebarangenter();
-            $("input[name='jumlah_barang']").focus();
         }
     });
     $("input[name='jumlah_barang']").on('keyup', function (e) {
         if (e.keyCode === 13) {
             // ENTER
             jumlahbarangenter();
-            $("#pelanggan_kasir").select2('open');
         }
     });
     $("#pelanggan_kasir").on('select2:select', function (e) {
         $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val())
-        $("#btn-tambahbarang").focus();
+        // $("#btn-tambahbarang").focus();
     });
     $("#pelanggan_kasir").on('select2:close', function (e) {
         $("#btn-tambahbarang").focus();
@@ -150,12 +148,98 @@
     $("#btn-tambahbarang").on('keyup', function (e) {
         if (e.keyCode === 13) {
             // ENTER
-            submit();
+            submitkasir();
         }
     });
-    function submit(){
-        kodebarangenter();
-        jumlahbarangenter();
+    function submitkasir()
+    {
+        // PROSES CARI ULANG KODE BARANG
+        console.log("PROSES CARI ULANG KODE BARANG");
+        var kodebarang = $("input[name='kode_barang']").val();
+        $.ajax({
+        url: '<?php echo base_url('/attribute/getbarang/?kodebarang=') ?>'+kodebarang,
+        success: function(data) {
+            var jsonget = $.parseJSON(data);
+            var jsonurl = jsonget[0];
+            if(jsonurl === null){
+                alert("KODE BARANG TIDAK TEPAT / BARANG BELUM DIMASUKAN");
+                $(".clean").val("");
+                $("input[name='kode_barang']").focus();
+                return false;
+            }else{
+                if(jsonurl['jumlahbarang']==="HABIS"){
+                    alert("JUMLAH BARANG HABIS");
+                    $("input[name='kode_barang']").focus();
+                    return false;
+                }else{
+                    // PROSES INPUT KE VALUE
+                    console.log("PROSES INPUT KE VALUE");
+                    $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
+                    $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
+                    $("input[name='harga_barang_retail']").val(jsonurl['hargabarang_retail']);
+                    $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
+                    $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
+                    // PROSES CHECKING STOK BARANG
+                    console.log("PROSES CHECKING STOK BARANG");
+                    if(parseFloat($("input[name='jumlah_barang']").val()) > parseFloat($("input[name='jumlah_barang_stok']").val())){
+                        alert("JUMLAH STOK TIDAK TERSEDIA, STOK TERSEDIA = "+$("input[name='jumlah_barang_stok']").val());
+                        $("input[name='jumlah_barang']").focus();
+                        return false;
+                    }else{
+                        // PROSES CHECKING DISKON ATAU TIDAK
+                        console.log("PROSES CHECKING DISKON ATAU TIDAK");
+                        if($("#pelanggan_kasir").val().length!=0){
+                            $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
+                        }else{
+                            $("input[name='diskon_harga']").val("");
+                        }
+                        var kasirpost = new FormData(document.getElementById("kasirpost"));
+                        $.ajax({
+                            url: "<?php echo base_url('/kasirtr/insert') ?>",
+                            type: "POST",
+                            data: kasirpost,
+                            contentType: false,       
+                            cache: false,             
+                            processData:false,
+                            success: function(data) {
+                                if(data == "Berhasil"){
+                                    window.location.reload(true);
+                                    return false;
+                                }else{
+                                    alert(data);
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                console.log(XMLHttpRequest.responseText); 
+                                if (XMLHttpRequest.status == 0) {
+                                alert(' Check Your Network.');
+                                } else if (XMLHttpRequest.status == 404) {
+                                alert('Requested URL not found.');
+                                } else if (XMLHttpRequest.status == 500) {
+                                alert('Internel Server Error.');
+                                }  else {
+                                alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                                }     
+                            }
+                        });
+                    }
+                }
+            }
+            console.log(jsonurl);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
     }
     function kodebarangenter(){
         var kodebarang = $("input[name='kode_barang']").val();
@@ -166,6 +250,7 @@
             var jsonurl = jsonget[0];
             if(jsonurl === null){
                 alert("KODE BARANG TIDAK TEPAT / BARANG BELUM DIMASUKAN");
+                $(".clean").val("");
                 return false;
             }else{
                 if(jsonurl['jumlahbarang']==="HABIS"){
@@ -179,6 +264,7 @@
                     $("input[name='harga_barang_retail']").val(jsonurl['hargabarang_retail']);
                     $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
                     $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
+                    $("input[name='jumlah_barang']").focus();
                 }
             }
             console.log(jsonurl);
@@ -198,13 +284,13 @@
         });
     }
     function jumlahbarangenter(){
-        if($("input[name='jumlah_barang']").val() >= $("input[name='jumlah_barang_stok']").val()){
+        if(parseFloat($("input[name='jumlah_barang']").val()) > parseFloat($("input[name='jumlah_barang_stok']").val())){
             alert("JUMLAH STOK TIDAK TERSEDIA, STOK TERSEDIA = "+$("input[name='jumlah_barang_stok']").val());
             $("input[name='jumlah_barang']").focus();
             return false;
         }else{
-            // alert('lanjut');
-            console.log("LANJUT");
+            alert("SISA STOK BARANG SAAT INI = "+( parseFloat($("input[name='jumlah_barang_stok']").val()) - parseFloat($("input[name='jumlah_barang']").val()) ));
+            $("#pelanggan_kasir").select2('open');
         }
     }
 </script>
