@@ -1,3 +1,4 @@
+<form id="kasirpost" action="javascript:void(0)" method="POST">
 <div class="box box-primary">
     <div class="box-header with-border">
         <h3 class="box-title titlealert">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h3>
@@ -14,7 +15,6 @@
                                     <td width="5%">:</td>
                                     <td width="45%"><input type="text" class="form-control" id="tanggalnow" readonly="readonly"></td>
                                 </tr>
-                                <form id="kasirpost" action="javascript:void(0)" method="POST">
                                 <!-- NOMOR TRANSAKSI PENJUALAN -->
                                 <input type="hidden" value="<?php echo $nomor_transaksi_penjualan ?>" name="nomor_transaksi_penjualan">
                                 <!-- TANGGAL TRANSAKSI PENJUALAN -->
@@ -37,9 +37,10 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left">
-                                        <button class="btn btn-default" type="button">Pilih Transaksi</button>
-                                        <button class="btn btn-warning" type="button">Hold Transaksi</button>
-                                        <button class="btn btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
+                                        <button class="btn btn-sm btn-default" type="button">Pilih Transaksi</button>
+                                        <button class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
+                                        <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
+                                        <button class="btn btn-sm btn-danger" type="button">Pembayaran Transaksi</button>
                                     </td>
                                 </tr>
                             </table>
@@ -62,28 +63,18 @@
                                     <td>:</td>
                                     <td><input type="text" class="form-control clean" name="diskon_harga"></td>
                                 </tr>
-                                </form>
                             </table>
                         </td>
                         <td width="2.5%">&nbsp;</td>
                     </tr>
                 </table>
                 <hr/>
-                <table class="table table-bordered" width="100%">
-                    <tr>
-                        <td width="5%">No</td>
-                        <td width="65%">Nama Barang</td>
-                        <td width="12.5%">Harga</td>
-                        <td width="7.5%">Qty</td>
-                        <td width="15%">Jumlah</td>
-                        <td width="5%">&nbsp;</td>
-                    </tr>
-                </table>
+                <div id="view_transaction_now"></div>
             </div>
         </div>
     </div>
 </div>
-
+</form>
 <script language="JavaScript">
     var tanggallengkap = new String();
     var namahari = ("Minggu Senin Selasa Rabu Kamis Jumat Sabtu");
@@ -99,6 +90,7 @@
 	$("#tanggalnow").val(tanggallengkap);
 </script>
 <script>
+    viewtransaction();
     $("input[name='kode_barang']").focus();
     $(document).on('keyup', function(e){
         if (e.keyCode === 27){
@@ -119,8 +111,7 @@
         }
     });
     $("#pelanggan_kasir").on('select2:select', function (e) {
-        $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val())
-        // $("#btn-tambahbarang").focus();
+        $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
     });
     $("#pelanggan_kasir").on('select2:close', function (e) {
         $("#btn-tambahbarang").focus();
@@ -145,17 +136,17 @@
             },
           }
     });
-    $("#btn-tambahbarang").on('keyup', function (e) {
-        if (e.keyCode === 13) {
-            // ENTER
-            submitkasir();
-        }
-    });
+    // $("#btn-tambahbarang").on('keyup', function (e) {
+    //     if (e.keyCode === 13) {
+    //         // ENTER
+    //         submitkasir();
+    //     }
+    // });
     function submitkasir()
     {
         // PROSES CARI ULANG KODE BARANG
-        $(".titlealert").html("LOADING");
-        $(".titlealert").html("PROSES CARI ULANG KODE BARANG");
+        $(".titlealert").html("LOADING.........................");
+        $(".titlealert").html("PROSES CARI ULANG KODE BARANG........................");
         console.log("PROSES CARI ULANG KODE BARANG");
         var kodebarang = $("input[name='kode_barang']").val();
         $.ajax({
@@ -175,7 +166,7 @@
                     return false;
                 }else{
                     // PROSES INPUT KE VALUE
-                    $(".titlealert").html("PROSES INPUT KE VALUE");
+                    $(".titlealert").html("PROSES INPUT KE VALUE........................");
                     console.log("PROSES INPUT KE VALUE");
                     $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
                     $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
@@ -183,7 +174,7 @@
                     $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
                     $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
                     // PROSES CHECKING STOK BARANG
-                    $(".titlealert").html("PROSES CHECKING STOK BARANG");
+                    $(".titlealert").html("PROSES CHECKING STOK BARANG........................");
                     console.log("PROSES CHECKING STOK BARANG");
                     if(parseFloat($("input[name='jumlah_barang']").val()) > parseFloat($("input[name='jumlah_barang_stok']").val())){
                         alert("JUMLAH STOK TIDAK TERSEDIA, STOK TERSEDIA = "+$("input[name='jumlah_barang_stok']").val());
@@ -192,7 +183,7 @@
                     }else{
                         // PROSES CHECKING DISKON ATAU TIDAK
                         console.log("PROSES CHECKING DISKON ATAU TIDAK");
-                        $(".titlealert").html("PROSES CHECKING DISKON ATAU TIDAK");
+                        $(".titlealert").html("PROSES CHECKING DISKON ATAU TIDAK........................");
                         // if($("#pelanggan_kasir").val().length===0){
                         //     $("input[name='diskon_harga']").val("");
                         // }else{
@@ -208,17 +199,17 @@
                             processData:false,
                             success: function(data) {
                                 if(data == "Berhasil"){
-                                    $(".titlealert").html("Berhasil");
+                                    $(".titlealert").html("Berhasil........................");
                                     window.location.reload(true);
                                     return false;
                                 }else{
-                                    $(".titlealert").html("Some Mallfunction");
+                                    $(".titlealert").html("Some Mallfunction!!!!!!!!!!!!!!!!!!!!!!!");
                                     alert(data);
                                 }
                             },
                             error: function(XMLHttpRequest, textStatus, errorThrown) {
                                 console.log(XMLHttpRequest.responseText); 
-                                $(".titlealert").html("ERROR :(");
+                                $(".titlealert").html("ERROR :( !!!!!!!!!!!!!!!!!!!!!!!!!!!");
                                 if (XMLHttpRequest.status == 0) {
                                 alert(' Check Your Network.');
                                 } else if (XMLHttpRequest.status == 404) {
@@ -237,7 +228,7 @@
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText); 
-            $(".titlealert").html("ERROR :(");
+            $(".titlealert").html("ERROR :( !!!!!!!!!!!!!!!!!!!!!!!!!!");
             if (XMLHttpRequest.status == 0) {
             alert(' Check Your Network.');
             } else if (XMLHttpRequest.status == 404) {
@@ -301,5 +292,48 @@
             alert("SISA STOK BARANG SAAT INI = "+( parseFloat($("input[name='jumlah_barang_stok']").val()) - parseFloat($("input[name='jumlah_barang']").val()) ));
             $("#pelanggan_kasir").select2('open');
         }
+    }
+    function viewtransaction(){
+        $('#view_transaction_now').html('LOADING ........');
+        $.ajax({
+        url: '<?php echo base_url('/kasir/transaction/?date='.date('Y-m-d').'&number_transaction='.$nomor_transaksi_penjualan) ?>',
+        success: function(data) {
+            $('#view_transaction_now').html(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
+    function holdingpayment(){
+        $('#view_transaction_now').html('LOADING ........');
+        $.ajax({
+        url: '<?php echo base_url('/kasirtr/holdingpayment?id='.$nomor_transaksi_penjualan) ?>',
+        success: function(data) {
+            console.log(data);
+            window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
     }
 </script>
