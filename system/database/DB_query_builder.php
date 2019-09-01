@@ -2019,7 +2019,8 @@ abstract class CI_DB_query_builder extends CI_DB_driver {
 
 				$clean[$k2] = array(
 					'field'  => $this->protect_identifiers($k2, FALSE, $escape),
-					'value'  => ($escape === FALSE ? $v2 : $this->escape($v2))
+					// 'value'  => ($escape === FALSE ? $v2 : $this->escape($v2))
+					'value'=>(is_array($v2) ? $v2[0] : ($escape === FALSE ? $v2 : $this->escape($v2)))
 				);
 			}
 

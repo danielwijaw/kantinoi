@@ -315,25 +315,86 @@
         });
     }
     function holdingpayment(){
-        $('#view_transaction_now').html('LOADING ........');
-        $.ajax({
-        url: '<?php echo base_url('/kasirtr/holdingpayment?id='.$nomor_transaksi_penjualan) ?>',
-        success: function(data) {
-            console.log(data);
-            window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest.responseText); 
-            if (XMLHttpRequest.status == 0) {
-            alert(' Check Your Network.');
-            } else if (XMLHttpRequest.status == 404) {
-            alert('Requested URL not found.');
-            } else if (XMLHttpRequest.status == 500) {
-            alert('Internel Server Error.');
-            }  else {
-            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
-            }     
+        if(confirm("Anda Yakin Akan HOLD Transaksi Saat Ini ?")){
+            $('#view_transaction_now').html('LOADING ........');
+            $.ajax({
+                url: '<?php echo base_url('/kasirtr/holdingpayment?id='.$nomor_transaksi_penjualan) ?>',
+                success: function(data) {
+                    console.log(data);
+                    window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseText); 
+                    if (XMLHttpRequest.status == 0) {
+                    alert(' Check Your Network.');
+                    } else if (XMLHttpRequest.status == 404) {
+                    alert('Requested URL not found.');
+                    } else if (XMLHttpRequest.status == 500) {
+                    alert('Internel Server Error.');
+                    }  else {
+                    alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                    }     
+                }
+            });
         }
-        });
+        else{
+            return false;
+        }
+    }
+    function deleteditemkasir(id, nama_barang, id_barang, created_at, jumlah_barang){
+        if(confirm("Anda Yakin Akan Menghapus "+nama_barang+" Dari Transaksi ?")){
+            $('#view_transaction_now').html('LOADING ........');
+            $.ajax({
+                url: '<?php echo base_url('/kasirtr/deleteditemkasir') ?>',
+                type: "GET",
+                data: {'id':id, 'nama_barang':nama_barang, 'id_barang':id_barang, 'created_at':created_at, 'jumlah_barang':jumlah_barang},
+                success: function(data) {
+                    console.log(data);
+                    window.location.reload(true);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseText); 
+                    if (XMLHttpRequest.status == 0) {
+                    alert(' Check Your Network.');
+                    } else if (XMLHttpRequest.status == 404) {
+                    alert('Requested URL not found.');
+                    } else if (XMLHttpRequest.status == 500) {
+                    alert('Internel Server Error.');
+                    }  else {
+                    alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                    }     
+                }
+            });
+        }
+        else{
+            return false;
+        }
+    }
+    function deletedtransaction(id){
+        if(confirm("Anda Yakin Akan Menghapus/Membatalkan Transaksi #"+id+" ?")){
+            $('#view_transaction_now').html('LOADING ........');
+            $.ajax({
+                url: '<?php echo base_url('/kasirtr/deletedtransaction?id=') ?>'+id,
+                success: function(data) {
+                    console.log(data);
+                    window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.responseText); 
+                    if (XMLHttpRequest.status == 0) {
+                    alert(' Check Your Network.');
+                    } else if (XMLHttpRequest.status == 404) {
+                    alert('Requested URL not found.');
+                    } else if (XMLHttpRequest.status == 500) {
+                    alert('Internel Server Error.');
+                    }  else {
+                    alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                    }     
+                }
+            });
+        }
+        else{
+            return false;
+        }
     }
 </script>
