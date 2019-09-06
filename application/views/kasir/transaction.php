@@ -28,3 +28,34 @@
     </tr>
     <?php } ?>
 </table>
+
+<div id="paymenttransaction" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pembayaran Transaksi Penjualan #<?php echo $_GET['number_transaction'] ?></h4>
+      </div>
+      <div class="modal-body">
+        <label>Metode Pembayaran</label>
+        <select name="methodpayment" id="methodpayment" class="form-control">
+            <option value="tunai">Tunai</option>
+            <option value="hutang">Hutang</option>
+        </select><br/>
+        <label>Total Belanja</label>
+        <input type="text" name="totalmoney" class="form-control" required=required><br/>
+        <label>Jumlah Uang Diterima</label>
+        <input type="text" name="getmoney" class="form-control"><br/>
+        <label>Kembalian</label>
+        <input type="text" name="backmoney" class="form-control">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Bayar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

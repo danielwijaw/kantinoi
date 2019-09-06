@@ -22,7 +22,7 @@
         <td><?php echo $value['alamat'] ?>, Desa/Kel. <?php echo $value['nama_kelurahan'] ?>, Kec. <?php echo $value['nama_kecamatan'] ?>, Kab. <?php echo $value['nama_kabupaten'] ?>, Prov. <?php echo $value['nama_provinsi'] ?></td>
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Data Suplier?')" href="<?php echo base_url('/mastertr/hapusdatasuplier?id='.$value['reg_supplier']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatesuplier<?php echo $value['reg_supplier'] ?>"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatesuplier<?php echo $value['reg_supplier'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
         </td>
     </tr>
     <?php } ?>

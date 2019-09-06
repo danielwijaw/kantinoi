@@ -5,13 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title class="titlealert"><?php echo $this->session->set_name_aps['setting_val']; ?></title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/skins/skin-blue.min.css">
-  <link rel="stylesheet" href="<?php echo base_url('assets/') ?>/dist/css/skins/select2.min.css">
-  <script src="<?php echo base_url('assets/') ?>/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo base_url('assets/') ?>/bower_components/jquery/dist/select2.full.min.js"></script>
+  <link rel="stylesheet" href="/style1.min.css">
+  <link rel="stylesheet" href="/icon1.min.css">
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="/dist/css/skins/select2.min.css">
+  <script src="/jquery/dist/jquery.min.js"></script>
+  <script src="/jquery/dist/select2.full.min.js"></script>
   <style>
     .dropdown-submenu {
       position: relative;
@@ -128,14 +128,14 @@
               <!-- Menu Toggle Button -->
               <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img src="<?php echo base_url('assets/') ?>/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs"><?php echo $this->session->userdata('nama') ?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                  <img src="<?php echo base_url('assets/') ?>/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                   <p><?php echo $this->session->userdata('nama') ?></p>
                 </li>
                 <!-- Menu Footer-->

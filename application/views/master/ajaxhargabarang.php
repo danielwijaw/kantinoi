@@ -20,7 +20,7 @@
         <td><?php echo $value['hargabarang_retail'] ?></td>
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Harga Barang?')" href="<?php echo base_url('/mastertr/hapusdatahargabarang?id='.$value['reg_hargabarang']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
         </td>
     </tr>
     <?php } ?>

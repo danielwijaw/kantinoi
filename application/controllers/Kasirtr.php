@@ -8,6 +8,7 @@ class Kasirtr extends CI_Controller {
 			parent::__construct();
 			$this->load->helper('dnl');
             $this->load->model('mastermodel');
+            $this->load->library('dnllibrary');
             if(null == $this->session->userdata('nip')){
             	redirect('/login/index/');
             	die();
@@ -17,7 +18,6 @@ class Kasirtr extends CI_Controller {
     public function insert()
     {
         error_reporting(0);
-        // die();
         if(isset($_POST)){
             $this->load->model('transaksi');
             $getbarang = $this->transaksi->getbarang($_POST['nomor_transaksi_penjualan'], $_POST['kode_barang']);
@@ -32,14 +32,18 @@ class Kasirtr extends CI_Controller {
                     'jumlah_barang'                 => ((int) escapeString($_POST['jumlah_barang']) + $getbarang['jumlah_barang'] ),
                     'created_at'                    => date('Y-m-d H:i:s')
                 );
-                $this->db->where('id_tr_penjualan', $getbarang['id_tr_penjualan']);
-                $this->db->update('tr_penjualan', $datains);
+                $url = base_url()."kasirasynch/insert_not_empty_getbarang_update_tr_penjualan";
+                $param = array(
+                    'getbarang' => $getbarang,
+                    'datains'   => $datains
+                );
+                $this->dnllibrary->do_in_background($url, $param);
 
-                $this->db->where('nomor_tr', $_POST['nomor_transaksi_penjualan']);
-                $this->db->where('reg_stokbarang', $_POST['kode_barang']);
-                $this->db->set('stok_perbarui', 'stok_perbarui-'.escapeString($_POST['jumlah_barang']), FALSE);
-                $this->db->set('created_at', date('Y-m-d H:i:s'));
-                $this->db->update('tr_stokbarang');
+                $url1 = base_url()."kasirasynch/insert_not_empty_getbarang_update_tr_stokbarang";
+                $param1 = array(
+                    'post' => $_POST
+                );
+                $this->dnllibrary->do_in_background($url1, $param1);
             }else{
                 $datains = array(
                     'nomor_tr_penjualan'            => escapeString($_POST['nomor_transaksi_penjualan']),
@@ -53,21 +57,34 @@ class Kasirtr extends CI_Controller {
                     'id_pelanggan' 	                => escapeString($_POST['pelanggan_kasir']),
                     'harga_fix' 	                => $hargafix,
                 );
-                $this->db->insert('tr_penjualan', $datains);
+                $url = base_url()."kasirasynch/insert_empty_tr_penjualan";
+                $param = array(
+                    'datains' => $datains
+                );
+                $this->dnllibrary->do_in_background($url, $param);
+
                 $datastok = array(
                     'nomor_tr'                      => escapeString($_POST['nomor_transaksi_penjualan']),
                     'reg_stokbarang'                => escapeString($_POST['kode_barang']),
                     'stok_awal'                     => escapeString($_POST['jumlah_barang_stok']),
                     'stok_perbarui'                 => ((int) escapeString($_POST['jumlah_barang_stok']) - escapeString($_POST['jumlah_barang']) )
                 );
-                $this->db->insert('tr_stokbarang', $datastok);
+                $url1 = base_url()."kasirasynch/insert_empty_tr_stokbarang";
+                $param1 = array(
+                    'datastok' => $datastok
+                );
+                $this->dnllibrary->do_in_background($url1, $param1);
             }
             $dataupdate = array(
                 'jumlahbarang'                  => ((int) escapeString($_POST['jumlah_barang_stok']) - escapeString($_POST['jumlah_barang']) ),
                 'updated_at'                    => date('Y-m-d H:i:s')
             );
-            $this->db->where('reg_stokbarang', $_POST['kode_barang']);
-            $this->db->update('tm_stokbarang', $dataupdate);
+            $urlx = base_url()."kasirasynch/insert_update_stok_barang";
+            $paramx = array(
+                'dataupdate' => $dataupdate,
+                'post'       => $_POST
+            );
+            $this->dnllibrary->do_in_background($urlx, $paramx);
             echo "Berhasil";
         }
     }

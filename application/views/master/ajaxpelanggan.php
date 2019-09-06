@@ -16,7 +16,7 @@
         <td><?php echo $value['pelanggan'] ?></td>
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Data Pelanggan?')" href="<?php echo base_url('/mastertr/hapusdatapelanggan?id='.$value['reg_pelanggan']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatepelanggan<?php echo $value['reg_pelanggan'] ?>"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatepelanggan<?php echo $value['reg_pelanggan'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
         </td>
     </tr>
     <?php } ?>

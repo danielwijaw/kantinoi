@@ -16,7 +16,7 @@
 </div>
 <!-- ./wrapper -->
 
-<script src="<?php echo base_url('assets/') ?>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/js1.min.js"></script>
 <script>
     $(".menunya").click(function() {
         $(".menunya").attr('class', 'menunya');

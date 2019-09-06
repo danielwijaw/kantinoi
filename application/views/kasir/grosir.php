@@ -40,7 +40,7 @@
                                         <button class="btn btn-sm btn-default" type="button">Pilih Transaksi</button>
                                         <button class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
                                         <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
-                                        <button class="btn btn-sm btn-danger" type="button">Pembayaran Transaksi</button>
+                                        <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
                                     </td>
                                 </tr>
                             </table>
@@ -75,6 +75,7 @@
     </div>
 </div>
 </form>
+
 <script language="JavaScript">
     var tanggallengkap = new String();
     var namahari = ("Minggu Senin Selasa Rabu Kamis Jumat Sabtu");

@@ -24,7 +24,7 @@
         <td><?php echo $value['jenisbarang'] ?></td>
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Stok Barang?')" href="<?php echo base_url('/mastertr/hapusdatastokbarang?id='.$value['reg_stokbarang']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatestokbarang<?php echo $value['reg_stokbarang'] ?>"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatestokbarang<?php echo $value['reg_stokbarang'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
         </td>
     </tr>
     <?php } ?>
