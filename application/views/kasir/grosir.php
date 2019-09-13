@@ -37,7 +37,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left">
-                                        <button class="btn btn-sm btn-default" type="button">Pilih Transaksi</button>
+                                        <button class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selecttransaction" onclick="viewholding()">Pilih Transaksi</button>
                                         <button class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
                                         <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
                                         <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
@@ -75,7 +75,22 @@
     </div>
 </div>
 </form>
+<div id="selecttransaction" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pilih Transaksi</h4>
+      </div>
+      <div class="modal-body">
+        <div id="transaction_here"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <script language="JavaScript">
     var tanggallengkap = new String();
     var namahari = ("Minggu Senin Selasa Rabu Kamis Jumat Sabtu");
@@ -294,6 +309,27 @@
             $("#pelanggan_kasir").select2('open');
         }
     }
+    function viewholding(){
+        $('#transaction_here').html('LOADING ........');
+        $.ajax({
+        url: '<?php echo base_url('/kasir/holding/') ?>',
+        success: function(data) {
+            $('#transaction_here').html(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
     function viewtransaction(){
         $('#view_transaction_now').html('LOADING ........');
         $.ajax({
@@ -397,5 +433,34 @@
         else{
             return false;
         }
+    }
+    function paymenttransaction(idtrans)
+    {
+        var paymentmethod = $("#methodpayment").val();
+        $.ajax({
+            url: '<?php echo base_url('/kasirtr/accepttransaction?id=') ?>'+idtrans+'&method='+paymentmethod,
+            success: function(data) {
+                var jsondata = JSON.parse(data);
+                console.log(jsondata.alert);
+                if(jsondata.alert){
+                    window.open(jsondata.url, '_blank');
+                    window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
+                }else{
+                    alert(jsondata.alert);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.responseText); 
+                if (XMLHttpRequest.status == 0) {
+                alert(' Check Your Network.');
+                } else if (XMLHttpRequest.status == 404) {
+                alert('Requested URL not found.');
+                } else if (XMLHttpRequest.status == 500) {
+                alert('Internel Server Error.');
+                }  else {
+                alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                }     
+            }
+        });
     }
 </script>

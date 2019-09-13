@@ -1,6 +1,7 @@
 RewriteEngine On
 RewriteRule ^icon1.min.css ./assets/bower_components/fontawesome/css/all.min.css
 RewriteRule ^webfonts/(.*)$ ./assets/bower_components/fontawesome/webfonts/$1
+RewriteRule ^bootstrap.min.css.map ./assets/bower_components/bootstrap/dist/css/bootstrap.min.css.map
 RewriteRule ^style1.min.css ./assets/bower_components/bootstrap/dist/css/bootstrap.min.css
 RewriteRule ^js1.min.js ./assets/bower_components/bootstrap/dist/js/bootstrap.min.js
 RewriteRule ^jquery/(.*)$ ./assets/bower_components/jquery/$1

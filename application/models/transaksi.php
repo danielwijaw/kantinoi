@@ -29,4 +29,11 @@ class transaksi extends CI_Model {
         return $dataecho;
     }
 
+    public function getholding()
+    {
+        $data = $this->db->query("select nomor_tr_penjualan from tr_penjualan where status_hold != '3' and status_muncul != '2' group by nomor_tr_penjualan");
+        $dataecho = $data->result_array();
+        return $dataecho;
+    }
+
 }

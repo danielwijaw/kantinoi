@@ -161,4 +161,29 @@ class Kasirtr extends CI_Controller {
             
         print_r($getbarang);
     }
+
+    public function accepttransaction()
+    {
+        if(isset($_GET['id'])){
+            $dataupdate = array(
+                'status_hold'       => '3',
+                'status_muncul'     => '2',
+                'deleted_at'        => date('Y-m-d H:i:s'),
+                'payment_method'    => $_GET['method']
+            );
+            $this->db->where('nomor_tr_penjualan', $_GET['id']);
+            $this->db->where('status_muncul', '1');
+            $this->db->update('tr_penjualan', $dataupdate);
+            $data = array(
+                'alert' => "Berhasil",
+                'url'   => base_url('/Kasir/printout/?number=').$_GET['id']
+            );
+            echo json_encode($data);
+        }else{
+            $data = array(
+                'alert' => "Tidak Bisa Mendapatkan ID"
+            );
+            echo json_encode($data);
+        }
+    }
 }

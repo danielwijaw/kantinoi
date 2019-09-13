@@ -4,7 +4,7 @@
     }
 </style>
 <div>
-    <?php if(isset($transaction[0])){ ?>
+    <?php error_reporting(0); if(isset($transaction[0])){ ?>
     <label>ID PELANGGAN = <?php echo $transaction[0]['id_pelanggan'] ?></label>
     <?php } ?>
 </div>
@@ -17,7 +17,9 @@
         <td width="15%">Jumlah</td>
         <td width="5%"><button type="button" class="btn btn-xs btn-danger" onclick="deletedtransaction('<?php echo $_GET['number_transaction'] ?>')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
-    <?php foreach($transaction as $key => $value){ ?>
+    <?php foreach($transaction as $key => $value){ 
+      $duit[] = $value['jumlah'];  
+    ?>
     <tr>
         <td style="text-align:center"><?php echo $value['no'] ?></td>
         <td><?php echo $value['nama_barang'] ?></td>
@@ -39,23 +41,62 @@
         <h4 class="modal-title">Pembayaran Transaksi Penjualan #<?php echo $_GET['number_transaction'] ?></h4>
       </div>
       <div class="modal-body">
-        <label>Metode Pembayaran</label>
+        <input type="hidden" name="methodpayment" id="methodpayment" value="tunai">
+        <!-- <label>Metode Pembayaran</label>
         <select name="methodpayment" id="methodpayment" class="form-control">
             <option value="tunai">Tunai</option>
             <option value="hutang">Hutang</option>
-        </select><br/>
+        </select><br/> -->
         <label>Total Belanja</label>
-        <input type="text" name="totalmoney" class="form-control" required=required><br/>
+        <input type="text" name="totalmoney" class="form-control" readonly=readonly value="<?php echo 'Rp. '.number_format(array_sum($duit)); ?>"><br/>
         <label>Jumlah Uang Diterima</label>
-        <input type="text" name="getmoney" class="form-control"><br/>
+        <input type="text" name="getmoney" id="rupiah" class="form-control"><br/>
         <label>Kembalian</label>
-        <input type="text" name="backmoney" class="form-control">
+        <input type="text" name="backmoney" id="backmoney" readonly=readonly class="form-control">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Bayar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="paymenttransaction('<?php echo $_GET['number_transaction'] ?>')">Bayar</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 
   </div>
 </div>
+
+<script type="text/javascript">
+		
+		var rupiah = document.getElementById('rupiah');
+		var backmoney = document.getElementById('backmoney');
+		rupiah.addEventListener('keyup', function(e){
+			rupiah.value = formatRupiah(this.value, 'Rp. ');
+      kembalian();
+      backmoney.value = formatRupiah(backmoney.value, 'Rp. ');
+		});
+
+		/* Fungsi formatRupiah */
+		function formatRupiah(angka, prefix){
+			var number_string = angka.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+		}
+    function kembalian()
+    {
+      var total = '<?php echo array_sum($duit) ?>';
+      var money = $('#rupiah').val();
+      var fixmoney = money.split('Rp. ');
+      var realfix = fixmoney[1].replace(".","");
+      var jujulan = realfix - total;
+      $("#backmoney").val(jujulan);
+    }
+	</script>

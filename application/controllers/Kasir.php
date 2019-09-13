@@ -46,4 +46,30 @@ class Kasir extends CI_Controller {
       );
       $this->load->view('/kasir/transaction', $data);
     }
+
+    public function holding()
+    {
+      $holding = $this->transaksi->getholding();
+      echo "<table class=\"table\" width=\"100%\">";
+      echo "<tr>
+              <td style=\"font-weight: bold\">Nomor Transaksi</td>
+              <td style=\"font-weight: bold;text-align:center\">Aksi</td>
+            </tr>";
+      foreach($holding as $key => $value){
+        echo "<tr>
+                <td width=\"95%\">".$value['nomor_tr_penjualan']."</td>
+                <td width=\"5%\" style=\"text-align:center\"><a href=\"".base_url('/kasir/grosir?tr=').$value['nomor_tr_penjualan']."\"><button class=\"btn btn-primary btn-sm\"><i class=\"fa fa-check\"></i></button></a></td>
+              </tr>";
+      }
+      echo "<tr>
+              <td>&nbsp;</td>
+              <td><a href=\"".base_url('/kasir/grosir')."\"><button class=\"btn btn-primary btn-sm\">Reset</button></a></td>
+            </tr>";
+      echo "</table>";
+    }
+
+    public function printout()
+    {
+      print_r($_GET);
+    }
 }
