@@ -1,7 +1,7 @@
 <?php
 class setting extends CI_Model {
 
-    public function getsetting()
+    public function getsession()
     {
         $data = $this->db->query("SELECT * FROM t_setting");
         $datax = $data->result_array();

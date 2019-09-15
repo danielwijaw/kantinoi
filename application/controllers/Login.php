@@ -42,11 +42,13 @@ class Login extends CI_Controller {
 	public function setsession()
 	{
 		$this->load->model('setting');
-		$data = $this->setting->getsetting();
+		$data = $this->setting->getsession();
 		$this->session->set_userdata($data);
-		foreach($data as $keyaps => $valueaps){
-			echo "<p>Membuat Pengaturan ".$keyaps." = ".$valueaps['setting_val']."<br/></p>";
-		}
+		// foreach($data as $keyaps => $valueaps){
+		// 	echo "<p>Membuat Pengaturan ".$keyaps." = ".$valueaps['setting_val']."<br/></p>";
+		// }
+		echo "SET NEW SESSION";
+		header('Refresh: 1; URL='.base_url('/'));
 	}
 
 	public function getsession()

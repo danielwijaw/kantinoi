@@ -92,8 +92,8 @@
                 <li class="dropdown-submenu">
                   <a href="javascript:void(0)">Report Transaksi</a>
                   <ul class="dropdown-menu">
-                    <li><a id="<?php echo "report-transaksi-kasirretail" ?>" href="<?php echo base_url("report/transaksikasirretail") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Retail</a></li>
-                    <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasirgrosir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Grosir</a></li>
+                    <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasirretail") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
+                    <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksistokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Stok Barang</a></li>
                   </ul>
                 </li>
               </ul>
@@ -102,14 +102,15 @@
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Utility <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a id="<?php echo "utility-hakakses" ?>" href="<?php echo base_url("utility/hakakses") ?>?" onclick="hyperlinkajax(event, this.id)">Hak Akses User</a></li>
-                <li><a id="<?php echo "utility-refreshsession" ?>" href="<?php echo base_url("utility/refreshsession") ?>?" onclick="hyperlinkajax(event, this.id)">Refresh Session</a></li>
+                <li><a href="<?php echo base_url("login/setsession") ?>?" >Refresh Session</a></li>
+                <li><a href="<?php echo base_url("backup/db") ?>" target="_blank">Backup Database</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Kasir <span class="caret"></span></a>
+              <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Transaksi <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a id="<?php echo "kasir-grosir" ?>" href="<?php echo base_url("kasir/grosir") ?>?" onclick="hyperlinkajax(event, this.id)">Kasir Grosir</a></li>
-                <li><a id="<?php echo "kasir-retail" ?>" href="<?php echo base_url("kasir/retail") ?>?" onclick="hyperlinkajax(event, this.id)">Kasir Retail</a></li>
+                <li><a id="<?php echo "kasir-grosir" ?>" href="<?php echo base_url("kasir/grosir") ?>?" onclick="hyperlinkajax(event, this.id)">Kasir Penjualan</a></li>
+                <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Stok Barang</a></li>
               </ul>
             </li>
           </ul>
