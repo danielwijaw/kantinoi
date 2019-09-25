@@ -12,7 +12,7 @@
 </div>
 
 <!-- Modal -->
-<div id="modalstokbarang" class="modal fade" role="dialog" style="overflow:hidden;">
+<div id="modalstokbarang" class="modal fade" role="dialog" style="overflow:true;">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -24,6 +24,8 @@
       <div class="modal-body">
         <form action="javascript:void(0)" method="POST" id="formdatastokbarang">
         <div class="col-md-12">
+            <label>ID Barang</label>
+            <input type="text" class="form-control" placeholder="Masukan ID Barang, Kosongkan Untuk Mendapat ID Secara Otomatis" name="reg_stokbarang" /><br/>
             <label>Nama Barang</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Barang" name="stokbarang" /><br/>
             <label>Jumlah Barang</label>
@@ -34,6 +36,8 @@
             <select class="select-supplier form-control" width="100%" name="reg_supplier" id="reg_supplier"></select><br/><br/>
             <label>Jenis Barang</label><br/>
             <select class="select-jbar form-control" width="100%" name="reg_jenisbarang" id="reg_jenisbarang"></select><br/><br/>
+            <label>Total Piutang</label>
+            <input type="text" class="form-control" placeholder="Masukan Jumlah Hutang (Kosongkan Apabila Tidak Ada Piutang) " name="piutang" /><br/>
         </div><br/>&nbsp;
       </div>
       </form>
@@ -145,11 +149,11 @@
       alert("Satuan Barang Wajib Diisi");
       return false;
     }
-    if($("input[name='reg_supplier']").val().length===0){
+    if($("select[name='reg_supplier']").val().length===0){
       alert("Nama Supplier Wajib Diisi");
       return false;
     }
-    if($("input[name='reg_jenisbarang']").val().length===0){
+    if($("select[name='reg_jenisbarang']").val().length===0){
       alert("Jenis Barang Wajib Diisi");
       return false;
     }

@@ -70,6 +70,13 @@ class Kasir extends CI_Controller {
 
     public function printout()
     {
-      print_r($_GET);
+      sleep(1);
+      if(isset($_GET['number'])){
+        $datax = $this->transaksi->getdatatransaction($_GET['number']);
+        $data = array(
+          'data' => $datax
+        );
+        $this->load->view('/kasir/printout', $data);
+      }
     }
 }

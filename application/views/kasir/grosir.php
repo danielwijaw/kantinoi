@@ -437,13 +437,16 @@
     function paymenttransaction(idtrans)
     {
         var paymentmethod = $("#methodpayment").val();
+        var rupiah      = $("#rupiah").val();
+        var totalmoney  = $("input[name='totalmoney']").val();
+        var backmoney   = $("input[name='backmoney']").val();
         $.ajax({
-            url: '<?php echo base_url('/kasirtr/accepttransaction?id=') ?>'+idtrans+'&method='+paymentmethod,
+            url: '<?php echo base_url('/kasirtr/accepttransaction?id=') ?>'+idtrans+'&method='+paymentmethod+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney,
             success: function(data) {
                 var jsondata = JSON.parse(data);
                 console.log(jsondata.alert);
                 if(jsondata.alert){
-                    window.open(jsondata.url, '_blank');
+                    window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
                     window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
                 }else{
                     alert(jsondata.alert);

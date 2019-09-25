@@ -3,7 +3,7 @@ class transaksi extends CI_Model {
 
     public function getnomorpenjualandaily()
     {
-        $data = $this->db->query("select coalesce((max(nomor_tr_penjualan)+1),1) as nomor_transaksi_penjualan from tr_penjualan where status_hold != '1' and status_muncul = '1' and created_at like '".date('Y-m-d')."%'");
+        $data = $this->db->query("select coalesce((max(nomor_tr_penjualan)+1),1) as nomor_transaksi_penjualan from tr_penjualan where status_hold != '1' and (status_muncul = '1' or status_hold = 3) and created_at like '".date('Y-m-d')."%'");
         $dataecho = $data->row_array();
         if(strlen($dataecho['nomor_transaksi_penjualan']) < 7 ){
             $datafix = array(
@@ -32,6 +32,13 @@ class transaksi extends CI_Model {
     public function getholding()
     {
         $data = $this->db->query("select nomor_tr_penjualan from tr_penjualan where status_hold != '3' and status_muncul != '2' group by nomor_tr_penjualan");
+        $dataecho = $data->result_array();
+        return $dataecho;
+    }
+
+    public function getdatatransaction($get)
+    {
+        $data = $this->db->query("select nomor_tr_penjualan, id_barang, nama_barang, jumlah_barang, harga_fix, satuan from tr_penjualan where nomor_tr_penjualan = '".$get."' and status_hold = '3'");
         $dataecho = $data->result_array();
         return $dataecho;
     }

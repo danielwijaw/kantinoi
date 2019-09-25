@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="/dist/css/skins/select2.min.css">
   <script src="/jquery/dist/jquery.min.js"></script>
   <script src="/jquery/dist/select2.full.min.js"></script>
+  <link rel="stylesheet" href="<?php echo base_url('/assets/bower_components/daterangepicker-master/daterangepicker.css') ?>">
+  <script src="<?php echo base_url('/assets/bower_components/daterangepicker-master/moment.min.js') ?>"></script>
+  <script src="<?php echo base_url('/assets/bower_components/daterangepicker-master/daterangepicker.js') ?>"></script>
   <style>
     .dropdown-submenu {
       position: relative;
@@ -67,6 +70,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
+            <?php if($this->session->userdata('nip')=='3301'){ ?>
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Master Data <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -80,7 +84,7 @@
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Report <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li class="dropdown-submenu">
+                <!-- <li class="dropdown-submenu">
                   <a href="javascript:void(0)">Report Master Data</a>
                   <ul class="dropdown-menu">
                     <li><a id="<?php echo "report-master-stokbarang" ?>" href="<?php echo base_url("report/masterstokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Master Stok Barang</a></li>
@@ -92,25 +96,32 @@
                 <li class="dropdown-submenu">
                   <a href="javascript:void(0)">Report Transaksi</a>
                   <ul class="dropdown-menu">
-                    <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasirretail") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
-                    <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksistokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Stok Barang</a></li>
+                    <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
+                    <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksipiutang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Piutang</a></li>
                   </ul>
-                </li>
+                </li> -->
+                <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
+                <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksipiutang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Piutang</a></li>
               </ul>
             </li>
+            <?php } ?>
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Utility <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a id="<?php echo "utility-hakakses" ?>" href="<?php echo base_url("utility/hakakses") ?>?" onclick="hyperlinkajax(event, this.id)">Hak Akses User</a></li>
+                <!-- <li><a id="<?php echo "utility-hakakses" ?>" href="<?php echo base_url("utility/hakakses") ?>?" onclick="hyperlinkajax(event, this.id)">Hak Akses User</a></li> -->
                 <li><a href="<?php echo base_url("login/setsession") ?>?" >Refresh Session</a></li>
+                <?php if($this->session->userdata('nip')=='3301'){ ?>
                 <li><a href="<?php echo base_url("backup/db") ?>" target="_blank">Backup Database</a></li>
+                <?php } ?>
               </ul>
             </li>
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Transaksi <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a id="<?php echo "kasir-grosir" ?>" href="<?php echo base_url("kasir/grosir") ?>?" onclick="hyperlinkajax(event, this.id)">Kasir Penjualan</a></li>
-                <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Stok Barang</a></li>
+                <?php if($this->session->userdata('nip')=='3301'){ ?>
+                <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang</a></li>
+                <?php } ?>
               </ul>
             </li>
           </ul>

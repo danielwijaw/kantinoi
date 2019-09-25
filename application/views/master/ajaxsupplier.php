@@ -1,3 +1,4 @@
+<?php error_reporting(0) ?>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -51,7 +52,11 @@
             <label>Alamat Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Alamat Supplier, Ex = 0822673893790" name="alamat_supplier_updated_<?php echo $value['reg_supplier'] ?>"  value="<?php echo $value['alamat'] ?>" /><br/>
             <label>Kelurahan, Kecamatan, Provinsi Supplier</label>
-            <select class="updatedatasupplieroi<?php echo $value['reg_supplier'] ?> form-control" width="100%" name="kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>" id="kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>"></select>
+            <select class="updatedatasupplieroi<?php echo $value['reg_supplier'] ?> form-control" width="100%" name="kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>" id="kelurahan_supplier_updated_<?php echo $value['reg_supplier'] ?>">
+              <option selected="selected" value="<?php echo $value['id_kelurahan'] ?>">
+                Desa/Kel. <?php echo $value['nama_kelurahan'] ?>, Kec. <?php echo $value['nama_kecamatan'] ?>, Kab. <?php echo $value['nama_kabupaten'] ?>, Prov. <?php echo $value['nama_provinsi'] ?>
+              </option>
+            </select>
         </form>
         </div><br/>&nbsp;
       </div>

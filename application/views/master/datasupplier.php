@@ -33,7 +33,9 @@
             <label>Alamat Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Alamat Supplier, Ex = Gang Sanggar RT. 04 RW. 01" name="alamat_supplier" /><br/>
             <label>Kelurahan, Kecamatan, Provinsi Supplier</label>
-            <select class="js-data-example-ajax form-control" width="100%" name="kelurahan_supplier" id="kelurahan_supplier"></select>
+            <select class="js-data-example-ajax form-control" width="100%" name="kelurahan_supplier" id="kelurahan_supplier">
+              
+            </select>
         </div><br/>&nbsp;
       </div>
       </form>

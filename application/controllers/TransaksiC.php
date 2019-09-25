@@ -25,7 +25,7 @@ class TransaksiC extends CI_Controller {
 	{
 		if(!isset($_GET['cari'])){
 			$this->load->model('mastermodel');
-			$total = $this->mastermodel->getdatastokbarangcount('1');
+			$total = $this->mastermodel->getdatapiutangcount('1');
 			$row = ceil($total / 5);
 			$button = "<ul class='pagination'>";
 			for ($x = 0; $x < $row; $x++) {
@@ -44,12 +44,12 @@ class TransaksiC extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatastokbarang('1',$datapage,'5');
+			$data = $this->mastermodel->getdatapiutang('1',$datapage,'5');
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/transaksi/ajaxstokbarang', $data);
 		}else{
 			$this->load->model('mastermodel');
-			$total = $this->mastermodel->getdatastokbarangcountsearch('1',$_GET['cari']);
+			$total = $this->mastermodel->getdatapiutangcountsearch('1',$_GET['cari']);
 			$row = ceil($total / 5);
 			$button = "<ul class='pagination'>";
 			for ($x = 0; $x < $row; $x++) {
@@ -68,7 +68,7 @@ class TransaksiC extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatastokbarangsearch('1',$datapage,'5',$_GET['cari']);
+			$data = $this->mastermodel->getdatapiutangsearch('1',$datapage,'5',$_GET['cari']);
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/transaksi/ajaxstokbarang', $data);
 		}

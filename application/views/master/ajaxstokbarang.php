@@ -32,7 +32,7 @@
 </table>
 
 <?php foreach ($data as $key => $value) { ?>
-<div id="modalupdatestokbarang<?php echo $value['reg_stokbarang'] ?>" class="modal fade" role="dialog"  style="overflow:hidden;">
+<div id="modalupdatestokbarang<?php echo $value['reg_stokbarang'] ?>" class="modal fade" role="dialog" >
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -44,6 +44,8 @@
       <div class="modal-body">
       <div class="col-md-12">
         <form action="javascript:void(0)" method="POST" id="formupdate<?php echo $value['reg_stokbarang'] ?>">
+            <label>ID Barang</label>
+            <input type="text" class="form-control" placeholder="Masukan ID Barang " value="<?php echo $value['reg_stokbarang'] ?>" name="reg_stokbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Nama Barang</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Barang " value="<?php echo $value['stokbarang'] ?>" name="stokbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Jumlah Barang</label>
@@ -52,9 +54,15 @@
             <label>Satuan</label>
             <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " value="<?php echo $value['satuan'] ?>" name="satuan_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Supplier</label><br/>
-            <select class="select-supplierupdated form-control" width="100%" name="reg_supplier_updated_<?php echo $value['reg_stokbarang'] ?>" id="reg_supplier_updated_<?php echo $value['reg_stokbarang'] ?>"></select><br/><br/>
+            <select class="select-supplierupdated form-control" width="100%" name="reg_supplier_updated_<?php echo $value['reg_stokbarang'] ?>" id="reg_supplier_updated_<?php echo $value['reg_stokbarang'] ?>">
+              <option selected="selected" value="<?php echo $value['reg_supplier'] ?>"><?php echo $value['nama_supplier'] ?></option>
+            </select><br/><br/>
             <label>Jenis Barang</label><br/>
-            <select class="select-barangupdated form-control" width="100%" name="reg_jenisbarang_updated_<?php echo $value['reg_stokbarang'] ?>" id="reg_jenisbarang_updated_<?php echo $value['reg_stokbarang'] ?>"></select><br/><br/>
+            <select class="select-barangupdated form-control" width="100%" name="reg_jenisbarang_updated_<?php echo $value['reg_stokbarang'] ?>" id="reg_jenisbarang_updated_<?php echo $value['reg_stokbarang'] ?>">
+              <option selected="selected" value="<?php echo $value['reg_jenisbarang'] ?>"><?php echo $value['jenisbarang'] ?></option>
+            </select><br/><br/>
+            <label>Total Piutang</label>
+            <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " name="piutang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
         </form>
         </div><br/>&nbsp;
       </div>

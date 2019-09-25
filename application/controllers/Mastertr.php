@@ -113,15 +113,40 @@ class Mastertr extends CI_Controller {
     public function insertdatastokbarang()
     {
         if(isset($_POST)){
-            $data = array(
-                'stokbarang' => escapeString($_POST['stokbarang']),
-                'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
-                'satuan' 	=> escapeString($_POST['satuan']),
-                'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
-                'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang'])
-            );
+            $row = $this->db->query('SELECT (MAX(reg_stokbarang)+1) AS `maxid` FROM `tm_stokbarang`')->row();
+            if(is_null($row->maxid) or $row->maxid == ''){
+                $row->maxid = '1';
+            }
+            if(!isset($_POST['reg_stokbarang'])){
+                $data = array(
+                    'stokbarang' => escapeString($_POST['stokbarang']),
+                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
+                    'satuan' 	=> escapeString($_POST['satuan']),
+                    'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
+                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
+                    'reg_stokbarang'    => $row->maxid
+                );
+            }else{
+                $data = array(
+                    'reg_stokbarang' => escapeString($_POST['reg_stokbarang']),
+                    'stokbarang' => escapeString($_POST['stokbarang']),
+                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
+                    'satuan' 	=> escapeString($_POST['satuan']),
+                    'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
+                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
+                );
+            }
 
             $this->db->insert('tm_stokbarang', $data);
+
+            $datax = array(
+                'stok_awal'         => '0',
+                'stok_perbarui' 	=> escapeString($_POST['jumlahbarang']),
+                'reg_stokbarang' 	=> $row->maxid,
+                'piutang'           => escapeString($_POST['piutang'])
+            );
+
+            $this->db->insert('tr_stokbarang', $datax);
             echo "Berhasil";
         }
     }
@@ -130,6 +155,7 @@ class Mastertr extends CI_Controller {
     {
         if(isset($_POST)){
             $data = array(
+                    'reg_stokbarang' => escapeString($_POST['reg_stokbarang_updated_'.$_GET['id']]),
                     'stokbarang' 	=> escapeString($_POST['stokbarang_updated_'.$_GET['id']]),
                     'jumlahbarang' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
                     'satuan' 	=> escapeString($_POST['satuan_updated_'.$_GET['id']]),
@@ -144,7 +170,8 @@ class Mastertr extends CI_Controller {
             $datax = array(
                 'stok_awal'         => escapeString($_POST['jumlahbarangawal_updated_'.$_GET['id']]),
                 'stok_perbarui' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
-                'reg_stokbarang' 	=> $_GET['id']
+                'reg_stokbarang' 	=> $_GET['id'],
+                'piutang' 	        => escapeString($_POST['piutang_updated_'.$_GET['id']])
             );
 
             $this->db->insert('tr_stokbarang', $datax);
@@ -280,4 +307,24 @@ class Mastertr extends CI_Controller {
     }
 
     // END PELANGGAN
+    // START PIUTANG
+
+    public function updatepiutang()
+    {
+        if(isset($_POST)){
+            $row = $this->db->query('SELECT piutang-'.escapeString($_POST['piutang_deleted_'.$_GET['id']]).' AS `piutang`, piutang_clear FROM `tr_stokbarang` where `id_tr_stokbarang` = '.$_GET['id'].' ')->row();
+            $row->piutang_clear = json_decode($row->piutang_clear, true);
+            $row->piutang_clear[date('Y-m-d H:i:s')] = escapeString($_POST['piutang_deleted_'.$_GET['id']]);
+            // print_r($row);
+            // die();
+            $piutang_clear = json_encode($row->piutang_clear);
+            $data = array(
+                'piutang' 	=> $row->piutang,
+                'piutang_clear' => $piutang_clear
+            );
+            $this->db->where('id_tr_stokbarang', $_GET['id']);
+            $this->db->update('tr_stokbarang', $data);
+            echo "Berhasil";
+        }
+    }
 }

@@ -3,7 +3,7 @@ class dataletter extends CI_Model {
 
     public function getsokbarangbyid($id)
     {
-        $data = $this->db->query("SELECT a.reg_stokbarang, a.stokbarang, a.jumlahbarang, a.satuan, b.hargabarang_grosir, b.hargabarang_retail from tm_stokbarang as a left join tm_hargabarang as b on a.reg_stokbarang = b.reg_hargabarang where a.status_muncul = '1' and a.reg_stokbarang = '".$id."' limit 1 ");
+        $data = $this->db->query("SELECT a.reg_stokbarang, a.stokbarang, a.jumlahbarang, a.satuan, b.hargabarang_grosir, b.hargabarang_retail from tm_stokbarang as a left join tm_hargabarang as b on a.reg_stokbarang = b.reg_stokbarang where a.status_muncul = '1' and a.reg_stokbarang = '".$id."' limit 1 ");
         return $data->row_array();
     }
 

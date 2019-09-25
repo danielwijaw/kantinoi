@@ -109,6 +109,11 @@ class mastermodel extends CI_Model {
         foreach($query->result_array() as $key => $value){
             $datax[$value['reg_supplier']]['jumlahbarang'] = $value['jumlahbarang'];
         }
+        if(isset($datax)){
+            $datax = $datax;
+        }else{
+            $datax = 0;
+        }
         return $datax;
     }
 
@@ -172,7 +177,11 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
         return $result[0]['allcount'];
     }
     
@@ -227,7 +236,11 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
         return $result[0]['allcount'];
     }
     
@@ -239,6 +252,11 @@ class mastermodel extends CI_Model {
         $this->db->limit($rowperpage, $rowno);  
         $this->db->order_by('reg_hargabarang', 'DESC');
         $query = $this->db->get();
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
         return $query->result_array();
     }
     
@@ -315,6 +333,57 @@ class mastermodel extends CI_Model {
     }
 
     // END DATA PELANGGAN
+
+    // START DATA PIUTANG
+
+    public function getdatapiutangcount($validasi) {
+
+        $this->db->select('allcount');
+        $this->db->from('v_countpiutang');
+        $this->db->where('status_muncul =', $validasi);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapiutang($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('*');
+        $this->db->from('v_piutang');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->limit($rowperpage, $rowno);  
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatapiutangcountsearch($validasi, $cari) {
+        error_reporting(0);
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%')";
+        $this->db->select('allcount');
+        $this->db->from('v_countpiutang');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapiutangsearch($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%')";
+        $this->db->select('*');
+        $this->db->from('v_piutang');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA PIUTANG
 
 
 

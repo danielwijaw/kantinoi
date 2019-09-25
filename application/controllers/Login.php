@@ -42,8 +42,15 @@ class Login extends CI_Controller {
 	public function setsession()
 	{
 		$this->load->model('setting');
+		$this->load->model('dataletter');
 		$data = $this->setting->getsession();
 		$this->session->set_userdata($data);
+		$post = array(
+			'nip' => $this->session->userdata('nip'),
+			'password' => $this->session->userdata('password')
+		);
+		$data = $this->dataletter->getlogin($post);
+		$this->session->set_userdata($data[0]);
 		// foreach($data as $keyaps => $valueaps){
 		// 	echo "<p>Membuat Pengaturan ".$keyaps." = ".$valueaps['setting_val']."<br/></p>";
 		// }
