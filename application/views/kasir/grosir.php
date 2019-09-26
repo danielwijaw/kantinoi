@@ -41,6 +41,7 @@
                                         <button class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
                                         <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
                                         <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
+                                        <button class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selectbarang" style="margin-top:1vh" onclick="viewbarang()">Pilih Barang</button>
                                     </td>
                                 </tr>
                             </table>
@@ -91,6 +92,47 @@
 
   </div>
 </div>
+
+<div id="selectbarang" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pilih Barang</h4>
+      </div>
+      <div class="modal-body">
+        <div id="barang_here"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="modalcarikasir" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cari Stok Barang</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-9">
+            <input type="text" id="caribarangkasir" class="form-control" placeholder="Masukan Key Pencarian Stok Barang">
+        </div>
+        <div class="col-md-3"><button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="carikasirstok()">Cari</button></div>
+      </div>
+      <div class="modal-footer">
+        &nbsp;
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script language="JavaScript">
     var tanggallengkap = new String();
     var namahari = ("Minggu Senin Selasa Rabu Kamis Jumat Sabtu");
@@ -256,6 +298,11 @@
             }     
         }
         });
+    }
+    function selectbarang(id)
+    {
+        $("input[name='kode_barang']").val(id);
+        kodebarangenter();
     }
     function kodebarangenter(){
         var kodebarang = $("input[name='kode_barang']").val();
@@ -464,6 +511,50 @@
                 alert('Unknow Error.\n' + XMLHttpRequest.responseText);
                 }     
             }
+        });
+    }
+    function viewbarang(){
+        $('#barang_here').html('LOADING ........');
+        $.ajax({
+        url: '<?php echo base_url('/attribute/barangkasir/') ?>',
+        success: function(data) {
+            $('#barang_here').html(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
+    
+    function carikasirstok(){
+    var pencarian = $("#caribarangkasir").val();
+    $( "#barang_here" ).html( "LOADING....." );
+        $.ajax({
+        url: "<?php echo base_url('/attribute/barangkasir/?cari=') ?>"+pencarian,
+        success: function(data) {
+            $('#barang_here').html(data);        
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
         });
     }
 </script>
