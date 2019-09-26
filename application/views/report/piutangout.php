@@ -1,9 +1,14 @@
-<?php //print_r($result) ?>
+<?php error_reporting(0) ?>
 <head>
-    <title>PRINT OUT KASIR <?php echo $_GET['tanggal'] ?></title>
+    <title>PRINT OUT KASIR <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?></title>
     <link rel="stylesheet" href="/style1.min.css">
 </head>
-<body>
+<body <?php if($_GET['print']=='1'){ echo 'onload="window.print()"';} ?>>
+    <?php if($_GET['print']=='1'){ ?>
+    <h2 style="text-align:center">
+        Report Transaksi Piutang <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?>
+    </h2>
+    <?php } ?>
     <table class="table table-bordered" width="100%">
         <tr>
             <th>No</th>

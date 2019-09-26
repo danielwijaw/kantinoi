@@ -57,4 +57,10 @@
             }
         });
     }
+
+    function printkasir(){
+        var newWindow = window.open("","_blank");
+        var tanggal = $('input[name="datetransaksikasir"]').val();
+        newWindow.location.href = "<?php echo base_url('/report/transaksikasirout?date='); ?>"+tanggal+"&print=1";
+    }
 </script>

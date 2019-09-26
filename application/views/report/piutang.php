@@ -32,7 +32,7 @@
         }
     });
     function filterpiutang()
-    {
+    {   
         var tanggal = $('input[name="datetransaksipiutang"]').val();
         $.ajax({
             url: "<?php echo base_url('/report/transaksipiutangout?date='); ?>"+tanggal,
@@ -57,5 +57,11 @@
             }
         });
         
+    }
+
+    function printpiutang(){
+        var newWindow = window.open("","_blank");
+        var tanggal = $('input[name="datetransaksipiutang"]').val();
+        newWindow.location.href = "<?php echo base_url('/report/transaksipiutangout?date='); ?>"+tanggal+"&print=1";
     }
 </script>
