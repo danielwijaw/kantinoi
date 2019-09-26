@@ -31,6 +31,11 @@ class Report extends CI_Controller {
 		$_GET['tanggal'] = explode(" - ", $_GET['date']);
 		$tanggalawal 	= $_GET['tanggal'][0];
 		$tanggalakhir 	= $_GET['tanggal'][1];
+		if($_GET['admin']!='null'){
+			$admin = " AND created_by = '".$_GET['admin']."'";
+		}else{
+			$admin = "";
+		}
 		$query = $this->db->query("
 		SELECT
 			* 
@@ -41,6 +46,7 @@ class Report extends CI_Controller {
 			AND nomor_tr_penjualan != ''
 			AND SUBSTR( deleted_at, 1, 10 ) >= '".$tanggalawal."' 
 			AND SUBSTR( deleted_at, 1, 10 ) <= '".$tanggalakhir."'
+			".$admin."
 		ORDER BY nomor_tr_penjualan
 		");
 		$result = $query->result_array();

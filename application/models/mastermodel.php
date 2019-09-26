@@ -1,6 +1,12 @@
 <?php
 class mastermodel extends CI_Model {
 
+    public function getkasir($search)
+    {
+        $data = $this->db->query("select nip, nama, jabatan from tm_user where (nip like '%".$search."%' or nama like '%".$search."%' or jabatan like '%".$search."%') order by nip DESC limit 50");
+        return $data->result_array();
+    }
+
     public function getpelanggankasir($search)
     {
         $data = $this->db->query("select reg_pelanggan, pelanggan from tm_pelanggan where (reg_pelanggan like '%".$search."%' or pelanggan like '%".$search."%') order by reg_pelanggan DESC limit 50");

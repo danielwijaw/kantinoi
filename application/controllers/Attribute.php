@@ -157,4 +157,20 @@ class Attribute extends CI_Controller {
 		};
 		echo json_encode($list);
 	}
+
+	public function getkasir()
+	{
+		if(!isset($_GET['search'])){
+			$_GET['search'] = 'a';
+		}else{
+			$_GET['search'] = $_GET['search'];
+		}
+		$this->load->model('mastermodel');
+		$data = $this->mastermodel->getkasir($_GET['search']);
+		foreach($data as $key => $value){
+			$list[$key]['id'] = $value['nip'];
+			$list[$key]['text'] = $value['nama']." (".$value['jabatan'].")";
+		};
+		echo json_encode($list);
+	}
 }
