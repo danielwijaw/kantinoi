@@ -43,4 +43,21 @@ class transaksi extends CI_Model {
         return $dataecho;
     }
 
+    public function getpelanggan($id){
+        $data = $this->db->query("
+        SELECT
+            a.id_pelanggan AS reg_pelanggan,
+            b.pelanggan 
+        FROM
+            tr_penjualan a,
+            tm_pelanggan b 
+        WHERE
+            a.id_pelanggan = b.reg_pelanggan 
+            AND a.nomor_tr_penjualan = '".$id."'
+        ORDER BY a.id_pelanggan DESC
+        ");
+        $dataecho = $data->row_array();
+        return $dataecho;
+    }
+
 }

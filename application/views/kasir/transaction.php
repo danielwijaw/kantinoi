@@ -42,11 +42,6 @@
       </div>
       <div class="modal-body">
         <input type="hidden" name="methodpayment" id="methodpayment" value="tunai">
-        <!-- <label>Metode Pembayaran</label>
-        <select name="methodpayment" id="methodpayment" class="form-control">
-            <option value="tunai">Tunai</option>
-            <option value="hutang">Hutang</option>
-        </select><br/> -->
         <label>Total Belanja</label>
         <input type="text" name="totalmoney" class="form-control" readonly=readonly value="<?php echo 'Rp. '.number_format(array_sum($duit)); ?>"><br/>
         <label>Jumlah Uang Diterima</label>
@@ -80,6 +75,11 @@
 			sisa     		= split[0].length % 3,
 			rupiah     		= split[0].substr(0, sisa),
 			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+      if(angka.charAt(0)=='-'){
+        var olrait = "-";
+      }else{
+        var olrait = "";
+      }
 
 			// tambahkan titik jika yang di input sudah menjadi angka ribuan
 			if(ribuan){
@@ -88,7 +88,7 @@
 			}
 
 			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-			return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+			return prefix == undefined ? rupiah : (rupiah ? olrait+'Rp. ' + rupiah : '');
 		}
     function kembalian()
     {
@@ -96,7 +96,8 @@
       var money = $('#rupiah').val();
       var fixmoney = money.split('Rp. ');
       var realfix = fixmoney[1].replace(".","");
-      var jujulan = realfix - total;
+      var yakinfix = realfix.replace(".","");
+      var jujulan = yakinfix - total;
       $("#backmoney").val(jujulan);
     }
 	</script>

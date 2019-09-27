@@ -85,6 +85,16 @@ class Kasirtr extends CI_Controller {
                 'post'       => $_POST
             );
             $this->dnllibrary->do_in_background($urlx, $paramx);
+            if(isset($_POST['pelanggan_kasir'])){
+                $this->db->query("
+                UPDATE tr_penjualan 
+                SET harga_fix = harga_grosir,
+                id_pelanggan = '".escapeString($_POST['pelanggan_kasir'])."' 
+                WHERE
+                    nomor_tr_penjualan = '".escapeString($_POST['nomor_transaksi_penjualan'])."' 
+                    AND status_muncul = '1'
+                ");
+            };
             echo "Berhasil";
         }
     }

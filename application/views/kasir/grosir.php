@@ -1,3 +1,18 @@
+<style>
+    select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+
+    .select2-selection {
+        background: #eee;
+        box-shadow: none;
+    }
+
+    .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+        display: none;
+    }
+}
+</style>
 <form id="kasirpost" action="javascript:void(0)" method="POST">
 <div class="box box-primary">
     <div class="box-header with-border">
@@ -33,7 +48,11 @@
                                 <tr>
                                     <td>Pelanggan</td>
                                     <td>:</td>
-                                    <td><select class="js-data-pelanggan-ajax form-control" width="100%" name="pelanggan_kasir" id="pelanggan_kasir"></select></td>
+                                    <td><select <?php if(isset($_GET['text'])){ ?> readonly=readonly <?php } ?> class="js-data-pelanggan-ajax form-control" width="100%" name="pelanggan_kasir" id="pelanggan_kasir">
+                                    <?php if(isset($_GET['text'])){ ?>
+                                    <option selected="selected" value="<?php echo $_GET['val'] ?>"><?php echo $_GET['text'] ?></option>
+                                    <?php } ?>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left">
@@ -148,6 +167,7 @@
 	$("#tanggalnow").val(tanggallengkap);
 </script>
 <script>
+
     viewtransaction();
     $("input[name='kode_barang']").focus();
     $(document).on('keyup', function(e){
@@ -170,6 +190,9 @@
     });
     $("#pelanggan_kasir").on('select2:select', function (e) {
         $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
+        var selected_element = $(e.currentTarget);
+        var select_val = selected_element.val();
+        var select_text = selected_element.text();
     });
     $("#pelanggan_kasir").on('select2:close', function (e) {
         $("#btn-tambahbarang").focus();
@@ -194,12 +217,6 @@
             },
           }
     });
-    // $("#btn-tambahbarang").on('keyup', function (e) {
-    //     if (e.keyCode === 13) {
-    //         // ENTER
-    //         submitkasir();
-    //     }
-    // });
     function submitkasir()
     {
         // PROSES CARI ULANG KODE BARANG
@@ -242,11 +259,6 @@
                         // PROSES CHECKING DISKON ATAU TIDAK
                         console.log("PROSES CHECKING DISKON ATAU TIDAK");
                         $(".titlealert").html("PROSES CHECKING DISKON ATAU TIDAK........................");
-                        // if($("#pelanggan_kasir").val().length===0){
-                        //     $("input[name='diskon_harga']").val("");
-                        // }else{
-                        //     $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
-                        // }
                         var kasirpost = new FormData(document.getElementById("kasirpost"));
                         $.ajax({
                             url: "<?php echo base_url('/kasirtr/insert') ?>",
@@ -353,7 +365,13 @@
             return false;
         }else{
             alert("SISA STOK BARANG SAAT INI = "+( parseFloat($("input[name='jumlah_barang_stok']").val()) - parseFloat($("input[name='jumlah_barang']").val()) ));
-            $("#pelanggan_kasir").select2('open');
+            <?php if(!isset($_GET['text'])){ ?>
+                $("#pelanggan_kasir").select2('open');
+            <?php }else{ ?>
+                $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
+                $("#btn-tambahbarang").focus();
+            <?php } ?>
+            
         }
     }
     function viewholding(){

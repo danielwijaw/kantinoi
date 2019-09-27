@@ -27,6 +27,11 @@ class Kasir extends CI_Controller {
           'nomor_transaksi_penjualan' => $nomortr['nomor_transaksi_penjualan']
         );
       }
+
+      $nomorpl = $this->transaksi->getpelanggan($data['nomor_transaksi_penjualan']);
+      $_GET['val'] = $nomorpl['reg_pelanggan'];
+      $_GET['text'] = $nomorpl['pelanggan'];
+
       $_GET['data'] = $data;
       $_GET['asdx'] = 'kasir/grosir';
       doViews($_GET);
