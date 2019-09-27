@@ -231,7 +231,7 @@ class mastermodel extends CI_Model {
 
     public function getnamabarangid($id)
     {
-        $data = $this->db->query("select * from tm_hargabarang where reg_hargabarang = '".$id."' ");
+        $data = $this->db->query("select * from tm_hargabarang where reg_stokbarang = '".$id."' ");
         return $data->result_array();
     }
 
