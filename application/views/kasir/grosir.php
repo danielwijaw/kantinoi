@@ -87,6 +87,11 @@
                         </td>
                         <td width="2.5%">&nbsp;</td>
                     </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div><b>ESC</b> = Close Modal & Reset Pelanggan || <b>Ctrl + `</b> = Pilih Transaksi || <b>Ctrl + 1</b> = Pilih Pelanggan || <b>Ctrl + H</b> = Holding Transaksi || <b>Ctrl + F</b> = Pembayaran Transaksi || <b>Ctrl + B</b> = Pilih Barang || <b>Ctrl + I</b> = Input Kode Barang || <b>Ctrl + J</b> = Input Jumlah Barang || <b>Ctrl + R</b> = Reload Transaksi Kasir || <b>Ctrl + D</b> = Hapus Transaksi Kasir Keseluruhan || <b>Ctrl + P</b> = Print Nota Pembelian (Konfirmasi Pembayaran Lalu Ctrl + P)</div>
+                        </td>
+                    </tr>
                 </table>
                 <hr/>
                 <div id="view_transaction_now"></div>
@@ -166,56 +171,89 @@
     tanggallengkap = namahari[hari] + ", " +tanggal + " " + namabulan[bulan] + " " + tahun;
 	$("#tanggalnow").val(tanggallengkap);
 </script>
-<script>
-
+<script>  
     viewtransaction();
+    viewholding();
     $("input[name='kode_barang']").focus();
+    jQuery(document).keydown(function(event) {
+            if (event.keyCode === 27){
+                // ESC
+                $("#pelanggan_kasir").val('').change();
+                $('.modal').modal('hide');
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 49) {
+                // Ctrl + 1
+                // Select Pelanggan
+                $("#pelanggan_kasir").select2('open');
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 192) {
+                // Ctrl + `
+                // Pilih Transaksi Hold
+                $("#btn-pilih-transaksi-kasir").focus();
+                $("#btn-pilih-transaksi-kasir").click();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 72) {
+                // Ctrl + h
+                // Hold Transaksi
+                $("#btn-hold-payment-kasir").focus();
+                $("#btn-hold-payment-kasir").click();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 70) {
+                // Ctrl + F
+                // Pembayaran Transaksi
+                $("#btn-payment-transaction-kasir").focus();
+                $("#btn-payment-transaction-kasir").click();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 66) {
+                // Ctrl + B
+                // Pilih Barang
+                $("#btn-pilih-barang-kasir").focus();
+                $("#btn-pilih-barang-kasir").click();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 73) {
+                // Ctrl + I
+                // Kode Barang
+                $("input[name='kode_barang']").focus();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 74) {
+                // Ctrl + J
+                // Jumlah Barang
+                $("input[name='jumlah_barang']").focus();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 82) {
+                // Ctrl + R
+                // Reset
+                $("#reset_kasir").click();
+                event.preventDefault();
+                return false;
+            }
+            if((event.ctrlKey || event.metaKey) && event.which == 68) {
+                // Ctrl + D
+                // Delete
+                $("#btn-delete-transaction").click();
+                event.preventDefault();
+                return false;
+            }
+        }
+    );
     $(document).on('keyup', function(e){
-        // alert(e.keyCode);
-        if (e.keyCode === 27){
-            // ESC
-            $("#pelanggan_kasir").val('').change();
-            $('.modal').modal('hide');
-        }
-        if (e.keyCode === 112){
-            // F1
-            // Select Pelanggan
-            $("#pelanggan_kasir").select2('open');
-        }
-        if (e.keyCode === 113){
-            // F2
-            // Pilih Transaksi
-            $("#btn-pilih-transaksi-kasir").focus();
-            $("#btn-pilih-transaksi-kasir").click();
-        }
-        if (e.keyCode === 115){
-            // F4
-            // Hold Transaksi
-            $("#btn-hold-payment-kasir").focus();
-            $("#btn-hold-payment-kasir").click();
-        }
-        if (e.keyCode === 119){
-            // F8
-            // Pembayaran Transaksi
-            $("#btn-payment-transaction-kasir").focus();
-            $("#btn-payment-transaction-kasir").click();
-        }
-        if (e.keyCode === 120){
-            // F9
-            // Pilih Barang
-            $("#btn-pilih-barang-kasir").focus();
-            $("#btn-pilih-barang-kasir").click();
-        }
-        if (e.keyCode === 33){
-            // Page Up
-            // Kode Barang
-            $("input[name='kode_barang']").focus();
-        }
-        if (e.keyCode === 34){
-            // Page Down
-            // Jumlah Barang
-            $("input[name='jumlah_barang']").focus();
-        }
+        console.log(e.keyCode);
     })
     $("input[name='kode_barang']").on('keyup', function (e) {
         if (e.keyCode === 13) {
@@ -409,6 +447,9 @@
             <?php if(!isset($_GET['text'])){ ?>
                 // $("#pelanggan_kasir").select2('open');
                 $("#btn-tambahbarang").focus();
+                if($("#pelanggan_kasir").val() != null){
+                    $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
+                }
             <?php }else{ ?>
                 $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
                 $("#btn-tambahbarang").focus();
@@ -553,8 +594,14 @@
                 var jsondata = JSON.parse(data);
                 console.log(jsondata.alert);
                 if(jsondata.alert){
-                    window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
-                    window.location.href = "<?php echo base_url('/kasir/grosir') ?>";
+                    jQuery(document).keydown(function(event) {
+                        if ((event.ctrlKey || event.metaKey) && event.keyCode === 80){
+                            window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
+                            event.preventDefault();
+                            return false;
+                        }
+                    });
+                    alert("Tekan Ctrl + P untuk Print Nota, Tekan Ctrl + R untuk Reload");
                 }else{
                     alert(jsondata.alert);
                 }

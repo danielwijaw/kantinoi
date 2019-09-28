@@ -15,7 +15,7 @@
         <td width="12.5%">Harga</td>
         <td width="7.5%">Qty</td>
         <td width="15%">Jumlah</td>
-        <td width="5%"><button type="button" class="btn btn-xs btn-danger" onclick="deletedtransaction('<?php echo $_GET['number_transaction'] ?>')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+        <td width="5%"><button type="button" id="btn-delete-transaction" class="btn btn-xs btn-danger" onclick="deletedtransaction('<?php echo $_GET['number_transaction'] ?>')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
     <?php foreach($transaction as $key => $value){ 
       $duit[] = $value['jumlah'];  
@@ -59,7 +59,9 @@
 </div>
 
 <script type="text/javascript">
-		
+    $('#paymenttransaction').on('shown.bs.modal', function () {
+        $('#rupiah').focus();
+    });
 		var rupiah = document.getElementById('rupiah');
 		var backmoney = document.getElementById('backmoney');
 		rupiah.addEventListener('keyup', function(e){

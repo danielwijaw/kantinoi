@@ -53,6 +53,7 @@ class transaksi extends CI_Model {
             tm_pelanggan b 
         WHERE
             a.id_pelanggan = b.reg_pelanggan 
+            AND a.status_muncul != '2'
             AND a.nomor_tr_penjualan = '".$id."'
         ORDER BY a.id_pelanggan DESC
         ");

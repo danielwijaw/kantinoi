@@ -68,7 +68,7 @@ class Kasir extends CI_Controller {
       }
       echo "<tr>
               <td>&nbsp;</td>
-              <td><a href=\"".base_url('/kasir/grosir')."\"><button class=\"btn btn-primary btn-sm\">Reset</button></a></td>
+              <td><a href=\"".base_url('/kasir/grosir')."\"><button id=\"reset_kasir\" class=\"btn btn-primary btn-sm\">Reset</button></a></td>
             </tr>";
       echo "</table>";
     }
