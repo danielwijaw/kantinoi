@@ -56,11 +56,11 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left">
-                                        <button class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selecttransaction" onclick="viewholding()">Pilih Transaksi</button>
-                                        <button class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
+                                        <button id="btn-pilih-transaksi-kasir" class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selecttransaction" onclick="viewholding()">Pilih Transaksi</button>
+                                        <button id="btn-hold-payment-kasir" class="btn btn-sm btn-warning" type="button" onclick="holdingpayment()">Hold Transaksi</button>
                                         <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
-                                        <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
-                                        <button class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selectbarang" style="margin-top:1vh" onclick="viewbarang()">Pilih Barang</button>
+                                        <button id="btn-payment-transaction-kasir" class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
+                                        <button id="btn-pilih-barang-kasir" class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selectbarang" style="margin-top:1vh" onclick="viewbarang()">Pilih Barang</button>
                                     </td>
                                 </tr>
                             </table>
@@ -171,9 +171,45 @@
     viewtransaction();
     $("input[name='kode_barang']").focus();
     $(document).on('keyup', function(e){
+        // alert(e.keyCode);
         if (e.keyCode === 27){
             // ESC
             $("#pelanggan_kasir").val('').change();
+            $('.modal').modal('hide');
+        }
+        if (e.keyCode === 112){
+            // F1
+            $("#pelanggan_kasir").select2('open');
+        }
+        if (e.keyCode === 113){
+            // F2
+            $("#btn-pilih-transaksi-kasir").focus();
+            $("#btn-pilih-transaksi-kasir").click();
+        }
+        if (e.keyCode === 115){
+            // F4
+            $("#btn-hold-payment-kasir").focus();
+            $("#btn-hold-payment-kasir").click();
+        }
+        if (e.keyCode === 119){
+            // F8
+            $("#btn-payment-transaction-kasir").focus();
+            $("#btn-payment-transaction-kasir").click();
+        }
+        if (e.keyCode === 120){
+            // F9
+            $("#btn-pilih-barang-kasir").focus();
+            $("#btn-pilih-barang-kasir").click();
+        }
+        if (e.keyCode === 33){
+            // Page Up
+            // Kode Barang
+            $("input[name='kode_barang']").focus();
+        }
+        if (e.keyCode === 34){
+            // Page Down
+            // Jumlah Barang
+            $("input[name='jumlah_barang']").focus();
         }
     })
     $("input[name='kode_barang']").on('keyup', function (e) {
@@ -198,7 +234,7 @@
         $("#btn-tambahbarang").focus();
     });
     $('.js-data-pelanggan-ajax').select2({
-           minimumInputLength: 1,
+           minimumInputLength: 0,
            allowClear: true,
            placeholder: 'Masukan Nama Pelanggan atau Kode Pelanggan',
            ajax: {
@@ -366,7 +402,8 @@
         }else{
             alert("SISA STOK BARANG SAAT INI = "+( parseFloat($("input[name='jumlah_barang_stok']").val()) - parseFloat($("input[name='jumlah_barang']").val()) ));
             <?php if(!isset($_GET['text'])){ ?>
-                $("#pelanggan_kasir").select2('open');
+                // $("#pelanggan_kasir").select2('open');
+                $("#btn-tambahbarang").focus();
             <?php }else{ ?>
                 $("input[name='diskon_harga']").val($("input[name='harga_barang_grosir']").val());
                 $("#btn-tambahbarang").focus();
