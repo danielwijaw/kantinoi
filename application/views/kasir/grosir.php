@@ -179,25 +179,30 @@
         }
         if (e.keyCode === 112){
             // F1
+            // Select Pelanggan
             $("#pelanggan_kasir").select2('open');
         }
         if (e.keyCode === 113){
             // F2
+            // Pilih Transaksi
             $("#btn-pilih-transaksi-kasir").focus();
             $("#btn-pilih-transaksi-kasir").click();
         }
         if (e.keyCode === 115){
             // F4
+            // Hold Transaksi
             $("#btn-hold-payment-kasir").focus();
             $("#btn-hold-payment-kasir").click();
         }
         if (e.keyCode === 119){
             // F8
+            // Pembayaran Transaksi
             $("#btn-payment-transaction-kasir").focus();
             $("#btn-payment-transaction-kasir").click();
         }
         if (e.keyCode === 120){
             // F9
+            // Pilih Barang
             $("#btn-pilih-barang-kasir").focus();
             $("#btn-pilih-barang-kasir").click();
         }
