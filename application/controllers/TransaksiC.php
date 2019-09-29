@@ -31,7 +31,7 @@ class TransaksiC extends CI_Controller {
 			for ($x = 0; $x < $row; $x++) {
 				$xz = $x + 1;
 				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/masterajax/stokbarang?page='.$xxz)."`, `masterstokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
+				$button .= "<li><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarang?page='.$xxz)."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){
@@ -55,7 +55,7 @@ class TransaksiC extends CI_Controller {
 			for ($x = 0; $x < $row; $x++) {
 				$xz = $x + 1;
 				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/masterajax/stokbarang?page='.$xxz.'&cari='.$_GET['cari'])."`, `masterstokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
+				$button .= "<li><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarang?page='.$xxz.'&cari='.$_GET['cari'])."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){

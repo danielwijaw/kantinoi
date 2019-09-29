@@ -154,28 +154,54 @@ class Mastertr extends CI_Controller {
     public function updatedatastokbarang()
     {
         if(isset($_POST)){
-            $data = array(
-                    'reg_stokbarang' => escapeString($_POST['reg_stokbarang_updated_'.$_GET['id']]),
-                    'stokbarang' 	=> escapeString($_POST['stokbarang_updated_'.$_GET['id']]),
-                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
-                    'satuan' 	=> escapeString($_POST['satuan_updated_'.$_GET['id']]),
-                    'reg_supplier' 	=> escapeString($_POST['reg_supplier_updated_'.$_GET['id']]),
-                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang_updated_'.$_GET['id']]),
+            if($_GET['status']=='update'){
+                $data = array(
+                        'reg_stokbarang' => escapeString($_POST['reg_stokbarang_updated_'.$_GET['id']]),
+                        'stokbarang' 	=> escapeString($_POST['stokbarang_updated_'.$_GET['id']]),
+                        'jumlahbarang' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
+                        'satuan' 	=> escapeString($_POST['satuan_updated_'.$_GET['id']]),
+                        'reg_supplier' 	=> escapeString($_POST['reg_supplier_updated_'.$_GET['id']]),
+                        'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang_updated_'.$_GET['id']]),
+                        'status_muncul'     => '1',
+                        'updated_at'        => date('Y-m-d H:i:s')
+                );
+                $this->db->where('reg_stokbarang', $_GET['id']);
+                $this->db->update('tm_stokbarang', $data);
+                
+                $datax = array(
+                    'stok_awal'         => escapeString($_POST['jumlahbarangawal_updated_'.$_GET['id']]),
+                    'stok_perbarui' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
+                    'reg_stokbarang' 	=> $_GET['id'],
+                    'piutang' 	        => escapeString($_POST['piutang_updated_'.$_GET['id']])
+                );
+
+                $this->db->insert('tr_stokbarang', $datax);
+            }else{
+                $hargabarang = array(
+                    'tanggal' => date('Y-m-d H:i:s'),
+                    'jumlah_barang' => escapeString($_POST['jumlahbarangdatang_updated_'.$_GET['id']]),
+                    'harga_barang' => escapeString($_POST['hargabarangdatang_updated_'.$_GET['id']]),
+                    'ppn_barang' => escapeString($_POST['ppnbarangdatang_updated_'.$_GET['id']]),
+                    'diskon_barang' => escapeString($_POST['diskonbarangdatang_updated_'.$_GET['id']]),
+                );
+                $data = array(
+                    'jumlahbarang' 	    => escapeString($_POST['jumlahawaldatang_updated_'.$_GET['id']])+escapeString($_POST['jumlahbarangdatang_updated_'.$_GET['id']]),
                     'status_muncul'     => '1',
                     'updated_at'        => date('Y-m-d H:i:s')
-            );
-            $this->db->where('reg_stokbarang', $_GET['id']);
-            $this->db->update('tm_stokbarang', $data);
-            
-            $datax = array(
-                'stok_awal'         => escapeString($_POST['jumlahbarangawal_updated_'.$_GET['id']]),
-                'stok_perbarui' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
-                'reg_stokbarang' 	=> $_GET['id'],
-                'piutang' 	        => escapeString($_POST['piutang_updated_'.$_GET['id']])
-            );
+                );
+                $this->db->where('reg_stokbarang', $_GET['id']);
+                $this->db->update('tm_stokbarang', $data);
+                
+                $datax = array(
+                    'stok_awal'         => escapeString($_POST['jumlahawaldatang_updated_'.$_GET['id']]),
+                    'stok_perbarui' 	=> escapeString($_POST['jumlahawaldatang_updated_'.$_GET['id']])+escapeString($_POST['jumlahbarangdatang_updated_'.$_GET['id']]),
+                    'reg_stokbarang' 	=> $_GET['id'],
+                    'piutang' 	        => escapeString($_POST['piutangdatang_updated_'.$_GET['id']]),
+                    'harga_default'     => json_encode($hargabarang)
+                );
 
-            $this->db->insert('tr_stokbarang', $datax);
-
+                $this->db->insert('tr_stokbarang', $datax);
+            }
             echo "Berhasil";
         }
     }
