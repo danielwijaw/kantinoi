@@ -71,6 +71,10 @@ function updatetransaksidatastokbarang<?php echo $value['id_tr_stokbarang'] ?>()
       alert("Total Pembayaran Wajib Diisi");
       return false;
     }
+    if($("input[name='piutang_deleted_<?php echo $value['id_tr_stokbarang'] ?>']").val() > <?php echo $value['piutang'] ?>){
+      alert("Pembayaran Piutang Melebihi Nilai Piutang");
+      return false;
+    }
     var a = new FormData(document.getElementById("formtransaksiupdate<?php echo $value['id_tr_stokbarang'] ?>"));
       $.ajax({
         url: "<?php echo base_url('/mastertr/updatepiutang?id='.$value['id_tr_stokbarang']) ?>",

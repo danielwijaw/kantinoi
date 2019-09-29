@@ -2,7 +2,7 @@
     <div class="box-header with-border">
         <table width = "100%">
             <tr>
-                <td width="50%"><h3 class="box-title titlealert">Report Transaksi Piutang</h3></td>
+                <td width="50%"><h3 class="box-title titlealert">Report Transaksi Piutang & Harga Barang</h3></td>
                 <td width="24%">&nbsp;</td>
                 <td width="18%"><input type="text" name="datetransaksipiutang" id="datetransaksipiutang" class="form-control"></td>
                 <td width="8%">&nbsp;

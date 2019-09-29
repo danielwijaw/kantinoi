@@ -64,7 +64,7 @@
             </select><br/><br/>
             <div style="display:none">
               <label>Total Piutang</label>
-              <input type="text" class="form-control" name="piutang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+              <input type="text" class="form-control" name="piutang_updated_<?php echo $value['reg_stokbarang'] ?>" value="0" /><br/>
             </div>
         </form>
         </div><br/>&nbsp;

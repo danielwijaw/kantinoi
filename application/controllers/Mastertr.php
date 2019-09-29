@@ -121,7 +121,7 @@ class Mastertr extends CI_Controller {
                 $data = array(
                     'stokbarang' => escapeString($_POST['stokbarang']),
                     'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
-                    'satuan' 	=> escapeString($_POST['satuan']),
+                    'satuan' 	=> strtolower(escapeString($_POST['satuan'])),
                     'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
                     'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
                     'reg_stokbarang'    => $row->maxid
@@ -131,7 +131,7 @@ class Mastertr extends CI_Controller {
                     'reg_stokbarang' => escapeString($_POST['reg_stokbarang']),
                     'stokbarang' => escapeString($_POST['stokbarang']),
                     'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
-                    'satuan' 	=> escapeString($_POST['satuan']),
+                    'satuan' 	=> strtolower(escapeString($_POST['satuan'])),
                     'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
                     'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
                 );
@@ -139,11 +139,20 @@ class Mastertr extends CI_Controller {
 
             $this->db->insert('tm_stokbarang', $data);
 
+            $hargabarang = array(
+                'tanggal' => date('Y-m-d H:i:s'),
+                'jumlah_barang' => escapeString($_POST['jumlahbarang']),
+                'harga_barang' => escapeString($_POST['reg_hargabarang']),
+                'ppn_barang' => escapeString($_POST['reg_ppnbarang']),
+                'diskon_barang' => escapeString($_POST['reg_diskonbarang']),
+            );
+
             $datax = array(
                 'stok_awal'         => '0',
                 'stok_perbarui' 	=> escapeString($_POST['jumlahbarang']),
                 'reg_stokbarang' 	=> $row->maxid,
-                'piutang'           => escapeString($_POST['piutang'])
+                'piutang'           => escapeString($_POST['piutang']),
+                'harga_default'     => json_encode($hargabarang)
             );
 
             $this->db->insert('tr_stokbarang', $datax);
@@ -159,7 +168,7 @@ class Mastertr extends CI_Controller {
                         'reg_stokbarang' => escapeString($_POST['reg_stokbarang_updated_'.$_GET['id']]),
                         'stokbarang' 	=> escapeString($_POST['stokbarang_updated_'.$_GET['id']]),
                         'jumlahbarang' 	=> escapeString($_POST['jumlahbarang_updated_'.$_GET['id']]),
-                        'satuan' 	=> escapeString($_POST['satuan_updated_'.$_GET['id']]),
+                        'satuan' 	=> strtolower(escapeString($_POST['satuan_updated_'.$_GET['id']])),
                         'reg_supplier' 	=> escapeString($_POST['reg_supplier_updated_'.$_GET['id']]),
                         'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang_updated_'.$_GET['id']]),
                         'status_muncul'     => '1',

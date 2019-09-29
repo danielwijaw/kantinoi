@@ -36,8 +36,14 @@
             <select class="select-supplier form-control" width="100%" name="reg_supplier" id="reg_supplier"></select><br/><br/>
             <label>Jenis Barang</label><br/>
             <select class="select-jbar form-control" width="100%" name="reg_jenisbarang" id="reg_jenisbarang"></select><br/><br/>
+            <label>Total Harga Barang Datang</label>
+            <input type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="reg_hargabarang" /><br/>
+            <label>PPN Harga Barang Datang (%)</label>
+            <input type="text" class="form-control" placeholder="Masukan PPN Barang Datang" name="reg_ppnbarang" /><br/>
+            <label>Diskon Barang Datang (Rupiah)</label>
+            <input type="text" class="form-control" placeholder="Masukan Total Diskon Barang Datang" name="reg_diskonbarang" /><br/>
             <label>Total Piutang</label>
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Hutang (Kosongkan Apabila Tidak Ada Piutang) " name="piutang" /><br/>
+            <input type="text" class="form-control" placeholder="Masukan Jumlah Hutang" name="piutang" /><br/>
         </div><br/>&nbsp;
       </div>
       </form>
@@ -155,6 +161,22 @@
     }
     if($("select[name='reg_jenisbarang']").val().length===0){
       alert("Jenis Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='reg_hargabarang']").val().length===0){
+      alert("Total Harga Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='reg_ppnbarang']").val().length===0){
+      alert("PPN Barang Wajib Diisi");
+      return false;
+    }
+    if($("input[name='reg_diskonbarang']").val().length===0){
+      alert("Diskon Wajib Diisi");
+      return false;
+    }
+    if($("input[name='piutang']").val().length===0){
+      alert("Piutang Wajib Diisi");
       return false;
     }
     var a = new FormData(document.getElementById("formdatastokbarang"));

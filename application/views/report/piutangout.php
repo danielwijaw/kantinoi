@@ -1,34 +1,69 @@
 <?php error_reporting(0) ?>
 <head>
-    <title>PRINT OUT KASIR <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?></title>
+    <title>Report Transaksi Piutang & Harga Barang <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?></title>
     <link rel="stylesheet" href="/style1.min.css">
 </head>
 <body <?php if($_GET['print']=='1'){ echo 'onload="window.print()"';} ?>>
     <?php if($_GET['print']=='1'){ ?>
     <h2 style="text-align:center">
-        Report Transaksi Piutang <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?>
+        Report Transaksi Piutang & Harga Barang <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?>
     </h2>
     <?php } ?>
     <table class="table table-bordered" width="100%">
         <tr>
-            <th>No</th>
+            <th width="3%">No</th>
             <th>Nama Barang</th>
-            <th>Stok Awal</th>
-            <th>Stok Akhir</th>
-            <th>Piutang</th>
-            <th>Pembayaran</th>
-            <th>Tanggal Piutang</th>
-            <th>Tanggal Pembayaran</th>
+            <th width="8.5%">Stok Awal</th>
+            <th width="8.5%">Stok Akhir</th>
+            <th>Harga Barang</th>
+            <th width="7.5%">Piutang</th>
+            <th width="10.5%">Pembayaran</th>
+            <th width="14.5%">Tanggal Piutang</th>
+            <th width="14.5%">Tanggal Pembayaran</th>
         </tr>
         <?php foreach($result as $key => $value){ ?>
-        <?php $data = json_decode($value['piutang_clear']);
+        <?php 
+            $display = "";
+            $data = json_decode($value['piutang_clear']);
+            $harga = json_decode($value['harga_default'], true);
             //print_r($data);
+            if($value['piutang']=='0' and $value['piutang_clear']==''){
+                $data = array( $value['created_at'] => "<b>Lunas</b>" );
+            }
+            if($value['harga_default']==''){
+                $data = array( $value['created_at'] => "<b>Stok Opname</b>" );
+                $display = "display:none";
+            }
         ?>
         <tr>
             <td><?php echo $key+1 ?></td>
             <td><?php echo $value['stokbarang'] ?></td>
             <td><?php echo $value['stok_awal'] ?></td>
             <td><?php echo $value['stok_perbarui'] ?></td>
+            <td>
+                <table width="100%" style="<?php echo $display ?>">
+                    <tr>
+                        <td width="65%">Harga Barang</td>
+                        <td width="5%">:</td>
+                        <td width="35%"><?php print_r($harga['harga_barang']) ?></td>
+                    </tr>
+                    <tr>
+                        <td>Jumlah Barang</td>
+                        <td>:</td>
+                        <td><?php print_r($harga['jumlah_barang']) ?></td>
+                    </tr>
+                    <tr>
+                        <td>PPN</td>
+                        <td>:</td>
+                        <td><?php print_r($harga['ppn_barang']) ?></td>
+                    </tr>
+                    <tr>
+                        <td>Diskon</td>
+                        <td>:</td>
+                        <td><?php print_r($harga['diskon_barang']) ?></td>
+                    </tr>
+                </table>
+            </td>
             <td><?php echo $value['piutang'] ?></td>
             <td><?php foreach($data as $keyx => $valuex){ echo $valuex."<br/>"; } ?></td>
             <td><?php echo $value['created_at'] ?></td>
