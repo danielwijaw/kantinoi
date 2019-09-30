@@ -62,6 +62,6 @@
     function printpembelian(){
         var newWindow = window.open("","_blank");
         var tanggal = $('input[name="daterekappembelian"]').val();
-        newWindow.location.href = "<?php echo base_url('/report/transaksipiutangout?date='); ?>"+tanggal+"&print=1";
+        newWindow.location.href = "<?php echo base_url('/report/transaksipembelianout?date='); ?>"+tanggal+"&print=1";
     }
 </script>
