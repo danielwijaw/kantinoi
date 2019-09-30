@@ -28,8 +28,8 @@
             <td><?php echo $value['nomor_tr_penjualan'] ?></td>
             <td><?php echo $value['nama_barang'] ?></td>
             <td><?php echo $value['jumlah_barang'] ?> <?php echo $value['satuan'] ?></td>
-            <td><?php echo $value['harga_retail'] ?> || <?php echo $value['harga_grosir'] ?></td>
-            <td><?php echo $value['harga_fix'] ?></td>
+            <td><?php echo rupiah($value['harga_retail']) ?> <br/> <?php echo rupiah($value['harga_grosir']) ?></td>
+            <td><?php echo rupiah($value['harga_fix']) ?></td>
             <td><?php echo ($value['harga_fix']*$value['jumlah_barang']) ?></td>
             <td><?php echo $value['id_pelanggan'] ?></td>
             <td><?php echo $value['created_by'] ?></td>

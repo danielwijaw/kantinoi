@@ -26,6 +26,18 @@ class Report extends CI_Controller {
 		doViews($_GET);
 	}
 	
+	public function rekappembelian()
+	{
+		$_GET['asdx'] = 'report/rekappembelian';
+		doViews($_GET);
+	}
+	
+	public function stokopname()
+	{
+		$_GET['asdx'] = 'report/stokopname';
+		doViews($_GET);
+	}
+	
 	public function transaksikasirout()
 	{
 		$_GET['tanggal'] = explode(" - ", $_GET['date']);
@@ -72,12 +84,65 @@ class Report extends CI_Controller {
 			AND tm_stokbarang.reg_stokbarang = tr_stokbarang.reg_stokbarang
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) >= '".$tanggalawal."' 
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) <= '".$tanggalakhir."'
+			AND harga_default != ''
 		");
 		$result = $query->result_array();
 		$data = [
 			'result' => $result
 		];
 		$this->load->view('/report/piutangout', $data);
+	}
+
+	public function stokopnameout()
+	{
+		$_GET['tanggal'] = explode(" - ", $_GET['date']);
+		$tanggalawal 	= $_GET['tanggal'][0];
+		$tanggalakhir 	= $_GET['tanggal'][1];
+		$query = $this->db->query("
+		SELECT
+			tr_stokbarang.*,
+			tm_stokbarang.stokbarang
+		FROM
+			tr_stokbarang, tm_stokbarang 
+		WHERE
+			nomor_tr = '0' 
+			AND tm_stokbarang.reg_stokbarang = tr_stokbarang.reg_stokbarang
+			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) >= '".$tanggalawal."' 
+			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) <= '".$tanggalakhir."'
+			AND harga_default = ''
+		");
+		$result = $query->result_array();
+		$data = [
+			'result' => $result
+		];
+		$this->load->view('/report/stokopnameout', $data);
+	}
+	
+	public function transaksipembelianout()
+	{
+		$_GET['tanggal'] = explode(" - ", $_GET['date']);
+		$tanggalawal 	= $_GET['tanggal'][0];
+		$tanggalakhir 	= $_GET['tanggal'][1];
+		$query = $this->db->query("
+		SELECT
+			tr_stokbarang.*,
+			tm_stokbarang.stokbarang,
+			tm_supplier.nama_supplier
+		FROM
+			tr_stokbarang, tm_stokbarang, tm_supplier
+		WHERE
+			nomor_tr = '0' 
+			AND tm_stokbarang.reg_stokbarang = tr_stokbarang.reg_stokbarang
+			AND tm_stokbarang.reg_supplier = tm_supplier.reg_supplier
+			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) >= '".$tanggalawal."' 
+			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) <= '".$tanggalakhir."'
+			AND harga_default != ''
+		");
+		$result = $query->result_array();
+		$data = [
+			'result' => $result
+		];
+		$this->load->view('/report/pembelianout', $data);
 	}
 
 

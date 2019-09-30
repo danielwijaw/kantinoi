@@ -102,6 +102,8 @@
                 </li> -->
                 <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
                 <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksipiutang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Piutang & Harga Barang</a></li>
+                <li><a id="<?php echo "report-rekap-pembelian" ?>" href="<?php echo base_url("report/rekappembelian") ?>?" onclick="hyperlinkajax(event, this.id)">Report Rekap Pembelian</a></li>
+                <li><a id="<?php echo "report-stok-opname" ?>" href="<?php echo base_url("report/stokopname") ?>?" onclick="hyperlinkajax(event, this.id)">Report Stok Opname</a></li>
               </ul>
             </li>
             <?php } ?>
