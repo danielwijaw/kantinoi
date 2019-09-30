@@ -15,7 +15,7 @@
             <th>Nama Barang</th>
             <th width="8.5%">Stok Awal</th>
             <th width="8.5%">Stok Akhir</th>
-            <th width="7.5%">Piutang</th>
+            <th style="display:none" width="7.5%">Piutang</th>
             <th>Pembayaran</th>
             <th>Tanggal Piutang</th>
             <th>Tanggal Pembayaran</th>
@@ -39,7 +39,7 @@
             <td><?php echo $value['stokbarang'] ?></td>
             <td><?php echo $value['stok_awal'] ?></td>
             <td><?php echo $value['stok_perbarui'] ?></td>
-            <td><?php echo rupiah($value['piutang']) ?></td>
+            <td style="display:none"><?php echo rupiah($value['piutang']) ?></td>
             <td><?php foreach($data as $keyx => $valuex){ echo $valuex."<br/>"; } ?></td>
             <td><?php echo $value['created_at'] ?></td>
             <td><?php foreach($data as $keyx => $valuex){ echo $keyx."<br/>"; } ?></td>
