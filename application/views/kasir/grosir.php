@@ -71,17 +71,17 @@
                                 <tr>
                                     <td width="50%">Kode Barang / Barcode</td>
                                     <td width="5%">:</td>
-                                    <td width="45%"><input type="text" class="form-control clean" name="kode_barang"></td>
+                                    <td width="45%"><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="kode_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Jumlah</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control clean" name="jumlah_barang"></td>
+                                    <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="jumlah_barang"></td>
                                 </tr>
                                 <tr>
                                     <td>Diskon</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control clean" name="diskon_harga"></td>
+                                    <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="diskon_harga"></td>
                                 </tr>
                             </table>
                         </td>

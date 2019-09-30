@@ -46,12 +46,12 @@
       <div class="col-md-12">
         <form action="javascript:void(0)" method="POST" id="formupdate<?php echo $value['reg_stokbarang'] ?>">
             <label>ID Barang</label>
-            <input type="text" class="form-control" placeholder="Masukan ID Barang " value="<?php echo $value['reg_stokbarang'] ?>" name="reg_stokbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan ID Barang " value="<?php echo $value['reg_stokbarang'] ?>" name="reg_stokbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Nama Barang</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Barang " value="<?php echo $value['stokbarang'] ?>" name="stokbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Jumlah Barang</label>
             <input type="hidden" class="form-control" value="<?php echo $value['jumlahbarang'] ?>" name="jumlahbarangawal_updated_<?php echo $value['reg_stokbarang'] ?>" />
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Stok Barang " value="<?php echo $value['jumlahbarang'] ?>" name="jumlahbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Stok Barang " value="<?php echo $value['jumlahbarang'] ?>" name="jumlahbarang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Satuan Jual</label>
             <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " value="<?php echo $value['satuan'] ?>" name="satuan_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Supplier</label><br/>
@@ -94,15 +94,15 @@
             <label>Jumlah Barang Awal</label>
             <input type="text" class="form-control" name="jumlahawaldatang_updated_<?php echo $value['reg_stokbarang'] ?>" value="<?php echo $value['jumlahbarang'] ?>" readonly="readonly"/><br/>
             <label>Jumlah Barang Datang</label>
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Barang Datang" name="jumlahbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Barang Datang" name="jumlahbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Total Harga Barang Datang</label>
-            <input type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>PPN Harga Barang Datang (%)</label>
-            <input type="text" class="form-control" placeholder="Masukan PPN Barang Datang" name="ppnbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan PPN Barang Datang" name="ppnbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Diskon Barang Datang (Rupiah)</label>
-            <input type="text" class="form-control" placeholder="Masukan Total Diskon Barang Datang" name="diskonbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Total Diskon Barang Datang" name="diskonbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Total Piutang</label>
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Piutang " name="piutangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" />
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Piutang " name="piutangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" />
         </form>
         </div><br/>&nbsp;
       </div>

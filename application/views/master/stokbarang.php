@@ -25,11 +25,11 @@
         <form action="javascript:void(0)" method="POST" id="formdatastokbarang">
         <div class="col-md-12">
             <label>ID Barang</label>
-            <input type="text" class="form-control" placeholder="Masukan ID Barang, Kosongkan Untuk Mendapat ID Secara Otomatis" name="reg_stokbarang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan ID Barang, Kosongkan Untuk Mendapat ID Secara Otomatis" name="reg_stokbarang" /><br/>
             <label>Nama Barang</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Barang" name="stokbarang" /><br/>
             <label>Jumlah Barang</label>
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Stok Barang " name="jumlahbarang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Jumlah Stok Barang " name="jumlahbarang" /><br/>
             <label>Satuan</label>
             <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " name="satuan" /><br/>
             <label>Supplier</label><br/>
@@ -37,13 +37,13 @@
             <label>Jenis Barang</label><br/>
             <select class="select-jbar form-control" width="100%" name="reg_jenisbarang" id="reg_jenisbarang"></select><br/><br/>
             <label>Total Harga Barang Datang</label>
-            <input type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="reg_hargabarang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="reg_hargabarang" /><br/>
             <label>PPN Harga Barang Datang (%)</label>
-            <input type="text" class="form-control" placeholder="Masukan PPN Barang Datang" name="reg_ppnbarang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan PPN Barang Datang" name="reg_ppnbarang" /><br/>
             <label>Diskon Barang Datang (Rupiah)</label>
-            <input type="text" class="form-control" placeholder="Masukan Total Diskon Barang Datang" name="reg_diskonbarang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Total Diskon Barang Datang" name="reg_diskonbarang" /><br/>
             <label>Total Piutang</label>
-            <input type="text" class="form-control" placeholder="Masukan Jumlah Hutang" name="piutang" /><br/>
+            <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Jumlah Hutang" name="piutang" /><br/>
         </div><br/>&nbsp;
       </div>
       </form>

@@ -37,7 +37,7 @@
       <div class="col-md-12">
         <form action="javascript:void(0)" method="POST" id="formupdate<?php echo $value['reg_pelanggan'] ?>">
             <label>Nomor ID Pelanggan</label>
-            <input type="text" class="form-control" placeholder="Masukan Data Pelanggan " value="<?php echo $value['reg_pelanggan'] ?>" name="reg_pelanggan_updated_<?php echo $value['reg_pelanggan'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Data Pelanggan " value="<?php echo $value['reg_pelanggan'] ?>" name="reg_pelanggan_updated_<?php echo $value['reg_pelanggan'] ?>" /><br/>
             <label>Nama Pelanggan</label>
             <input type="text" class="form-control" placeholder="Masukan Data Pelanggan " value="<?php echo $value['pelanggan'] ?>" name="pelanggan_updated_<?php echo $value['reg_pelanggan'] ?>" /><br/>
         </form>

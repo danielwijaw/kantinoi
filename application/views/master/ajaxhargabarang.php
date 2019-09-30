@@ -44,10 +44,10 @@
             <input type="text" class="form-control" value="<?php echo $value['stokbarang'] ?>" readonly="readonly" /><br/>
             <label>Harga Barang Retail</label>
             <input type="hidden" value="<?php echo $value['hargabarang_retail'] ?>" name="hargabarang_awal_retail_updated_<?php echo $value['reg_hargabarang'] ?>" />
-            <input type="text" class="form-control" placeholder="Masukan Harga Barang " value="<?php echo $value['hargabarang_retail'] ?>" name="hargabarang_retail_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang " value="<?php echo $value['hargabarang_retail'] ?>" name="hargabarang_retail_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
             <label>Harga Barang Grosir</label>
             <input type="hidden" value="<?php echo $value['hargabarang_grosir'] ?>" name="hargabarang_awal_grosir_updated_<?php echo $value['reg_hargabarang'] ?>" />
-            <input type="text" class="form-control" placeholder="Masukan Harga Barang Grosir " value="<?php echo $value['hargabarang_grosir'] ?>" name="hargabarang_grosir_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang Grosir " value="<?php echo $value['hargabarang_grosir'] ?>" name="hargabarang_grosir_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
         </form>
         </div><br/>&nbsp;
       </div>

@@ -27,9 +27,9 @@
             <label>Nama Barang</label><br/>
             <select class="js-data-example-ajax form-control" width="100%" name="reg_stokbarang" id="reg_stokbarang"></select><br/><br/>
             <label>Harga Barang Grosir</label>
-            <input type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_grosir" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_grosir" /><br/>
             <label>Harga Barang Retail</label>
-            <input type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_retail" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_retail" /><br/>
         </div><br/>&nbsp;
       </div>
       </form>

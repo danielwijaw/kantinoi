@@ -29,7 +29,7 @@
             <label>Atas Nama Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Atas Nama Supplier, Ex = Susanto Wardoyo" name="atas_nama" /><br/>
             <label>Kontak Atas Nama Supplier</label>
-            <input type="text" class="form-control" placeholder="Masukan Kontak Atas Nama Supplier, Ex = 0822673893790" name="kontak_nama" /><br/>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Kontak Atas Nama Supplier, Ex = 0822673893790" name="kontak_nama" /><br/>
             <label>Alamat Supplier</label>
             <input type="text" class="form-control" placeholder="Masukan Alamat Supplier, Ex = Gang Sanggar RT. 04 RW. 01" name="alamat_supplier" /><br/>
             <label>Kelurahan, Kecamatan, Provinsi Supplier</label>
