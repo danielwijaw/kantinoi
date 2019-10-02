@@ -641,6 +641,7 @@
                 console.log(jsondata.alert);
                 if(jsondata.alert){
                     if (confirm('Print Nota Penjualan ?')) {
+                        $("#reset_kasir").click();
                         window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
                     } else {
                         $("#reset_kasir").click();
