@@ -191,6 +191,7 @@
 <script>  
     viewtransaction();
     viewholding();
+    cetaktransaksi();
     $("input[name='kode_barang']").focus();
     jQuery(document).keydown(function(event) {
             if (event.keyCode === 27){
@@ -270,7 +271,7 @@
             if ((event.ctrlKey || event.metaKey) && event.keyCode === 80){
                 // Ctrl + P
                 // SELECT PRINT
-                window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
+                $("#btn-cetak-transaksi").click();
                 event.preventDefault();
                 return false;
             }
