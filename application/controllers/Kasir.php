@@ -45,6 +45,7 @@ class Kasir extends CI_Controller {
 
     public function transaction()
     {
+      sleep(1);
       $transaction = $this->transaksi->getransactionnow($_GET['number_transaction']);
       $data = array(
         'transaction' => $transaction
@@ -73,12 +74,36 @@ class Kasir extends CI_Controller {
       echo "</table>";
     }
 
+    public function finished()
+    {
+      $holding = $this->transaksi->getfinished();
+      echo "<table class=\"table\" width=\"100%\">";
+      echo "<tr>
+              <td style=\"font-weight: bold\">Nomor Transaksi</td>
+              <td style=\"font-weight: bold;text-align:center\">Aksi</td>
+            </tr>";
+      foreach($holding as $key => $value){
+        echo "<tr>
+                <td width=\"95%\">".$value['nomor_tr_penjualan']."</td>
+                <td width=\"5%\" style=\"text-align:center\"><a target=\"_blank\" href=\"".base_url('/kasir/printout?number=').$value['nomor_tr_penjualan']."\"><button class=\"btn btn-primary btn-sm\"><i class=\"fa fa-check\"></i></button></a></td>
+              </tr>";
+      }
+      echo "</table>";
+    }
+
     public function printout()
     {
       sleep(1);
       if(isset($_GET['number'])){
         $datax = $this->transaksi->getdatatransaction($_GET['number']);
+        if(!isset($_GET['rupiah'])){
+          $_GET = json_decode($datax[0]['pembayaran_terakhir'], true);
+          $_GET['number'] = $_GET['id'];
+        }else{
+          $_GET = $_GET;
+        }
         $data = array(
+          '_GET' => $_GET,
           'data' => $datax
         );
         $this->load->view('/kasir/printout', $data);

@@ -36,9 +36,16 @@ class transaksi extends CI_Model {
         return $dataecho;
     }
 
+    public function getfinished()
+    {
+        $data = $this->db->query("select nomor_tr_penjualan from tr_penjualan where status_hold = '3' and status_muncul = '2' and payment_method = 'tunai' group by nomor_tr_penjualan order by nomor_tr_penjualan DESC");
+        $dataecho = $data->result_array();
+        return $dataecho;
+    }
+
     public function getdatatransaction($get)
     {
-        $data = $this->db->query("select nomor_tr_penjualan, id_barang, nama_barang, jumlah_barang, harga_fix, satuan from tr_penjualan where nomor_tr_penjualan = '".$get."' and status_hold = '3'");
+        $data = $this->db->query("select nomor_tr_penjualan, id_barang, nama_barang, jumlah_barang, harga_fix, satuan, pembayaran_terakhir from tr_penjualan where nomor_tr_penjualan = '".$get."' and status_hold = '3'");
         $dataecho = $data->result_array();
         return $dataecho;
     }
