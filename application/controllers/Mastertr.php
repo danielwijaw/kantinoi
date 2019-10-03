@@ -141,19 +141,39 @@ class Mastertr extends CI_Controller {
 
             $hargabarang = array(
                 'tanggal' => date('Y-m-d H:i:s'),
+				'nofak' => escapeString($_POST['nofak']),
                 'jumlah_barang' => escapeString($_POST['jumlahbarang']),
                 'harga_barang' => escapeString($_POST['reg_hargabarang']),
                 'ppn_barang' => escapeString($_POST['reg_ppnbarang']),
                 'diskon_barang' => escapeString($_POST['reg_diskonbarang']),
             );
-
-            $datax = array(
+			
+			
+			if($_POST['reg_stokbarang']==''){
+                $datax = array(
                 'stok_awal'         => '0',
                 'stok_perbarui' 	=> escapeString($_POST['jumlahbarang']),
                 'reg_stokbarang' 	=> $row->maxid,
                 'piutang'           => escapeString($_POST['piutang']),
                 'harga_default'     => json_encode($hargabarang)
-            );
+				);
+            }else{
+				$datax = array(
+                'stok_awal'         => '0',
+                'stok_perbarui' 	=> escapeString($_POST['jumlahbarang']),
+                'reg_stokbarang' 	=> escapeString($_POST['reg_stokbarang']),
+                'piutang'           => escapeString($_POST['piutang']),
+                'harga_default'     => json_encode($hargabarang)
+				);
+            }
+
+            //$datax = array(
+                //'stok_awal'         => '0',
+                //'stok_perbarui' 	=> escapeString($_POST['jumlahbarang']),
+                //'reg_stokbarang' 	=> $row->maxid,
+                //'piutang'           => escapeString($_POST['piutang']),
+                //'harga_default'     => json_encode($hargabarang)
+            //);
 
             $this->db->insert('tr_stokbarang', $datax);
             echo "Berhasil";
@@ -188,6 +208,7 @@ class Mastertr extends CI_Controller {
             }else{
                 $hargabarang = array(
                     'tanggal' => date('Y-m-d H:i:s'),
+					'nofak' => escapeString($_POST['nofak_updated_'.$_GET['id']]),
                     'jumlah_barang' => escapeString($_POST['jumlahbarangdatang_updated_'.$_GET['id']]),
                     'harga_barang' => escapeString($_POST['hargabarangdatang_updated_'.$_GET['id']]),
                     'ppn_barang' => escapeString($_POST['ppnbarangdatang_updated_'.$_GET['id']]),
