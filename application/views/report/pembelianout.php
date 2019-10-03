@@ -12,6 +12,7 @@
     <table class="table table-bordered" width="100%">
         <tr>
             <th width="3%">No</th>
+			<th>No Faktur</th>
             <th>Nama Barang</th>
             <th>Supplier</th>
             <th>Jumlah Beli</th>
@@ -26,15 +27,28 @@
         ?>
         <tr>
             <td><?php echo $key+1 ?></td>
+			<td><?php echo $harga['nofak'] ?></td>
             <td><?php echo $value['stokbarang'] ?></td>
             <td><?php echo $value['nama_supplier'] ?></td>
             <td><?php echo (int)$value['stok_perbarui']-$value['stok_awal'] ?></td>
             <td><?php echo rupiah($harga['harga_barang']) ?></td>
             <td><?php echo $harga['ppn_barang'] ?> %</td>
             <td><?php echo rupiah($harga['diskon_barang']) ?></td>
-            <td><?php echo rupiah(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']-$harga['diskon_barang']) ?></td>
-            <td><?php echo rupiah($value['piutang']) ?></td>
+			<?php $ttl[]=(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']-$harga['diskon_barang']));?>
+            <td><?php echo rupiah(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']-$harga['diskon_barang'])); ?></td>
+            <?php $ttl2[]=($value['piutang']);?>
+			<td><?php echo rupiah($value['piutang']) ?></td>
         </tr>
         <?php } ?>
+		<tr>
+			<td colspan=7></td>
+			<?php $harga1 = array_sum($ttl);?>
+			<?php $harga2 = array_sum($ttl2);?>
+			<td><b>Total</b></td>
+			<td><b><?php echo rupiah($harga1); ?></b></td>
+			<td><b><?php echo rupiah($harga2); ?></b></td>
+			
+			
+		</tr>
     </table>
 </body>

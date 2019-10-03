@@ -28,7 +28,9 @@
             <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan ID Barang, Kosongkan Untuk Mendapat ID Secara Otomatis" name="reg_stokbarang" /><br/>
             <label>Nama Barang</label>
             <input type="text" class="form-control" placeholder="Masukan Nama Barang" name="stokbarang" /><br/>
-            <label>Jumlah Barang</label>
+            <label>Nomor Faktur</label>
+            <input type="text"  class="form-control" placeholder="Masukan Nomor Faktur" name="nofak" /><br/>
+			<label>Jumlah Barang</label>
             <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Jumlah Stok Barang " name="jumlahbarang" /><br/>
             <label>Satuan</label>
             <input type="text" class="form-control" placeholder="Masukan Satuan Stok Barang " name="satuan" /><br/>

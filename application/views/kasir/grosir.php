@@ -61,6 +61,7 @@
                                         <button class="btn btn-sm btn-primary" type="button" id="btn-tambahbarang" onclick="submitkasir()">Tambah Barang</button>
                                         <button id="btn-payment-transaction-kasir" class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#paymenttransaction">Pembayaran Transaksi</button>
                                         <button id="btn-pilih-barang-kasir" class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selectbarang" style="margin-top:1vh" onclick="viewbarang()">Pilih Barang</button>
+                                        <button id="btn-cetak-transaksi" class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#cetaktransaksi" style="margin-top:1vh" onclick="cetaktransaksi()">Pilih Cetak Nota</button>
                                     </td>
                                 </tr>
                             </table>
@@ -89,7 +90,7 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <div><b>ESC</b> = Close Modal & Reset Pelanggan || <b>Ctrl + `</b> = Pilih Transaksi || <b>Ctrl + 1</b> = Pilih Pelanggan || <b>Ctrl + H</b> = Holding Transaksi || <b>Ctrl + F</b> = Pembayaran Transaksi || <b>Ctrl + B</b> = Pilih Barang || <b>Ctrl + I</b> = Input Kode Barang || <b>Ctrl + J</b> = Input Jumlah Barang || <b>Ctrl + R</b> = Reload Transaksi Kasir || <b>Ctrl + D</b> = Hapus Transaksi Kasir Keseluruhan || <b>Ctrl + P</b> = Print Nota Pembelian (Konfirmasi Pembayaran Lalu Ctrl + P)</div>
+                            <div><b>ESC</b> = Close Modal & Reset Pelanggan || <b>Ctrl + `</b> = Pilih Transaksi || <b>Ctrl + 1</b> = Pilih Pelanggan || <b>Ctrl + H</b> = Holding Transaksi || <b>Ctrl + F</b> = Pembayaran Transaksi || <b>Ctrl + B</b> = Pilih Barang || <b>Ctrl + I</b> = Input Kode Barang || <b>Ctrl + J</b> = Input Jumlah Barang || <b>Ctrl + R</b> = Reload Transaksi Kasir || <b>Ctrl + D</b> = Hapus Transaksi Kasir Keseluruhan || <b>Ctrl + P</b> = Pilih Cetak Nota Transaksi</div>
                         </td>
                     </tr>
                 </table>
@@ -100,6 +101,22 @@
     </div>
 </div>
 </form>
+<div id="cetaktransaksi" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Pilih Transaksi Untuk Di Cetak</h4>
+      </div>
+      <div class="modal-body">
+        <div id="print_here"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 <div id="selecttransaction" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -174,6 +191,7 @@
 <script>  
     viewtransaction();
     viewholding();
+    cetaktransaksi();
     $("input[name='kode_barang']").focus();
     jQuery(document).keydown(function(event) {
             if (event.keyCode === 27){
@@ -247,6 +265,13 @@
                 // Ctrl + D
                 // Delete
                 $("#btn-delete-transaction").click();
+                event.preventDefault();
+                return false;
+            }
+            if ((event.ctrlKey || event.metaKey) && event.keyCode === 80){
+                // Ctrl + P
+                // SELECT PRINT
+                $("#btn-cetak-transaksi").click();
                 event.preventDefault();
                 return false;
             }
@@ -478,6 +503,27 @@
         }
         });
     }
+    function cetaktransaksi(){
+        $('#print_here').html('LOADING ........');
+        $.ajax({
+        url: '<?php echo base_url('/kasir/finished/') ?>',
+        success: function(data) {
+            $('#print_here').html(data);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
     function viewtransaction(){
         $('#view_transaction_now').html('LOADING ........');
         $.ajax({
@@ -594,14 +640,12 @@
                 var jsondata = JSON.parse(data);
                 console.log(jsondata.alert);
                 if(jsondata.alert){
-                    jQuery(document).keydown(function(event) {
-                        if ((event.ctrlKey || event.metaKey) && event.keyCode === 80){
-                            window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
-                            event.preventDefault();
-                            return false;
-                        }
-                    });
-                    alert("Tekan Ctrl + P untuk Print Nota, Tekan Ctrl + R untuk Reload");
+                    if (confirm('Print Nota Penjualan ?')) {
+                        $("#reset_kasir").click();
+                        window.open(jsondata.url+'&rupiah='+rupiah+'&totalmoney='+totalmoney+'&backmoney='+backmoney, '_blank');
+                    } else {
+                        $("#reset_kasir").click();
+                    }
                 }else{
                     alert(jsondata.alert);
                 }

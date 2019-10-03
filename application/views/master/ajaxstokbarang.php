@@ -89,11 +89,13 @@
       <div class="modal-body">
       <div class="col-md-12">
         <form action="javascript:void(0)" method="POST" id="formstokbarang<?php echo $value['reg_stokbarang'] ?>">
-            <label>Nama Barang</label>
+		    <label>Nama Barang</label>
             <input type="text" class="form-control" value="<?php echo $value['stokbarang'] ?>" readonly="readonly" /><br/>
             <label>Jumlah Barang Awal</label>
             <input type="text" class="form-control" name="jumlahawaldatang_updated_<?php echo $value['reg_stokbarang'] ?>" value="<?php echo $value['jumlahbarang'] ?>" readonly="readonly"/><br/>
-            <label>Jumlah Barang Datang</label>
+            <label>Nomor Faktur</label>
+            <input type="text"  class="form-control" placeholder="Masukan Nomor Faktur" name="nofak_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>     
+			<label>Jumlah Barang Datang</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Barang Datang" name="jumlahbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Total Harga Barang Datang</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>

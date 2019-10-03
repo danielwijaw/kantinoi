@@ -179,7 +179,8 @@ class Kasirtr extends CI_Controller {
                 'status_hold'       => '3',
                 'status_muncul'     => '2',
                 'deleted_at'        => date('Y-m-d H:i:s'),
-                'payment_method'    => $_GET['method']
+                'payment_method'    => $_GET['method'],
+                'pembayaran_terakhir' => json_encode($_GET)
             );
             $this->db->where('nomor_tr_penjualan', $_GET['id']);
             $this->db->where('status_muncul', '1');
