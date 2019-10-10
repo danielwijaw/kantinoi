@@ -114,6 +114,7 @@
                 <li><a href="<?php echo base_url("login/setsession") ?>?" >Refresh Session</a></li>
                 <?php if($this->session->userdata('nip')=='3301'){ ?>
                 <li><a href="<?php echo base_url("backup/db") ?>" target="_blank">Backup Database</a></li>
+                <li><a id="<?php echo "utility-retur-transaksi" ?>" href="<?php echo base_url("transaksiC/retur") ?>?" onclick="hyperlinkajax(event, this.id)">Batal Transaksi Penjualan</a></li>
                 <?php } ?>
               </ul>
             </li>

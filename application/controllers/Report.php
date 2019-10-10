@@ -55,6 +55,7 @@ class Report extends CI_Controller {
 			tr_penjualan 
 		WHERE
 			payment_method = 'tunai' 
+			AND status_hold != '4'
 			AND nomor_tr_penjualan != ''
 			AND SUBSTR( deleted_at, 1, 10 ) >= '".$tanggalawal."' 
 			AND SUBSTR( deleted_at, 1, 10 ) <= '".$tanggalakhir."'

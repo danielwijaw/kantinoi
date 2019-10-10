@@ -395,6 +395,64 @@ class mastermodel extends CI_Model {
 
     // END DATA PIUTANG
 
+    // START DATA RETUR
+
+    public function getdatareturcount() 
+    {
+        $this->db->select('count(distinct nomor_tr_penjualan) as allcount');
+        $this->db->from('tr_penjualan');
+        $this->db->where('status_hold =', '3');
+        $this->db->where('status_muncul =', '2');
+        $this->db->where('payment_method =', 'tunai');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
+        return $result[0]['allcount'];
+    }
+    
+    public function getdataretur($rowno, $rowperpage)
+    {
+        $this->db->select('nomor_tr_penjualan, deleted_at');
+        $this->db->from('tr_penjualan');
+        $this->db->where('status_hold =', '3');
+        $this->db->where('status_muncul =', '2');
+        $this->db->where('payment_method =', 'tunai');
+        $this->db->group_by("nomor_tr_penjualan");
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('nomor_tr_penjualan', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatareturcountsearch($cari) {
+        error_reporting(0);
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
+        $this->db->select('allcount');
+        $this->db->from('v_countstokbarang');
+        $this->db->where($where);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
+    }
+    
+    public function getdataretursearch($rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
+        $this->db->select('nomor_tr_penjualan, deleted_at');
+        $this->db->from('v_stokbarang');
+        $this->db->where($where);
+        $this->db->limit($rowperpage, $rowno);  
+        $this->db->order_by('reg_stokbarang', 'DESC');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA RETUR
+
 
 
 }
