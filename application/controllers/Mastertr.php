@@ -386,20 +386,29 @@ class Mastertr extends CI_Controller {
 
     public function updatepiutangfaktur()
     {
-        if(isset($_POST)){
-            $row = $this->db->query('SELECT piutang-'.escapeString($_POST['piutang_deleted_'.$_GET['id']]).' AS `piutang`, piutang_clear FROM `tr_stokbarang` where `id_tr_stokbarang` = '.$_GET['id'].' ')->row();
-            $row->piutang_clear = json_decode($row->piutang_clear, true);
-            $row->piutang_clear[date('Y-m-d H:i:s')] = escapeString($_POST['piutang_deleted_'.$_GET['id']]);
-            // print_r($row);
-            // die();
-            $piutang_clear = json_encode($row->piutang_clear);
-            $data = array(
-                'piutang' 	=> $row->piutang,
-                'piutang_clear' => $piutang_clear
-            );
-            $this->db->where('id_tr_stokbarang', $_GET['id']);
-            $this->db->update('tr_stokbarang', $data);
-            echo "Berhasil";
+        if(isset($_GET['id'])){
+            $query = $this->db->query("
+            SELECT
+              id_tr_stokbarang, harga_default, piutang, piutang_clear
+            FROM
+              tr_stokbarang
+            WHERE
+              JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$_GET['id']."\"
+            ");
+            $row = new stdClass();
+            $result = $query->result_array();
+            foreach($result as $key => $value){
+                $row->piutang_clear = json_decode($value['piutang_clear'], true);
+                $row->piutang_clear[date('Y-m-d H:i:s')] = $value['piutang'];
+                $piutang_clear = json_encode($row->piutang_clear);
+                $data = array(
+                    'piutang' 	=> $row->piutang,
+                    'piutang_clear' => $piutang_clear
+                );
+                $this->db->where('id_tr_stokbarang', $value['id_tr_stokbarang']);
+                $this->db->update('tr_stokbarang', $data);
+            }
+            redirect('/transaksiC/stokfaktur/');
         }
     }
 }

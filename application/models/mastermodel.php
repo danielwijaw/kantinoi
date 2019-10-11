@@ -484,7 +484,7 @@ class mastermodel extends CI_Model {
     
     public function getdatapiutangcountsearchfak($validasi, $cari) {
         error_reporting(0);
-        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$cari."\" )";
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$cari."%\" )";
         $this->db->select('allcount');
         $this->db->from('v_countpiutang');
         $this->db->where($where);
@@ -496,7 +496,7 @@ class mastermodel extends CI_Model {
     
     public function getdatapiutangsearchfak($validasi, $rowno, $rowperpage, $cari)
     {
-        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$cari."\")";
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$cari."%\")";
         $this->db->select('*');
         $this->db->from('v_piutang');
         $this->db->where($where);
