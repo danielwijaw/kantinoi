@@ -84,22 +84,6 @@
             <li class="dropdown">
               <a href="javascript:void()" class="dropdown-toggle" data-toggle="dropdown">Report <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <!-- <li class="dropdown-submenu">
-                  <a href="javascript:void(0)">Report Master Data</a>
-                  <ul class="dropdown-menu">
-                    <li><a id="<?php echo "report-master-stokbarang" ?>" href="<?php echo base_url("report/masterstokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Master Stok Barang</a></li>
-                    <li><a id="<?php echo "report-master-datadepartemen" ?>" href="<?php echo base_url("report/masterdatadepartemen") ?>?" onclick="hyperlinkajax(event, this.id)">Report Master Data Departemen</a></li>
-                    <li><a id="<?php echo "report-master-datasupplier" ?>" href="<?php echo base_url("report/masterdatasupplier") ?>?" onclick="hyperlinkajax(event, this.id)">Report Master Data Supplier</a></li>
-                    <li><a id="<?php echo "report-master-datapelanggan" ?>" href="<?php echo base_url("report/masterdatapelanggan") ?>?" onclick="hyperlinkajax(event, this.id)">Report Master Data Pelanggan</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown-submenu">
-                  <a href="javascript:void(0)">Report Transaksi</a>
-                  <ul class="dropdown-menu">
-                    <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
-                    <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksipiutang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Piutang</a></li>
-                  </ul>
-                </li> -->
                 <li><a id="<?php echo "report-transaksi-kasirgrosir" ?>" href="<?php echo base_url("report/transaksikasir") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Kasir Penjualan</a></li>
                 <li><a id="<?php echo "report-transaksi-stokbarang" ?>" href="<?php echo base_url("report/transaksipiutang") ?>?" onclick="hyperlinkajax(event, this.id)">Report Transaksi Piutang & Harga Barang</a></li>
                 <li><a id="<?php echo "report-rekap-pembelian" ?>" href="<?php echo base_url("report/rekappembelian") ?>?" onclick="hyperlinkajax(event, this.id)">Report Rekap Pembelian</a></li>
@@ -113,8 +97,8 @@
                 <!-- <li><a id="<?php echo "utility-hakakses" ?>" href="<?php echo base_url("utility/hakakses") ?>?" onclick="hyperlinkajax(event, this.id)">Hak Akses User</a></li> -->
                 <li><a href="<?php echo base_url("login/setsession") ?>?" >Refresh Session</a></li>
                 <?php if($this->session->userdata('nip')=='3301'){ ?>
-                <li><a href="<?php echo base_url("backup/db") ?>" target="_blank">Backup Database</a></li>
-                <li><a id="<?php echo "utility-retur-transaksi" ?>" href="<?php echo base_url("transaksiC/retur") ?>?" onclick="hyperlinkajax(event, this.id)">Batal Transaksi Penjualan</a></li>
+                  <li><a href="<?php echo base_url("backup/db") ?>" target="_blank">Backup Database</a></li>
+                  <li><a id="<?php echo "utility-retur-transaksi" ?>" href="<?php echo base_url("transaksiC/retur") ?>?" onclick="hyperlinkajax(event, this.id)">Batal Transaksi Penjualan</a></li>
                 <?php } ?>
               </ul>
             </li>
@@ -123,7 +107,9 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a id="<?php echo "kasir-grosir" ?>" href="<?php echo base_url("kasir/grosir") ?>?" onclick="hyperlinkajax(event, this.id)">Kasir Penjualan</a></li>
                 <?php if($this->session->userdata('nip')=='3301'){ ?>
-                <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang</a></li>
+                  <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang</a></li>
+                  <li><a id="<?php echo "transaksiC-stokfaktur" ?>" href="<?php echo base_url("transaksiC/stokfaktur") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang Perfaktur</a></li>
+                  <li><a id="<?php echo "kasir-stokbarang" ?>" href="<?php echo base_url("kasir/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Stok Barang</a></li>
                 <?php } ?>
               </ul>
             </li>

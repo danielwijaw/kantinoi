@@ -109,4 +109,43 @@ class Kasir extends CI_Controller {
         $this->load->view('/kasir/printout', $data);
       }
     }
+
+    public function stokbarang()
+    {
+      if(isset($_GET['faktur'])){
+        $data = array(
+          'nomor_faktur' => $_GET['faktur']
+        );
+      }else{
+        $data = array(
+          'nomor_faktur' => ""
+        );
+      }
+      $_GET['data'] = $data;
+      $_GET['asdx'] = 'kasir/stokbarang';
+      doViews($_GET);
+    }
+
+    public function stokbarangtransaction()
+    {
+      $query = $this->db->query("
+      SELECT
+        tr_stokbarang.*,
+        tm_stokbarang.stokbarang,
+        tm_supplier.nama_supplier
+      FROM
+        tr_stokbarang, tm_stokbarang, tm_supplier
+      WHERE
+        nomor_tr = '0' 
+        AND tm_stokbarang.reg_stokbarang = tr_stokbarang.reg_stokbarang
+        AND tm_stokbarang.reg_supplier = tm_supplier.reg_supplier
+        AND harga_default != ''
+	      AND JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$_GET['nofak']."\"
+      ");
+      $result = $query->result_array();
+      $data = [
+        'result' => $result
+      ];
+      $this->load->view('/report/pembelianout', $data);
+    }
 }

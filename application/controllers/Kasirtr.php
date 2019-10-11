@@ -197,4 +197,43 @@ class Kasirtr extends CI_Controller {
             echo json_encode($data);
         }
     }
+
+    public function nginsertdatastokbarangsu()
+    {
+        $hargabarang = array(
+            'tanggal' => date('Y-m-d H:i:s'),
+            'nofak' => escapeString($_POST['nofak']),
+            'jumlah_barang' => escapeString($_POST['jumlah_barang']),
+            'harga_barang' => escapeString($_POST['total_harga']),
+            'ppn_barang' => escapeString($_POST['ppn_total']),
+            'diskon_barang' => escapeString($_POST['diskon_total']),
+        );
+        $data = array(
+            'jumlahbarang' 	    => escapeString($_POST['barang_awal'])+escapeString($_POST['jumlah_barang']),
+            'status_muncul'     => '1',
+            'updated_at'        => date('Y-m-d H:i:s')
+        );
+        $this->db->where('reg_stokbarang', escapeString($_POST['id_barang']));
+        $this->db->update('tm_stokbarang', $data);
+        
+        $datax = array(
+            'stok_awal'         => escapeString($_POST['barang_awal']),
+            'stok_perbarui' 	=> escapeString($_POST['barang_awal'])+escapeString($_POST['jumlah_barang']),
+            'reg_stokbarang' 	=> escapeString($_POST['id_barang']),
+            'piutang' 	        => escapeString($_POST['piyutang_total']),
+            'harga_default'     => json_encode($hargabarang)
+        );
+
+        if($this->db->insert('tr_stokbarang', $datax)){
+            $dataalert = array(
+                'echo' => 'Berhasil',
+                'url'  => base_url('/kasir/stokbarang/?faktur='.escapeString($_POST['nofak']))
+            ); 
+        }else{
+            $dataalert = array(
+                'echo' => 'Gagal'
+            );
+        };
+        echo json_encode($dataalert);
+    }
 }

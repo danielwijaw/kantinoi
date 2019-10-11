@@ -75,4 +75,18 @@ class transaksi extends CI_Model {
         return $dataecho;
     }
 
+    public function getnomorfaktur()
+    {
+        $data = $this->db->query("select coalesce((max(nomor_tr_penjualan)+1),1) as nomor_transaksi_penjualan from tr_penjualan where status_hold != '1' and (status_muncul = '1' or status_hold = 3) and created_at like '".date('Y-m-d')."%'");
+        $dataecho = $data->row_array();
+        if(strlen($dataecho['nomor_transaksi_penjualan']) < 7 ){
+            $datafix = array(
+                'nomor_transaksi_penjualan' => date('ymd').$dataecho['nomor_transaksi_penjualan']
+            );
+        }else{
+            $datafix = $dataecho;
+        }
+        return $datafix;
+    }
+
 }

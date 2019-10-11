@@ -453,6 +453,59 @@ class mastermodel extends CI_Model {
 
     // END DATA RETUR
 
+    // START DATA PIUTANG
 
+    public function getdatapiutangcountfak($validasi) {
+
+        $this->db->select('allcount');
+        $this->db->from('v_countpiutang');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->where('piutang !=', '0');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if(isset($result[0]['allcount'])){
+            $result[0]['allcount'] = $result[0]['allcount'];
+        }else{
+            $result[0]['allcount'] = 0;
+        }
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapiutangfak($validasi, $rowno, $rowperpage)
+    {
+        $this->db->select('*');
+        $this->db->from('v_piutang');
+        $this->db->where('status_muncul =', $validasi);
+        $this->db->where('piutang !=', '0');
+        $this->db->limit($rowperpage, $rowno);  
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    
+    public function getdatapiutangcountsearchfak($validasi, $cari) {
+        error_reporting(0);
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$cari."\" )";
+        $this->db->select('allcount');
+        $this->db->from('v_countpiutang');
+        $this->db->where($where);
+        $this->db->where('piutang !=', '0');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result[0]['allcount'];
+    }
+    
+    public function getdatapiutangsearchfak($validasi, $rowno, $rowperpage, $cari)
+    {
+        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$cari."\")";
+        $this->db->select('*');
+        $this->db->from('v_piutang');
+        $this->db->where($where);
+        $this->db->where('piutang !=', '0');
+        $this->db->limit($rowperpage, $rowno);  
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // END DATA PIUTANG
 
 }

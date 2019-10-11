@@ -226,4 +226,57 @@ class Attribute extends CI_Controller {
 			$this->load->view('/kasir/ajaxstokbarang', $data);
 		}
 	}
+
+	public function stokbarangoi()
+	{
+		if(!isset($_GET['cari'])){
+			$this->load->model('mastermodel');
+			$total = $this->mastermodel->getdatastokbarangcount('1');
+			$row = ceil($total / 5);
+			$button = "<ul class='pagination'>";
+			for ($x = 0; $x < $row; $x++) {
+				$xz = $x + 1;
+				$xxz = ($xz*5)-5;
+				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$xxz)."`, `ngenehbarange`)' href='javascript:void(0)'>$xz</a></li>";
+			} 
+			$button .= "</ul>";
+			if($total <= 5){
+				$button = '';
+			}else{
+				$button = $button;
+			}
+			$datapage = '';
+			if(isset($_GET['page']))
+			{
+				$datapage = $_GET['page'];
+			}
+			$data = $this->mastermodel->getdatastokbarang('1',$datapage,'5');
+			$data = array('data' => $data,'button'=>$button);
+			$this->load->view('/kasir/ajaxstokbarangoi', $data);
+		}else{
+			$this->load->model('mastermodel');
+			$total = $this->mastermodel->getdatastokbarangcountsearch('1',$_GET['cari']);
+			$row = ceil($total / 5);
+			$button = "<ul class='pagination'>";
+			for ($x = 0; $x < $row; $x++) {
+				$xz = $x + 1;
+				$xxz = ($xz*5)-5;
+				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$xxz.'&cari='.$_GET['cari'])."`, `ngenehbarange`)' href='javascript:void(0)'>$xz</a></li>";
+			} 
+			$button .= "</ul>";
+			if($total <= 5){
+				$button = '';
+			}else{
+				$button = $button;
+			}
+			$datapage = '';
+			if(isset($_GET['page']))
+			{
+				$datapage = $_GET['page'];
+			}
+			$data = $this->mastermodel->getdatastokbarangsearch('1',$datapage,'5',$_GET['cari']);
+			$data = array('data' => $data,'button'=>$button);
+			$this->load->view('/kasir/ajaxstokbarangoi', $data);
+		}
+	}
 }

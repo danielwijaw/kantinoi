@@ -383,4 +383,23 @@ class Mastertr extends CI_Controller {
             echo "Berhasil";
         }
     }
+
+    public function updatepiutangfaktur()
+    {
+        if(isset($_POST)){
+            $row = $this->db->query('SELECT piutang-'.escapeString($_POST['piutang_deleted_'.$_GET['id']]).' AS `piutang`, piutang_clear FROM `tr_stokbarang` where `id_tr_stokbarang` = '.$_GET['id'].' ')->row();
+            $row->piutang_clear = json_decode($row->piutang_clear, true);
+            $row->piutang_clear[date('Y-m-d H:i:s')] = escapeString($_POST['piutang_deleted_'.$_GET['id']]);
+            // print_r($row);
+            // die();
+            $piutang_clear = json_encode($row->piutang_clear);
+            $data = array(
+                'piutang' 	=> $row->piutang,
+                'piutang_clear' => $piutang_clear
+            );
+            $this->db->where('id_tr_stokbarang', $_GET['id']);
+            $this->db->update('tr_stokbarang', $data);
+            echo "Berhasil";
+        }
+    }
 }
