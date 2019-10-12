@@ -208,6 +208,7 @@ class Kasirtr extends CI_Controller {
             'ppn_barang' => escapeString($_POST['ppn_total']),
             'diskon_barang' => escapeString($_POST['diskon_total']),
         );
+        $updatebatch = array();
         $data = array(
             'jumlahbarang' 	    => escapeString($_POST['barang_awal'])+escapeString($_POST['jumlah_barang']),
             'status_muncul'     => '1',
@@ -225,6 +226,29 @@ class Kasirtr extends CI_Controller {
         );
 
         if($this->db->insert('tr_stokbarang', $datax)){
+            
+        if($_POST['ppn_total']!=""){
+            $query = $this->db->query("
+            SELECT
+              id_tr_stokbarang, harga_default, piutang, piutang_clear
+            FROM
+              tr_stokbarang
+            WHERE
+              JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$_POST['nofak']."\"
+            ");
+            $result = $query->result_array();
+            foreach($result as $key => $value){
+                $barangecuk = json_decode($value['harga_default'], true);
+                $barangecuk['ppn_barang'] = (int)escapeString($_POST['ppn_total']) / count($result);
+                $barangecuk['diskon_barang'] = (int)escapeString($_POST['diskon_total']) / count($result);
+                $updatebatch[] = array(
+                        'id_tr_stokbarang'  => $value['id_tr_stokbarang'],
+                        'piutang'           => escapeString($_POST['piyutang_total']) / count($result),
+                        'harga_default'     => json_encode($barangecuk)
+                );
+            };
+            $this->db->update_batch('tr_stokbarang', $updatebatch, 'id_tr_stokbarang');
+        }
             $dataalert = array(
                 'echo' => 'Berhasil',
                 'url'  => base_url('/kasir/stokbarang/?faktur='.escapeString($_POST['nofak']))

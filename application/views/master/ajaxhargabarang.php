@@ -20,7 +20,7 @@
         <td><?php echo $value['hargabarang_retail'] ?></td>
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Harga Barang?')" href="<?php echo base_url('/mastertr/hapusdatahargabarang?id='.$value['reg_hargabarang']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-            <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
+            <button onclick="harganemetusu('<?php echo $value['reg_stokbarang'] ?>')" class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
         </td>
     </tr>
     <?php } ?>
@@ -42,12 +42,14 @@
         <form action="javascript:void(0)" method="POST" id="formupdate<?php echo $value['reg_hargabarang'] ?>">
             <label>Nama Barang</label>
             <input type="text" class="form-control" value="<?php echo $value['stokbarang'] ?>" readonly="readonly" /><br/>
+            <div class="harganecuk"></div>
             <label>Harga Barang Retail</label>
             <input type="hidden" value="<?php echo $value['hargabarang_retail'] ?>" name="hargabarang_awal_retail_updated_<?php echo $value['reg_hargabarang'] ?>" />
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang " value="<?php echo $value['hargabarang_retail'] ?>" name="hargabarang_retail_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
             <label>Harga Barang Grosir</label>
             <input type="hidden" value="<?php echo $value['hargabarang_grosir'] ?>" name="hargabarang_awal_grosir_updated_<?php echo $value['reg_hargabarang'] ?>" />
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang Grosir " value="<?php echo $value['hargabarang_grosir'] ?>" name="hargabarang_grosir_updated_<?php echo $value['reg_hargabarang'] ?>" /><br/>
+            
         </form>
         </div><br/>&nbsp;
       </div>
@@ -66,6 +68,12 @@
 </div>
 
 <script>
+function harganemetusu(asd){
+  $( ".harganecuk" ).html( "LOADING GET DATA" );
+  $.get( "<?php echo base_url('/attribute/getdatahargabelicuk/?id=') ?>"+asd, function( data ) {
+  $( ".harganecuk" ).html( data );
+  });
+};
 <?php foreach ($data as $key => $value) { ?>
 function updatedatahargabarang<?php echo $value['reg_hargabarang'] ?>()
   {

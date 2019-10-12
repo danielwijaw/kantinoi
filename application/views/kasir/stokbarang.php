@@ -16,7 +16,7 @@
 <form id="formbarangcuk" action="javascript:void(0)" method="POST">
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title titlealert">Transaksi Stokbarang</h3>
+        <h3 class="box-title titlealert">Transaksi Pembelian Stokbarang By Faktur</h3>
     </div>
     <div class="box-body">
         <div class="col-md-12">
@@ -31,11 +31,6 @@
                                     <td width="45%"><input type="text" class="form-control" id="tanggalnow" readonly="readonly"></td>
                                 </tr>
                                 <tr>
-                                    <td>Nomor Faktur</td>
-                                    <td>:</td>
-                                    <td><input type="text" class="form-control" id="nofak" name="nofak" value="<?php echo $nomor_faktur ?>"></td>
-                                </tr>
-                                <tr>
                                     <td>Total Piyutang Barang Datang (Rupiah)</td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="piyutang_total"></td>
@@ -44,6 +39,11 @@
                                     <td>Diskon Harga Barang Datang (Rupiah)</td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="diskon_total"></td>
+                                </tr>
+                                <tr>
+                                    <td>PPN Harga Barang Datang (%)</td>
+                                    <td>:</td>
+                                    <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="ppn_total"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" style="text-align:left">
@@ -70,19 +70,19 @@
                                     <td><input type="text" readonly=readonly onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="barang_awal"></td>
                                 </tr>
                                 <tr>
+                                    <td>Nomor Faktur</td>
+                                    <td>:</td>
+                                    <td><input type="text" class="form-control" id="nofak" name="nofak" value="<?php echo $nomor_faktur ?>"></td>
+                                </tr>
+                                <tr>
                                     <td>Jumlah Barang Datang</td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="jumlah_barang"></td>
                                 </tr>
                                 <tr>
-                                    <td>Total Harga Barang Datang</td>
+                                    <td>Harga Satuan Barang Datang</td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="total_harga"></td>
-                                </tr>
-                                <tr>
-                                    <td>PPN Harga Barang Datang (%)</td>
-                                    <td>:</td>
-                                    <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="ppn_total"></td>
                                 </tr>
                             </table>
                         </td>
@@ -229,11 +229,11 @@
             $("input[name='nofak']").focus();
             return false;
         }
-        if($("input[name='piyutang_total']").val().length===0){
-            alert("Total Piyutang Wajib Diisi");
-            $("input[name='piyutang_total']").focus();
-            return false;
-        }
+        // if($("input[name='piyutang_total']").val().length===0){
+        //     alert("Total Piyutang Wajib Diisi");
+        //     $("input[name='piyutang_total']").focus();
+        //     return false;
+        // }
         if($("input[name='id_barang']").val().length===0){
             alert("Barang Wajib Dipilih");
             $("#btn-pilih-barang").click();
@@ -254,16 +254,16 @@
             $("input[name='total_harga']").focus();
             return false;
         }
-        if($("input[name='ppn_total']").val().length===0){
-            alert("PPN Wajib Diisi");
-            $("input[name='ppn_total']").focus();
-            return false;
-        }
-        if($("input[name='diskon_total']").val().length===0){
-            alert("Total Diskon Harga Barang Wajib Diisi");
-            $("input[name='diskon_total']").focus();
-            return false;
-        }
+        // if($("input[name='ppn_total']").val().length===0){
+        //     alert("PPN Wajib Diisi");
+        //     $("input[name='ppn_total']").focus();
+        //     return false;
+        // }
+        // if($("input[name='diskon_total']").val().length===0){
+        //     alert("Total Diskon Harga Barang Wajib Diisi");
+        //     $("input[name='diskon_total']").focus();
+        //     return false;
+        // }
         var formbarangcuk = new FormData(document.getElementById("formbarangcuk"));
         $.ajax({
             url: "<?php echo base_url('/kasirtr/nginsertdatastokbarangsu') ?>",

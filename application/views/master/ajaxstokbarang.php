@@ -95,10 +95,10 @@
             <input type="text" class="form-control" name="jumlahawaldatang_updated_<?php echo $value['reg_stokbarang'] ?>" value="<?php echo $value['jumlahbarang'] ?>" readonly="readonly"/><br/>
             <label>Nomor Faktur</label>
             <input type="text"  class="form-control" placeholder="Masukan Nomor Faktur" name="nofak_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>     
-			<label>Jumlah Barang Datang</label>
+			      <label>Jumlah Barang Datang</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Barang Datang" name="jumlahbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
-            <label>Total Harga Barang Datang</label>
-            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
+            <label>Harga Per Satuan Barang Datang</label>
+            <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Persatuan Barang Datang" name="hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>PPN Harga Barang Datang (%)</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan PPN Barang Datang" name="ppnbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Diskon Barang Datang (Rupiah)</label>
@@ -192,7 +192,7 @@ function updatedatastokbarang<?php echo $value['reg_stokbarang'] ?>(status)
         return false;
       }
       if($("input[name='hargabarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>']").val().length===0){
-        alert("Total Harga Barang Wajib Diisi");
+        alert("Harga Barang Wajib Diisi");
         return false;
       }
       if($("input[name='ppnbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>']").val().length===0){

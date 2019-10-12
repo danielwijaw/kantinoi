@@ -43,4 +43,10 @@ class Master extends CI_Controller {
 		$_GET['asdx'] = 'master/jenisbarang';
 		doViews($_GET);
 	}
+
+	public function returnpembelian()
+	{
+		$_GET['asdx'] = 'master/returnpembelian';
+		doViews($_GET);
+	}
 }

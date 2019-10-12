@@ -79,6 +79,8 @@
                 <li><a id="<?php echo "master-stokbarang" ?>" href="<?php echo base_url("master/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Stok Barang</a></li>
                 <li><a id="<?php echo "master-hargabarang" ?>" href="<?php echo base_url("master/hargabarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Harga Barang</a></li>
                 <li><a id="<?php echo "master-datapelanggan" ?>" href="<?php echo base_url("master/datapelanggan") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Pelanggan</a></li>
+                <li><a id="<?php echo "kasir-stokbarang" ?>" href="<?php echo base_url("kasir/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Pembelian Stok Barang</a></li>
+                <li><a id="<?php echo "master-returnpembelian" ?>" href="<?php echo base_url("master/returnpembelian") ?>?" onclick="hyperlinkajax(event, this.id)">Master Data Return Pembelian</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -109,7 +111,6 @@
                 <?php if($this->session->userdata('nip')=='3301'){ ?>
                   <li><a id="<?php echo "transaksiC-stok" ?>" href="<?php echo base_url("transaksiC/stok") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang</a></li>
                   <li><a id="<?php echo "transaksiC-stokfaktur" ?>" href="<?php echo base_url("transaksiC/stokfaktur") ?>?" onclick="hyperlinkajax(event, this.id)">Piutang Stok Barang Perfaktur</a></li>
-                  <li><a id="<?php echo "kasir-stokbarang" ?>" href="<?php echo base_url("kasir/stokbarang") ?>?" onclick="hyperlinkajax(event, this.id)">Stok Barang</a></li>
                 <?php } ?>
               </ul>
             </li>

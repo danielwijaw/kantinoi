@@ -38,7 +38,7 @@
             <select class="select-supplier form-control" width="100%" name="reg_supplier" id="reg_supplier"></select><br/><br/>
             <label>Jenis Barang</label><br/>
             <select class="select-jbar form-control" width="100%" name="reg_jenisbarang" id="reg_jenisbarang"></select><br/><br/>
-            <label>Total Harga Barang Datang</label>
+            <label>Harga Per Satuan Barang Datang</label>
             <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan Total Harga Barang Datang" name="reg_hargabarang" /><br/>
             <label>PPN Harga Barang Datang (%)</label>
             <input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Masukan PPN Barang Datang" name="reg_ppnbarang" /><br/>
