@@ -146,6 +146,6 @@ class Kasir extends CI_Controller {
       $data = [
         'result' => $result
       ];
-      $this->load->view('/report/pembelianout', $data);
+      $this->load->view('/report/pembelianoutbarang', $data);
     }
 }

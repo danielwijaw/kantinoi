@@ -239,7 +239,7 @@ class Kasirtr extends CI_Controller {
             $result = $query->result_array();
             foreach($result as $key => $value){
                 $barangecuk = json_decode($value['harga_default'], true);
-                $barangecuk['ppn_barang'] = (int)escapeString($_POST['ppn_total']) / count($result);
+                $barangecuk['ppn_barang'] = (int)escapeString($_POST['ppn_total']);
                 $barangecuk['diskon_barang'] = (int)escapeString($_POST['diskon_total']) / count($result);
                 $updatebatch[] = array(
                         'id_tr_stokbarang'  => $value['id_tr_stokbarang'],
@@ -259,5 +259,45 @@ class Kasirtr extends CI_Controller {
             );
         };
         echo json_encode($dataalert);
+    }
+
+    public function ngitungtokjud()
+    {
+        $query = $this->db->query("
+        SELECT
+            id_tr_stokbarang, harga_default, piutang, piutang_clear
+        FROM
+            tr_stokbarang
+        WHERE
+            JSON_EXTRACT(harga_default, \"$.nofak\") = \"".$_POST['nofak']."\"
+        ");
+        $result = $query->result_array();
+        foreach($result as $key => $value){
+            $barangecuk = json_decode($value['harga_default'], true);
+            $barangecuk['ppn_barang'] = (int)escapeString($_POST['ppn_total']);
+            $barangecuk['diskon_barang'] = (int)escapeString($_POST['diskon_total']) / count($result);
+            $updatebatch[] = array(
+                    'id_tr_stokbarang'  => $value['id_tr_stokbarang'],
+                    'piutang'           => escapeString($_POST['piyutang_total']) / count($result),
+                    'harga_default'     => json_encode($barangecuk)
+            );
+        };
+        $this->db->update_batch('tr_stokbarang', $updatebatch, 'id_tr_stokbarang');
+        $dataalert = array(
+            'echo' => 'Berhasil',
+            'url'  => base_url('/kasir/stokbarang/?faktur='.escapeString($_POST['nofak']))
+        ); 
+        echo json_encode($dataalert);
+    }
+
+    public function deletetransaksifaktur(){
+        $this->db->where('reg_stokbarang', $_GET['idbarang']);
+		$this->db->set('jumlahbarang', 'jumlahbarang+'.$_GET['val'], FALSE);
+        $this->db->update('tm_stokbarang');
+        
+        $this->db->where('id_tr_stokbarang', $_GET['id']);
+        $this->db->delete('tr_stokbarang');
+
+        redirect('/kasir/stokbarang/?faktur='.$_GET['nofak']);
     }
 }

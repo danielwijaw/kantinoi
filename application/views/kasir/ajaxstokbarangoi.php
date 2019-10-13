@@ -9,6 +9,7 @@
             <th>Jenis Barang</th>
             <td width="7%"><center>
                 <button data-toggle="modal" data-target="#modalcaricuk" class="btn btn-primary btn-xs"><i class="fa fa-search" aria-hidden="true"></i></button>
+                <button data-toggle="modal" data-target="#modalenambah" class="btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </td>
         </tr>
     </thead>

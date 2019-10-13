@@ -411,4 +411,37 @@ class Mastertr extends CI_Controller {
             redirect('/transaksiC/stokfaktur/');
         }
     }
+
+    public function insertdatastokbarangfaktur()
+    {
+        if(isset($_POST)){
+            $row = $this->db->query('SELECT (MAX(reg_stokbarang)+1) AS `maxid` FROM `tm_stokbarang`')->row();
+            if(is_null($row->maxid) or $row->maxid == ''){
+                $row->maxid = '1';
+            }
+            if(!isset($_POST['reg_stokbarang'])){
+                $data = array(
+                    'stokbarang' => escapeString($_POST['stokbarang']),
+                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
+                    'satuan' 	=> strtolower(escapeString($_POST['satuan'])),
+                    'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
+                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
+                    'reg_stokbarang'    => $row->maxid
+                );
+            }else{
+                $data = array(
+                    'reg_stokbarang' => escapeString($_POST['reg_stokbarang']),
+                    'stokbarang' => escapeString($_POST['stokbarang']),
+                    'jumlahbarang' 	=> escapeString($_POST['jumlahbarang']),
+                    'satuan' 	=> strtolower(escapeString($_POST['satuan'])),
+                    'reg_supplier' 	=> escapeString($_POST['reg_supplier']),
+                    'reg_jenisbarang' 	=> escapeString($_POST['reg_jenisbarang']),
+                );
+            }
+
+            $this->db->insert('tm_stokbarang', $data);
+
+            echo "Berhasil";
+        }
+    }
 }
