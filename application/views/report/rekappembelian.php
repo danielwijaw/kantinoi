@@ -4,7 +4,7 @@
             <tr>
                 <td width="50%"><h3 class="box-title titlealert">Report Rekap Pembelian</h3></td>
                 <td width="24%">&nbsp;</td>
-                <td width="18%"><input type="text" name="daterekappembelian" id="daterekappembelian" class="form-control"></td>
+                <td width="18%"><input type="text" name="carioyy" id="carioyy" placeholder="Masukan Keyword Pencarian" class="form-control"><input type="text" name="daterekappembelian" id="daterekappembelian" class="form-control"></td>
                 <td width="8%">&nbsp;
                     <button class="btn btn-primary btn-sm" onclick="filterpembelian()">
                         <i class="fa fa-filter" aria-hidden="true"></i>
@@ -34,8 +34,9 @@
     function filterpembelian()
     {   
         var tanggal = $('input[name="daterekappembelian"]').val();
+        var cari = $('input[name="carioyy"]').val();
         $.ajax({
-            url: "<?php echo base_url('/report/transaksipembelianout?date='); ?>"+tanggal,
+            url: "<?php echo base_url('/report/transaksipembelianout?date='); ?>"+tanggal+"&cari="+cari,
             type: "GET",
             contentType: false,       
             cache: false,             
@@ -62,6 +63,7 @@
     function printpembelian(){
         var newWindow = window.open("","_blank");
         var tanggal = $('input[name="daterekappembelian"]').val();
-        newWindow.location.href = "<?php echo base_url('/report/transaksipembelianout?date='); ?>"+tanggal+"&print=1";
+        var cari = $('input[name="carioyy"]').val();
+        newWindow.location.href = "<?php echo base_url('/report/transaksipembelianout?date='); ?>"+tanggal+"&print=1"+"&cari="+cari;
     }
 </script>

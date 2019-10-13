@@ -74,6 +74,13 @@ class Report extends CI_Controller {
 		$_GET['tanggal'] = explode(" - ", $_GET['date']);
 		$tanggalawal 	= $_GET['tanggal'][0];
 		$tanggalakhir 	= $_GET['tanggal'][1];
+		$cari = "";
+		if(!empty($_GET['cari'])){
+			$cari = "
+				AND (JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$_GET['cari']."%\"
+				or tm_stokbarang.stokbarang like '%".$_GET['cari']."%')
+			";
+		}
 		$query = $this->db->query("
 		SELECT
 			tr_stokbarang.*,
@@ -86,6 +93,7 @@ class Report extends CI_Controller {
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) >= '".$tanggalawal."' 
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) <= '".$tanggalakhir."'
 			AND harga_default != ''
+			".$cari."
 		");
 		$result = $query->result_array();
 		$data = [
@@ -124,6 +132,14 @@ class Report extends CI_Controller {
 		$_GET['tanggal'] = explode(" - ", $_GET['date']);
 		$tanggalawal 	= $_GET['tanggal'][0];
 		$tanggalakhir 	= $_GET['tanggal'][1];
+		$cari = "";
+		if(!empty($_GET['cari'])){
+			$cari = "
+				AND (JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$_GET['cari']."%\"
+				or tm_stokbarang.stokbarang like '%".$_GET['cari']."%'
+				or tm_supplier.nama_supplier like '%".$_GET['cari']."%')
+			";
+		}
 		$query = $this->db->query("
 		SELECT
 			tr_stokbarang.*,
@@ -138,6 +154,7 @@ class Report extends CI_Controller {
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) >= '".$tanggalawal."' 
 			AND SUBSTR( tr_stokbarang.created_at, 1, 10 ) <= '".$tanggalakhir."'
 			AND harga_default != ''
+			".$cari."
 		");
 		$result = $query->result_array();
 		$data = [

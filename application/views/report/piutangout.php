@@ -12,6 +12,7 @@
     <table class="table table-bordered" width="100%">
         <tr>
             <th width="3%">No</th>
+            <th>Nomor Faktur</th>
             <th>Nama Barang</th>
             <th width="5%">Stok Awal</th>
             <th width="5%">Stok Akhir</th>
@@ -40,6 +41,7 @@
         ?>
         <tr>
             <td><?php echo $key+1 ?></td>
+            <td><?php echo $harga['nofak'] ?></td>
             <td><?php echo $value['stokbarang'] ?></td>
             <td><?php echo $value['stok_awal'] ?></td>
             <td><?php echo $value['stok_perbarui'] ?></td>
