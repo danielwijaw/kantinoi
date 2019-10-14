@@ -31,7 +31,7 @@
                                     <td width="45%"><input type="text" class="form-control" id="tanggalnow" readonly="readonly"></td>
                                 </tr>
                                 <tr>
-                                    <td>Total Piyutang Barang Datang (Rupiah)</td>
+                                    <td>Total Piyutang Barang Datang (Rupiah)&nbsp;<input type="checkbox" id="utangenongol" value="true"></td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="piyutang_total"></td>
                                 </tr>

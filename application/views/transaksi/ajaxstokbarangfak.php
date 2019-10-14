@@ -37,11 +37,18 @@
         <td><?php foreach($variabledata[$key]['jenisbarang'] as $kontal){
             echo $kontal."<br/>";
           }?></td>
-        <td>Total :<?php echo rupiah(array_sum(($variabledata[$key]['piutang']))); ?></td>
+        <td>Total :<?php echo rupiah($tititit = array_sum(($variabledata[$key]['piutang']))); ?></td>
         <td>
-          <a onclick="return confirm('Anda Yakin Akan Membayar Piyutang Suplier?')" href="<?php echo base_url('/mastertr/updatepiutangfaktur?id='.$key) ?>">
+          <?php if($tititit!='0'){ ?>
+          <a onclick="window.open('<?php echo base_url('/attribute/printfaktur/?nofak='.$key.'&kiekey=piutang') ?>')" href="<?php echo base_url('/mastertr/updatepiutangfaktur?id='.$key) ?>">
             <button class="btn btn-xs btn-warning" title="Pembayaran Piyutang" >
               <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+          </a>
+          <?php } ?>
+          <a onclick="window.open('<?php echo base_url('/attribute/printfaktur/?nofak='.$key.'&kiekey=piutang') ?>')">
+            <button class="btn btn-xs btn-primary" title="Print Piyutang" >
+              <i class="fa fa-print" aria-hidden="true"></i>
             </button>
           </a>
         </td>

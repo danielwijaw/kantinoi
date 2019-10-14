@@ -460,7 +460,6 @@ class mastermodel extends CI_Model {
         $this->db->select('allcount');
         $this->db->from('v_countpiutang');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->where('piutang !=', '0');
         $query = $this->db->get();
         $result = $query->result_array();
         if(isset($result[0]['allcount'])){
@@ -476,8 +475,8 @@ class mastermodel extends CI_Model {
         $this->db->select('*');
         $this->db->from('v_piutang');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->where('piutang !=', '0');
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
+        $this->db->order_by("piutang", "DESC");  
         $query = $this->db->get();
         return $query->result_array();
     }

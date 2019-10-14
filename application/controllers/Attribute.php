@@ -398,19 +398,28 @@ class Attribute extends CI_Controller {
 	}
 
 	public function processs(){
-		$retur = [
+		$query = $this->db->get_where('tr_stokbarang', array('id_tr_stokbarang' => $_GET['id']));
+		$row = $query->row_array();
+		$retur = json_decode($row['retur_barang'], true);
+		$harga_default = json_decode($row['harga_default'], true);
+
+		$retur[date('Y-m-d H:i:s')] = [
 			'jumlah' => $_GET['val'],
 			'tanggal'	=> date('Y-m-d H:i:s')
 		];
+		$harga_default['jumlah_barang'] = $harga_default['jumlah_barang']-$_GET['val'];
 		$returnya = json_encode($retur);
 		$data = array(
-			'retur_barang' => $returnya
+			'retur_barang' => $returnya,
+			'stok_perbarui' => $row['stok_perbarui']-$_GET['val'],
+			'harga_default'	=> json_encode($harga_default),
+			'piutang'		=> ($row['piutang']-($_GET['val']*$harga_default['harga_barang']))-((($_GET['val']*$harga_default['harga_barang']))*$harga_default['ppn_barang']/100)
 		);
 		$this->db->where('id_tr_stokbarang', $_GET['id']);
 		$this->db->update('tr_stokbarang', $data);
 
 		$this->db->where('reg_stokbarang', $_GET['idbarang']);
-		$this->db->set('jumlahbarang', 'jumlahbarang+'.$_GET['val'], FALSE);
+		$this->db->set('jumlahbarang', 'jumlahbarang-'.$_GET['val'], FALSE);
 		$this->db->update('tm_stokbarang');
 	}
 

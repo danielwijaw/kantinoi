@@ -11,7 +11,7 @@
                         <td style="text-align:left">
                             <button id="btn-pilih-barang" class="btn btn-sm btn-default" type="button" data-toggle="modal" data-target="#selectbarang" onclick="nomorecuk()">Pilih Nomor Faktur</button>
                             <button class="btn btn-sm btn-default" type="button" onclick="reload()">Reset Nomor Faktur</button>
-                            <a href="<?php echo base_url('/attribute/printfaktur/?nofak='.$_GET['nofak']) ?>" target="_blank"><button class="btn btn-sm btn-default" type="button">Cetak Retur By Nomor Faktur</button></a>
+                            <a href="<?php echo base_url('/attribute/printfaktur/?nofak='.$_GET['nofak'].'&kiekey=returoi') ?>" target="_blank"><button class="btn btn-sm btn-default" type="button">Cetak Retur By Nomor Faktur</button></a>
                         </td>
                     </tr>
                 </table>

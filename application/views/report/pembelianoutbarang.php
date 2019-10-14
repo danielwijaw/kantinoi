@@ -80,3 +80,65 @@
 		</tr>
     </table>
 </body>
+
+<script>
+$('input[name="ppn_total"]').val('<?php echo $harga['ppn_barang'] ?>');
+$(function()
+    {
+      $('#utangenongol').change(function()
+      {
+        if ($(this).is(':checked')) {
+          munculduit();
+        }else{
+          duitenoll();
+        };
+      });
+      $('input[name="jumlah_barang"]').keyup(function(){
+        if ($('#utangenongol').is(':checked')) {
+          munculduit();
+        }else{
+          duitenoll();
+        };
+      });
+      $('input[name="total_harga"]').keyup(function(){
+        if ($('#utangenongol').is(':checked')) {
+          munculduit();
+        }else{
+          duitenoll();
+        };
+      });
+      $('input[name="ppn_total"]').change(function(){
+        var utangetext = Number('<?php echo $total123; ?>');
+        if ($('#utangenongol').is(':checked')) {
+          munculduit();
+        }else{
+          duitenoll();
+        };
+      });
+      $('input[name="diskon_total"]').change(function(){
+        if ($('#utangenongol').is(':checked')) {
+          munculduit();
+        }else{
+          duitenoll();
+        };
+      });
+    });
+function munculduit(){
+  var total123 = Number('<?php echo $total123; ?>');
+  if(total123===0){
+    var total123 = $('input[name="piyutang_total"]').val();
+  }else{
+    var total123 = Number('<?php echo $total123; ?>');
+  }
+  var tititt = (Number('<?php echo $harga['ppn_barang'] ?>')*Number('<?php echo $total123; ?>')/100);
+  var atasd = Number('<?php echo $total123; ?>')-Number(tititt);
+  var ppne = Number($('input[name="ppn_total"]').val()) * Number(total123)/100 ;
+  var utang1 = Number(atasd)+Number(ppne);
+  var utang2 = Number($('input[name="jumlah_barang"]').val()) * Number($('input[name="total_harga"]').val());
+  var diskonecuk = Number($('input[name="diskon_total"]').val());
+  $('input[name="piyutang_total"]').val(utang1+utang2-diskonecuk);
+}
+function duitenoll(){
+  var utangetext = $('input[name="piyutang_total"]').val('0');
+}
+</script>
