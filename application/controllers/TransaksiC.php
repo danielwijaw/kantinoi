@@ -200,15 +200,15 @@ class TransaksiC extends CI_Controller {
 		}else{
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatapiutangcountsearchfak('1',$_GET['cari']);
-			$row = ceil($total / 5);
+			$row = ceil($total / 50);
 			$button = "<ul class='pagination'>";
 			for ($x = 0; $x < $row; $x++) {
 				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
+				$xxz = ($xz*50)-50;
 				$button .= "<li><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarangfaktur?page='.$xxz.'&cari='.$_GET['cari'])."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
 			} 
 			$button .= "</ul>";
-			if($total <= 5){
+			if($total <= 50){
 				$button = '';
 			}else{
 				$button = $button;
@@ -218,7 +218,7 @@ class TransaksiC extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatapiutangsearchfak('1',$datapage,'5',$_GET['cari']);
+			$data = $this->mastermodel->getdatapiutangsearchfak('1',$datapage,'50',$_GET['cari']);
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/transaksi/ajaxstokbarangfak', $data);
 		}

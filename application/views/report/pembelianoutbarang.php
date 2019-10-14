@@ -75,7 +75,7 @@
     <tr>
 			<td colspan=6></td>
 			<td><b>Piutang</b></td>
-			<td><b><?php echo rupiah($harga2); ?></b></td>
+			<td><b><?php echo rupiah(round($harga2, -1)); ?></b></td>
       <td>&nbsp;</td>
 		</tr>
     </table>
@@ -83,6 +83,7 @@
 
 <script>
 $('input[name="ppn_total"]').val('<?php echo $harga['ppn_barang'] ?>');
+$('input[name="diskon_total"]').val('<?php echo $harga3 ?>');
 $(function()
     {
       $('#utangenongol').change(function()
@@ -133,7 +134,7 @@ function munculduit(){
   var tititt = (Number('<?php echo $harga['ppn_barang'] ?>')*Number('<?php echo $total123; ?>')/100);
   var atasd = Number('<?php echo $total123; ?>')-Number(tititt);
   var ppne = Number($('input[name="ppn_total"]').val()) * Number(total123)/100 ;
-  var utang1 = Number(atasd)+Number(ppne);
+  var utang1 = Number(atasd)+Number(ppne)+Number('<?php echo $harga3 ?>');
   var utang2 = Number($('input[name="jumlah_barang"]').val()) * Number($('input[name="total_harga"]').val());
   var diskonecuk = Number($('input[name="diskon_total"]').val());
   $('input[name="piyutang_total"]').val(utang1+utang2-diskonecuk);

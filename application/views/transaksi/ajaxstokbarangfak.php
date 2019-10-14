@@ -37,7 +37,7 @@
         <td><?php foreach($variabledata[$key]['jenisbarang'] as $kontal){
             echo $kontal."<br/>";
           }?></td>
-        <td>Total :<?php echo rupiah($tititit = array_sum(($variabledata[$key]['piutang']))); ?></td>
+        <td>Total :<?php echo rupiah($tititit = round(array_sum(($variabledata[$key]['piutang'])), -1)); ?></td>
         <td>
           <?php if($tititit!='0'){ ?>
           <a onclick="window.open('<?php echo base_url('/attribute/printfaktur/?nofak='.$key.'&kiekey=piutang') ?>')" href="<?php echo base_url('/mastertr/updatepiutangfaktur?id='.$key) ?>">

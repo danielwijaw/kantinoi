@@ -76,7 +76,7 @@
     <tr>
 			<td colspan=4></td>
 			<td><b>Piutang</b></td>
-			<td><b><?php echo rupiah($harga2); ?></b></td>
+			<td><b><?php echo rupiah(round($harga2, -1)); ?></b></td>
       <td>&nbsp;</td>
 		</tr>
 </table>
