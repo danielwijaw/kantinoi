@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-    <?php foreach ($variabledata as $key => $value) { 
+    <?php foreach ($variabledata as $key => $value) {
     ?>
     <tr>
         <td><?php echo $key ?></td>
@@ -37,9 +37,7 @@
         <td><?php foreach($variabledata[$key]['jenisbarang'] as $kontal){
             echo $kontal."<br/>";
           }?></td>
-        <td><?php foreach($variabledata[$key]['piutang'] as $kontal){
-            echo rupiah($kontal)."<br/>";
-          }?><br/>Total :<?php echo rupiah(array_sum(($variabledata[$key]['piutang']))); ?></td>
+        <td>Total :<?php echo rupiah(array_sum(($variabledata[$key]['piutang']))); ?></td>
         <td>
           <a onclick="return confirm('Anda Yakin Akan Membayar Piyutang Suplier?')" href="<?php echo base_url('/mastertr/updatepiutangfaktur?id='.$key) ?>">
             <button class="btn btn-xs btn-warning" title="Pembayaran Piyutang" >

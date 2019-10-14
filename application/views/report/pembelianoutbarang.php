@@ -18,13 +18,11 @@
             <th>Jumlah Beli</th>
             <th>Harga</th>
             <th>PPN</th>
-            <th>Diskon</th>
             <th>Total</th>
-            <th>Piutang</th>
             <th>&nbsp;</th>
         </tr>
-        <?php foreach($result as $key => $value){ 
-            $harga = json_decode($value['harga_default'], true);    
+        <?php foreach($result as $key => $value){
+            $harga = json_decode($value['harga_default'], true);
         ?>
         <tr>
             <td><?php echo $key+1 ?></td>
@@ -34,24 +32,51 @@
             <td><?php echo (int)$value['stok_perbarui']-$value['stok_awal'] ?></td>
             <td><?php echo rupiah($harga['harga_barang']) ?></td>
             <td><?php echo $harga['ppn_barang'] ?> %</td>
-            <td><?php echo rupiah($harga['diskon_barang']) ?></td>
-			<?php $ttl[]=(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']-$harga['diskon_barang']));?>
-            <td><?php echo rupiah(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']-$harga['diskon_barang'])); ?></td>
+            <?php $ttl3[]=($harga['diskon_barang']);?>
+
+			<?php $ttl[]=(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang']));?>
+            <td><?php echo rupiah(($value['stok_perbarui']-$value['stok_awal'])*(($harga['harga_barang']*$harga['ppn_barang']/100)+$harga['harga_barang'])); ?></td>
             <?php $ttl2[]=($value['piutang']);?>
-			<td><?php echo rupiah($value['piutang']) ?></td>
+
+
             <td><a href="<?php echo base_url('/kasirtr/deletetransaksifaktur/?idbarang='.$value['reg_stokbarang'].'&nofak='.$harga['nofak'].'&id='.$value['id_tr_stokbarang'].'&val='.((int)$value['stok_perbarui']-$value['stok_awal'])) ?>"><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></a></td>
         </tr>
         <?php } ?>
+    <tr>
+			<td colspan=9>&nbsp;</td>
+
+		</tr>
 		<tr>
-			<td colspan=7></td>
+			<td colspan=6></td>
 			<?php $harga1 = array_sum($ttl);?>
 			<?php $harga2 = array_sum($ttl2);?>
-			<td><b>Total</b></td>
+      <?php $harga3 = array_sum($ttl3);?>
+      <?php $total123 = $harga1-$harga3;?>
+			<td><b>Sub Total</b></td>
 			<td><b><?php echo rupiah($harga1); ?></b></td>
+      <td>&nbsp;</td>
+
+
+
+		</tr>
+
+    <tr>
+			<td colspan=6></td>
+			<td><b>Diskon</b></td>
+			<td><b><?php echo rupiah($harga3); ?></b></td>
+      <td>&nbsp;</td>
+		</tr>
+    <tr>
+			<td colspan=6></td>
+			<td><b>Total</b></td>
+			<td><b><?php echo rupiah($total123); ?></b></td>
+      <td>&nbsp;</td>
+		</tr>
+    <tr>
+			<td colspan=6></td>
+			<td><b>Piutang</b></td>
 			<td><b><?php echo rupiah($harga2); ?></b></td>
-            <td>&nbsp;</td>
-			
-			
+      <td>&nbsp;</td>
 		</tr>
     </table>
 </body>

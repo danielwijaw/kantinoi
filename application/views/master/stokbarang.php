@@ -5,7 +5,7 @@
     <div class="box-body">
         <div class="col-md-12">
         	<div class="table-responsive" id="masterstokbarangajax">
-                
+
             </div>
         </div>
     </div>
@@ -127,10 +127,10 @@
         $.ajax({
         url: "<?php echo base_url('/masterajax/stokbarang') ?>",
         success: function(data) {
-            $('#masterstokbarangajax').html(data);        
+            $('#masterstokbarangajax').html(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest.responseText); 
+            console.log(XMLHttpRequest.responseText);
             if (XMLHttpRequest.status == 0) {
             alert(' Check Your Network.');
             } else if (XMLHttpRequest.status == 404) {
@@ -139,7 +139,7 @@
             alert('Internel Server Error.');
             }  else {
             alert('Unknow Error.\n' + XMLHttpRequest.responseText);
-            }     
+            }
         }
         });
     }
@@ -186,8 +186,8 @@
         url: "<?php echo base_url('/mastertr/insertdatastokbarang') ?>",
         type: "POST",
         data: a,
-        contentType: false,       
-        cache: false,             
+        contentType: false,
+        cache: false,
         processData:false,
         success: function(data) {
           if(data == "Berhasil"){
@@ -199,7 +199,7 @@
           }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-          console.log(XMLHttpRequest.responseText); 
+          console.log(XMLHttpRequest.responseText);
           if (XMLHttpRequest.status == 0) {
           alert(' Check Your Network.');
           } else if (XMLHttpRequest.status == 404) {
@@ -208,7 +208,7 @@
           alert('Internel Server Error.');
           }  else {
           alert('Unknow Error.\n' + XMLHttpRequest.responseText);
-          }     
+          }
         }
     });
   }
@@ -219,10 +219,10 @@
         $.ajax({
         url: "<?php echo base_url('/masterajax/stokbarang/?cari=') ?>"+pencarian,
         success: function(data) {
-            $('#masterstokbarangajax').html(data);        
+            $('#masterstokbarangajax').html(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            console.log(XMLHttpRequest.responseText); 
+            console.log(XMLHttpRequest.responseText);
             if (XMLHttpRequest.status == 0) {
             alert(' Check Your Network.');
             } else if (XMLHttpRequest.status == 404) {
@@ -231,7 +231,7 @@
             alert('Internel Server Error.');
             }  else {
             alert('Unknow Error.\n' + XMLHttpRequest.responseText);
-            }     
+            }
         }
         });
   }
