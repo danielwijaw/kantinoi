@@ -292,7 +292,7 @@ class Kasirtr extends CI_Controller {
 
     public function deletetransaksifaktur(){
         $this->db->where('reg_stokbarang', $_GET['idbarang']);
-		$this->db->set('jumlahbarang', 'jumlahbarang+'.$_GET['val'], FALSE);
+		$this->db->set('jumlahbarang', 'jumlahbarang-'.$_GET['val'], FALSE);
         $this->db->update('tm_stokbarang');
         
         $this->db->where('id_tr_stokbarang', $_GET['id']);

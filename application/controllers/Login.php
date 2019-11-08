@@ -13,7 +13,7 @@ class Login extends CI_Controller {
 			die();
 		}
     }
-	
+
 	public function index()
 	{
 		if(null != $this->session->userdata('nip')){

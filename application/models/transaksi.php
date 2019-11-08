@@ -17,7 +17,7 @@ class transaksi extends CI_Model {
 
     public function getransactionnow($notrans)
     {
-        $data = $this->db->query("select ROW_NUMBER() OVER (ORDER BY id_tr_penjualan) AS no, id_tr_penjualan, nama_barang, harga_fix, jumlah_barang, satuan, (harga_fix * jumlah_barang) as jumlah, id_pelanggan, id_barang, created_at from tr_penjualan where nomor_tr_penjualan = '".$notrans."' and status_muncul = '1' order by created_at ASC");
+        $data = $this->db->query("select ROW_NUMBER() OVER (ORDER BY id_tr_penjualan) AS no, id_tr_penjualan, nama_barang, harga_fix, jumlah_barang, satuan, (harga_fix * jumlah_barang) as jumlah, id_pelanggan, id_barang, created_at from tr_penjualan where nomor_tr_penjualan = '".$notrans."' and status_muncul = '1' order by created_at DESC");
         $dataecho = $data->result_array();
         return $dataecho;
     }

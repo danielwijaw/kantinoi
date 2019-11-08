@@ -29,6 +29,10 @@
         <td><button type="button" class="btn btn-xs btn-warning" onclick="deleteditemkasir('<?php echo $value['id_tr_penjualan'] ?>', '<?php echo $value['nama_barang'] ?>', '<?php echo $value['id_barang'] ?>', '<?php echo $value['created_at'] ?>', '<?php echo $value['jumlah_barang'] ?>')"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
     </tr>
     <?php } ?>
+    <tr>
+      <td colspan="4">&nbsp;</td>
+      <td colspan="2"><?php echo 'Rp. '.number_format(array_sum($duit)); ?></td>
+    </tr>
 </table>
 
 <div id="paymenttransaction" class="modal fade" role="dialog">

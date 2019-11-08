@@ -26,6 +26,7 @@
         <div class="col-md-12">
             <label>Nama Barang</label><br/>
             <select class="js-data-example-ajax form-control" width="100%" name="reg_stokbarang" id="reg_stokbarang"></select><br/><br/>
+            <div class="harganecuk"></div>
             <label>Harga Barang Grosir</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Harga Barang " name="hargabarang_grosir" /><br/>
             <label>Harga Barang Retail</label>
@@ -66,6 +67,14 @@
 </div>
 
 <script>
+    $('#reg_stokbarang').on('select2:select', function (e) {
+      var data = e.params.data;
+      console.log(data.id);
+      $( ".harganecuk" ).html( "LOADING GET DATA" );
+      $.get( "<?php echo base_url('/attribute/getdatahargabelicuk/?id=') ?>"+data.id, function( data ) {
+        $( ".harganecuk" ).html( data );
+      });
+    });
     $('#reg_stokbarang').select2({
            allowClear: true,
            placeholder: 'Pilih Nama Barang',

@@ -64,22 +64,22 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatasupplier($validasi, $rowno, $rowperpage)
     {
         $this->db->select('a.reg_supplier, a.nama_supplier, a.atas_nama, a.kontak_supplier, a.alamat, a.id_kelurahan, b.nama_provinsi, b.nama_kabupaten, b.nama_kecamatan, b.nama_kelurahan');
         $this->db->from('tm_supplier as a');
         $this->db->join('t_lokasi b', 'a.id_kelurahan = b.id_kelurahan', 'left');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_supplier', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatasuppliercountsearch($validasi, $cari) {
         $where = "status_muncul = '".$validasi."' and (a.reg_supplier like '%".$cari."%' or a.nama_supplier like '%".$cari."%' or a.atas_nama like '%".$cari."%' or a.kontak_supplier like '%".$cari."%' or a.alamat like '%".$cari."%' or b.nama_provinsi like '%".$cari."%' or b.nama_kabupaten like '%".$cari."%' or b.nama_kecamatan like '%".$cari."%' or b.nama_kelurahan like '%".$cari."%') ";
         $this->db->select('count(a.reg_supplier) as allcount');
@@ -88,10 +88,10 @@ class mastermodel extends CI_Model {
         $this->db->where($where);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatasuppliersearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (a.reg_supplier like '%".$cari."%' or a.nama_supplier like '%".$cari."%' or a.atas_nama like '%".$cari."%' or a.kontak_supplier like '%".$cari."%' or a.alamat like '%".$cari."%' or b.nama_provinsi like '%".$cari."%' or b.nama_kabupaten like '%".$cari."%' or b.nama_kecamatan like '%".$cari."%' or b.nama_kelurahan like '%".$cari."%') ";
@@ -99,7 +99,7 @@ class mastermodel extends CI_Model {
         $this->db->from('tm_supplier as a');
         $this->db->join('t_lokasi b', 'a.id_kelurahan = b.id_kelurahan', 'left');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_supplier', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -134,21 +134,21 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatajenisbarang($validasi, $rowno, $rowperpage)
     {
         $this->db->select('a.reg_jenisbarang, a.jenisbarang');
         $this->db->from('tm_jenisbarang as a');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_jenisbarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatajenisbarangcountsearch($validasi, $cari) {
         $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
         $this->db->select('count(a.reg_jenisbarang) as allcount');
@@ -156,17 +156,17 @@ class mastermodel extends CI_Model {
         $this->db->where($where);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatajenisbarangsearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (a.reg_jenisbarang like '%".$cari."%' or a.jenisbarang like '%".$cari."%')";
         $this->db->select('a.reg_jenisbarang, a.jenisbarang');
         $this->db->from('tm_jenisbarang as a');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_jenisbarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -190,18 +190,18 @@ class mastermodel extends CI_Model {
         }
         return $result[0]['allcount'];
     }
-    
+
     public function getdatastokbarang($validasi, $rowno, $rowperpage)
     {
         $this->db->select('*');
         $this->db->from('v_stokbarang');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('reg_stokbarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatastokbarangcountsearch($validasi, $cari) {
         error_reporting(0);
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
@@ -212,14 +212,14 @@ class mastermodel extends CI_Model {
         $result = $query->result_array();
         return $result[0]['allcount'];
     }
-    
+
     public function getdatastokbarangsearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
         $this->db->select('*');
         $this->db->from('v_stokbarang');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('reg_stokbarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -249,13 +249,13 @@ class mastermodel extends CI_Model {
         }
         return $result[0]['allcount'];
     }
-    
+
     public function getdatahargabarang($validasi, $rowno, $rowperpage)
     {
         $this->db->select('*');
         $this->db->from('v_hargabarang');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('reg_hargabarang', 'DESC');
         $query = $this->db->get();
         if(isset($result[0]['allcount'])){
@@ -265,7 +265,7 @@ class mastermodel extends CI_Model {
         }
         return $query->result_array();
     }
-    
+
     public function getdatahargabarangcountsearch($validasi, $cari) {
         error_reporting(0);
         $where = "status_muncul = '".$validasi."' and (stokbarang like '%".$cari."%' or hargabarang_grosir like '%".$cari."%' or hargabarang_retail like '%".$cari."%')";
@@ -276,14 +276,14 @@ class mastermodel extends CI_Model {
         $result = $query->result_array();
         return $result[0]['allcount'];
     }
-    
+
     public function getdatahargabarangsearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (stokbarang like '%".$cari."%' or hargabarang_grosir like '%".$cari."%' or hargabarang_retail like '%".$cari."%')";
         $this->db->select('*');
         $this->db->from('v_hargabarang');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('reg_hargabarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -300,21 +300,21 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapelanggan($validasi, $rowno, $rowperpage)
     {
         $this->db->select('a.reg_pelanggan, a.pelanggan');
         $this->db->from('tm_pelanggan as a');
         $this->db->where('status_muncul =', $validasi);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_pelanggan', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatapelanggancountsearch($validasi, $cari) {
         $where = "status_muncul = '".$validasi."' and (a.reg_pelanggan like '%".$cari."%' or a.pelanggan like '%".$cari."%')";
         $this->db->select('count(a.reg_pelanggan) as allcount');
@@ -322,17 +322,17 @@ class mastermodel extends CI_Model {
         $this->db->where($where);
         $query = $this->db->get();
         $result = $query->result_array();
-     
+
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapelanggansearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (a.reg_pelanggan like '%".$cari."%' or a.pelanggan like '%".$cari."%')";
         $this->db->select('a.reg_pelanggan, a.pelanggan');
         $this->db->from('tm_pelanggan as a');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('a.reg_pelanggan', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -357,18 +357,18 @@ class mastermodel extends CI_Model {
         }
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapiutang($validasi, $rowno, $rowperpage)
     {
         $this->db->select('*');
         $this->db->from('v_piutang');
         $this->db->where('status_muncul =', $validasi);
         $this->db->where('piutang !=', '0');
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatapiutangcountsearch($validasi, $cari) {
         error_reporting(0);
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%')";
@@ -380,7 +380,7 @@ class mastermodel extends CI_Model {
         $result = $query->result_array();
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapiutangsearch($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%')";
@@ -388,7 +388,7 @@ class mastermodel extends CI_Model {
         $this->db->from('v_piutang');
         $this->db->where($where);
         $this->db->where('piutang !=', '0');
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $query = $this->db->get();
         return $query->result_array();
     }
@@ -397,7 +397,7 @@ class mastermodel extends CI_Model {
 
     // START DATA RETUR
 
-    public function getdatareturcount() 
+    public function getdatareturcount()
     {
         $this->db->select('count(distinct nomor_tr_penjualan) as allcount');
         $this->db->from('tr_penjualan');
@@ -413,7 +413,7 @@ class mastermodel extends CI_Model {
         }
         return $result[0]['allcount'];
     }
-    
+
     public function getdataretur($rowno, $rowperpage)
     {
         $this->db->select('nomor_tr_penjualan, deleted_at');
@@ -422,12 +422,12 @@ class mastermodel extends CI_Model {
         $this->db->where('status_muncul =', '2');
         $this->db->where('payment_method =', 'tunai');
         $this->db->group_by("nomor_tr_penjualan");
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('nomor_tr_penjualan', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatareturcountsearch($cari) {
         error_reporting(0);
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
@@ -438,14 +438,14 @@ class mastermodel extends CI_Model {
         $result = $query->result_array();
         return $result[0]['allcount'];
     }
-    
+
     public function getdataretursearch($rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
         $this->db->select('nomor_tr_penjualan, deleted_at');
         $this->db->from('v_stokbarang');
         $this->db->where($where);
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $this->db->order_by('reg_stokbarang', 'DESC');
         $query = $this->db->get();
         return $query->result_array();
@@ -469,18 +469,18 @@ class mastermodel extends CI_Model {
         }
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapiutangfak($validasi, $rowno, $rowperpage)
     {
         $this->db->select('*');
         $this->db->from('v_piutang');
         $this->db->where('status_muncul =', $validasi);
         $this->db->limit($rowperpage, $rowno);
-        $this->db->order_by("piutang", "DESC");  
+        $this->db->order_by("piutang", "DESC");
         $query = $this->db->get();
         return $query->result_array();
     }
-    
+
     public function getdatapiutangcountsearchfak($validasi, $cari) {
         error_reporting(0);
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$cari."%\" )";
@@ -492,7 +492,7 @@ class mastermodel extends CI_Model {
         $result = $query->result_array();
         return $result[0]['allcount'];
     }
-    
+
     public function getdatapiutangsearchfak($validasi, $rowno, $rowperpage, $cari)
     {
         $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%' or piutang like '%".$cari."%' or stok_awal like '%".$cari."%' or stok_perbarui like '%".$cari."%' or JSON_EXTRACT(harga_default, \"$.nofak\") like \"%".$cari."%\")";
@@ -500,7 +500,7 @@ class mastermodel extends CI_Model {
         $this->db->from('v_piutang');
         $this->db->where($where);
         $this->db->where('piutang !=', '0');
-        $this->db->limit($rowperpage, $rowno);  
+        $this->db->limit($rowperpage, $rowno);
         $query = $this->db->get();
         return $query->result_array();
     }

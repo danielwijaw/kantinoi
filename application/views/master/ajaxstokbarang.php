@@ -9,7 +9,7 @@
             <th>Jenis Barang</th>
             <td width="10%"><center>
                 <button data-toggle="modal" data-target="#modalstokbarangcari" class="btn btn-primary btn-xs"><i class="fa fa-search" aria-hidden="true"></i></button>
-                <button data-toggle="modal" data-target="#modalstokbarang" class="btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <!--<button data-toggle="modal" data-target="#modalstokbarang" class="btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
             </td>
         </tr>
     </thead>
@@ -25,7 +25,7 @@
         <td>
             <a onclick="return confirm('Anda Yakin Akan Menghapus Stok Barang?')" href="<?php echo base_url('/mastertr/hapusdatastokbarang?id='.$value['reg_stokbarang']) ?>"><button class="btn btn-xs btn-danger" title="Hapus Data"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
             <button class="btn btn-xs btn-warning" title="Update Data" data-toggle="modal" data-target="#modalupdatestokbarang<?php echo $value['reg_stokbarang'] ?>"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
-            <button class="btn btn-xs btn-primary" title="Barang Datang" data-toggle="modal" data-target="#modalupdatebarangdatang<?php echo $value['reg_stokbarang'] ?>"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <!--<button class="btn btn-xs btn-primary" title="Barang Datang" data-toggle="modal" data-target="#modalupdatebarangdatang<?php //echo $value['reg_stokbarang'] ?>"><i class="fa fa-plus" aria-hidden="true"></i></button>-->
         </td>
     </tr>
     <?php } ?>
@@ -94,7 +94,7 @@
             <label>Jumlah Barang Awal</label>
             <input type="text" class="form-control" name="jumlahawaldatang_updated_<?php echo $value['reg_stokbarang'] ?>" value="<?php echo $value['jumlahbarang'] ?>" readonly="readonly"/><br/>
             <label>Nomor Faktur</label>
-            <input type="text"  class="form-control" placeholder="Masukan Nomor Faktur" name="nofak_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>     
+            <input type="text"  class="form-control" placeholder="Masukan Nomor Faktur" name="nofak_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
 			      <label>Jumlah Barang Datang</label>
             <input onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" type="text" class="form-control" placeholder="Masukan Jumlah Barang Datang" name="jumlahbarangdatang_updated_<?php echo $value['reg_stokbarang'] ?>" /><br/>
             <label>Harga Per Satuan Barang Datang</label>
@@ -213,8 +213,8 @@ function updatedatastokbarang<?php echo $value['reg_stokbarang'] ?>(status)
         url: "<?php echo base_url('/mastertr/updatedatastokbarang?id='.$value['reg_stokbarang']) ?>"+"&status="+status,
         type: "POST",
         data: a,
-        contentType: false,       
-        cache: false,             
+        contentType: false,
+        cache: false,
         processData:false,
         success: function(data) {
           if(data == "Berhasil"){
@@ -226,7 +226,7 @@ function updatedatastokbarang<?php echo $value['reg_stokbarang'] ?>(status)
           }
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-          console.log(XMLHttpRequest.responseText); 
+          console.log(XMLHttpRequest.responseText);
           if (XMLHttpRequest.status == 0) {
           alert(' Check Your Network.');
           } else if (XMLHttpRequest.status == 404) {
@@ -235,7 +235,7 @@ function updatedatastokbarang<?php echo $value['reg_stokbarang'] ?>(status)
           alert('Internel Server Error.');
           }  else {
           alert('Unknow Error.\n' + XMLHttpRequest.responseText);
-          }     
+          }
         }
     });
   }

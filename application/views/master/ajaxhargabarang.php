@@ -3,8 +3,8 @@
         <tr>
             <th>ID</th>
             <th>Nama Barang</th>
-            <th>Harga Barang Retail</th>
             <th>Harga Barang Grosir</th>
+            <th>Harga Barang Retail</th>
             <td width="7%"><center>
                 <button data-toggle="modal" data-target="#modalhargabarangcari" class="btn btn-primary btn-xs"><i class="fa fa-search" aria-hidden="true"></i></button>
                 <button data-toggle="modal" data-target="#modalhargabarang" class="btn btn-primary btn-xs"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -28,7 +28,7 @@
 </table>
 
 <?php foreach ($data as $key => $value) { ?>
-<div id="modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>" class="modal fade" role="dialog"  style="overflow:hidden;">
+<div id="modalupdatehargabarang<?php echo $value['reg_hargabarang'] ?>" class="modal fade" role="dialog" >
   <div class="modal-dialog">
 
     <!-- Modal content-->
