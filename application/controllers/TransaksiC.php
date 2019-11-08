@@ -177,11 +177,17 @@ class TransaksiC extends CI_Controller {
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatapiutangcountfak('1');
 			$row = ceil($total / 5);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarangfaktur?page='.$xxz)."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarangfaktur?page='.$i)."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){
@@ -201,11 +207,17 @@ class TransaksiC extends CI_Controller {
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatapiutangcountsearchfak('1',$_GET['cari']);
 			$row = ceil($total / 50);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*50)-50;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarangfaktur?page='.$xxz.'&cari='.$_GET['cari'])."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/transaksiC/stokbarangfaktur?page='.$i.'&cari='.$_GET['cari'])."`, `mastertransaksistokbarangajax`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 50){

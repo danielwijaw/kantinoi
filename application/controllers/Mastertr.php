@@ -276,8 +276,8 @@ class Mastertr extends CI_Controller {
     {
         if(isset($_POST)){
             $data = array(
-                    'hargabarang_grosir' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
-                    'hargabarang_retail'    => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']]),
+                    'hargabarang_retail' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
+                    'hargabarang_grosir'    => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']]),
                     'status_muncul'         => '1',
                     'updated_at'            => date('Y-m-d H:i:s')
             );
@@ -286,10 +286,10 @@ class Mastertr extends CI_Controller {
 
             $datax = array(
                 'reg_hargabarang'               => $_GET['id'],
-                'hargabarang_grosir_awal' 	    => escapeString($_POST['hargabarang_awal_retail_updated_'.$_GET['id']]),
-                'hargabarang_retail_awal'       => escapeString($_POST['hargabarang_awal_grosir_updated_'.$_GET['id']]),
-                'hargabarang_grosir_perbarui' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
-                'hargabarang_retail_perbarui'   => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']])
+                'hargabarang_retail_awal' 	    => escapeString($_POST['hargabarang_awal_retail_updated_'.$_GET['id']]),
+                'hargabarang_grosir_awal'       => escapeString($_POST['hargabarang_awal_grosir_updated_'.$_GET['id']]),
+                'hargabarang_retail_perbarui' 	=> escapeString($_POST['hargabarang_retail_updated_'.$_GET['id']]),
+                'hargabarang_grosir_perbarui'   => escapeString($_POST['hargabarang_grosir_updated_'.$_GET['id']])
             );
             $this->db->insert('tr_hargabarang', $datax);
 

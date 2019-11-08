@@ -180,11 +180,17 @@ class Attribute extends CI_Controller {
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatastokbarangcount('1');
 			$row = ceil($total / 5);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?page='.$xxz)."`, `barang_here`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?page='.$i)."`, `barang_here`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){
@@ -204,11 +210,17 @@ class Attribute extends CI_Controller {
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatastokbarangcountsearch('1',$_GET['cari']);
 			$row = ceil($total / 5);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?page='.$xxz)."`, `barang_here`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?page='.$i)."`, `barang_here`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){
@@ -232,15 +244,21 @@ class Attribute extends CI_Controller {
 		if(!isset($_GET['cari'])){
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatastokbarangcount('1');
-			$row = ceil($total / 5);
+			$row = ceil($total / 10);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$xxz)."`, `ngenehbarange`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$i)."`, `ngenehbarange`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
-			if($total <= 5){
+			if($total <= 10){
 				$button = '';
 			}else{
 				$button = $button;
@@ -250,21 +268,27 @@ class Attribute extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatastokbarang('1',$datapage,'5');
+			$data = $this->mastermodel->getdatastokbarang('1',$datapage,'10');
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/kasir/ajaxstokbarangoi', $data);
 		}else{
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatastokbarangcountsearch('1',$_GET['cari']);
-			$row = ceil($total / 5);
+			$row = ceil($total / 10);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$xxz.'&cari='.$_GET['cari'])."`, `ngenehbarange`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/stokbarangoi?page='.$i.'&cari='.$_GET['cari'])."`, `ngenehbarange`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
-			if($total <= 5){
+			if($total <= 10){
 				$button = '';
 			}else{
 				$button = $button;
@@ -274,13 +298,14 @@ class Attribute extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatastokbarangsearch('1',$datapage,'5',$_GET['cari']);
+			$data = $this->mastermodel->getdatastokbarangsearch('1',$datapage,'10',$_GET['cari']);
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/kasir/ajaxstokbarangoi', $data);
 		}
 	}
 
 	public function getdatahargabelicuk(){
+		error_reporting(0);
 		$query = $this->db->query("
             SELECT
               *
@@ -306,15 +331,21 @@ class Attribute extends CI_Controller {
 		if(!isset($_GET['cari'])){
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatapiutangcountfak('1');
-			$row = ceil($total / 5);
+			$row = ceil($total / 10);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/nomorfakturcuk?page='.$xxz)."`, `nangkene`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/nomorfakturcuk?page='.$i)."`, `nangkene`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
-			if($total <= 5){
+			if($total <= 10){
 				$button = '';
 			}else{
 				$button = $button;
@@ -324,21 +355,27 @@ class Attribute extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatapiutangfak('1',$datapage,'5');
+			$data = $this->mastermodel->getdatapiutangfak('1',$datapage,'10');
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/transaksi/ajaxstokbarangfakx', $data);
 		}else{
 			$this->load->model('mastermodel');
 			$total = $this->mastermodel->getdatapiutangcountsearchfak('1',$_GET['cari']);
-			$row = ceil($total / 5);
+			$row = ceil($total / 10);
+			$page = (isset($_GET['page']))? $_GET['page'] : 1;
+			$jumlah_number = 3;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1;
+			$start_number = ($page > $jumlah_number)? $page - $jumlah_number : 1; // Untuk awal link number        
+			$end_number = ($page < ($row - $jumlah_number))? $page + $jumlah_number : $row;
+			$link_prev = ($page > 1)? $page - 1 : 1;
+			$link_next = ($page < $row)? $page + 1 : $row;
 			$button = "<ul class='pagination'>";
-			for ($x = 0; $x < $row; $x++) {
-				$xz = $x + 1;
-				$xxz = ($xz*5)-5;
-				$button .= "<li><a onclick='ajaxpaging(`".base_url('/attribute/nomorfakturcuk?page='.$xxz.'&cari='.$_GET['cari'])."`, `nangkene`)' href='javascript:void(0)'>$xz</a></li>";
+			for ($i = $start_number; $i <= $end_number; $i++) {
+				$link_active = ($page == $i)? ' class="active"' : '';
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/nomorfakturcuk?page='.$i.'&cari='.$_GET['cari'])."`, `nangkene`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
-			if($total <= 5){
+			if($total <= 10){
 				$button = '';
 			}else{
 				$button = $button;
@@ -348,7 +385,7 @@ class Attribute extends CI_Controller {
 			{
 				$datapage = $_GET['page'];
 			}
-			$data = $this->mastermodel->getdatapiutangsearchfak('1',$datapage,'5',$_GET['cari']);
+			$data = $this->mastermodel->getdatapiutangsearchfak('1',$datapage,'10',$_GET['cari']);
 			$data = array('data' => $data,'button'=>$button);
 			$this->load->view('/transaksi/ajaxstokbarangfakx', $data);
 		}
@@ -424,6 +461,7 @@ class Attribute extends CI_Controller {
 	}
 
 	public function printfaktur(){
+		error_reporting(0);
 		$query = $this->db->query("
 		SELECT
 			tr_stokbarang.*,
