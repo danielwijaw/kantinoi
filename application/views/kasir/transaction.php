@@ -63,6 +63,7 @@
 </div>
 
 <script type="text/javascript">
+    $("#hargamunculbos").html("<?php echo 'Rp. '.number_format(array_sum($duit)); ?>");
     $('#paymenttransaction').on('shown.bs.modal', function () {
         $('#rupiah').focus();
     });

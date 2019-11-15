@@ -61,7 +61,6 @@ class mastermodel extends CI_Model {
 
         $this->db->select('count(reg_supplier) as allcount');
         $this->db->from('tm_supplier');
-        $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
 
@@ -180,7 +179,6 @@ class mastermodel extends CI_Model {
 
         $this->db->select('allcount');
         $this->db->from('v_countstokbarang');
-        $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
         if(isset($result[0]['allcount'])){
@@ -239,7 +237,6 @@ class mastermodel extends CI_Model {
 
         $this->db->select('allcount');
         $this->db->from('v_counthargabarang');
-        $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
         if(isset($result[0]['allcount'])){
@@ -297,7 +294,6 @@ class mastermodel extends CI_Model {
 
         $this->db->select('count(reg_pelanggan) as allcount');
         $this->db->from('tm_pelanggan');
-        $this->db->where('status_muncul =', $validasi);
         $query = $this->db->get();
         $result = $query->result_array();
 
@@ -346,7 +342,6 @@ class mastermodel extends CI_Model {
 
         $this->db->select('allcount');
         $this->db->from('v_countpiutang');
-        $this->db->where('status_muncul =', $validasi);
         $this->db->where('piutang !=', '0');
         $query = $this->db->get();
         $result = $query->result_array();

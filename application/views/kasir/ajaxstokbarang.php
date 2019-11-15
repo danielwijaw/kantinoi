@@ -22,7 +22,7 @@
         <td><?php echo $value['nama_supplier'] ?></td>
         <td><?php echo $value['jenisbarang'] ?></td>
         <td>
-            <button data-dismiss="modal" onclick="selectbarang('<?php echo $value['reg_stokbarang'] ?>')" class="btn btn-xs btn-warning" title="Select Data"><i class="fa fa-sync-alt" aria-hidden="true"></i></button>
+            <button id="stokbarangpalingpol<?php echo $key ?>" data-dismiss="modal" onclick="selectbarang('<?php echo $value['reg_stokbarang'] ?>')" class="btn btn-xs btn-warning hooverwak" title="Select Data"><i class="fa fa-sync-alt" aria-hidden="true"></i>&nbsp;Pilih</button>
         </td>
     </tr>
     <?php } ?>
@@ -32,3 +32,8 @@
 <div style="text-align:center">
 <?php echo $button ?>
 </div>
+
+<script>
+    $('#stokbarangpalingpol0').focus();
+    $("#caribarangkasir").focus();
+</script>

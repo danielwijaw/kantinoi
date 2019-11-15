@@ -13,10 +13,23 @@
     }
 }
 </style>
+<style>
+    .hooverwak:focus {
+        background-color: red;
+    };
+    .hooverwak:hover {
+        background-color: red;
+    };
+</style>
 <form id="kasirpost" action="javascript:void(0)" method="POST">
 <div class="box box-primary">
     <div class="box-header with-border">
-        <h3 class="box-title titlealert">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h3>
+        <div class="col-md-6">
+            <h1 class="box-title titlealert">Transaksi Penjualan #<?php echo $nomor_transaksi_penjualan ?></h1>
+        </div>
+        <div class="col-md-6" style="text-align: right; font-weight: bold; font-size: 24pt">
+            <div id="hargamunculbos"></div>
+        </div>
     </div>
     <div class="box-body">
         <div class="col-md-12">
@@ -135,7 +148,7 @@
 </div>
 
 <div id="selectbarang" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -164,7 +177,7 @@
         <div class="col-md-9">
             <input type="text" id="caribarangkasir" class="form-control" placeholder="Masukan Key Pencarian Stok Barang">
         </div>
-        <div class="col-md-3"><button class="btn btn-primary btn-sm" data-dismiss="modal" onclick="carikasirstok()">Cari</button></div>
+        <div class="col-md-3"><button id="carikasirstok" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="carikasirstok()">Cari</button></div>
       </div>
       <div class="modal-footer">
         &nbsp;
@@ -274,7 +287,14 @@
                 $("#btn-cetak-transaksi").click();
                 event.preventDefault();
                 return false;
-            }
+            }  
+            $("#caribarangkasir").on('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    // ENTER
+                    $('#carikasirstok').click();   
+                    $('#modalcarikasir').modal('hide');
+                }
+            });
         }
     );
     $(document).on('keyup', function(e){
@@ -323,6 +343,7 @@
     });
     function submitkasir()
     {
+        $("#btn-tambahbarang").attr("disabled", true);
         // PROSES CARI ULANG KODE BARANG
         $(".titlealert").html("LOADING.........................");
         $(".titlealert").html("PROSES CARI ULANG KODE BARANG........................");
@@ -581,7 +602,7 @@
                 data: {'id':id, 'nama_barang':nama_barang, 'id_barang':id_barang, 'created_at':created_at, 'jumlah_barang':jumlah_barang},
                 success: function(data) {
                     console.log(data);
-                    window.location.reload(true);
+                    // window.location.reload(true);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseText); 
@@ -666,6 +687,8 @@
     }
     function viewbarang(){
         $('#barang_here').html('LOADING ........');
+        $('#modalcarikasir').modal('show');
+        $('#caribarangkasir').focus();
         $.ajax({
         url: '<?php echo base_url('/attribute/barangkasir/') ?>',
         success: function(data) {
@@ -692,7 +715,8 @@
         $.ajax({
         url: "<?php echo base_url('/attribute/barangkasir/?cari=') ?>"+pencarian,
         success: function(data) {
-            $('#barang_here').html(data);        
+            $('#barang_here').html(data);    
+            $('#caribarangkasir').val("");    
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText); 
