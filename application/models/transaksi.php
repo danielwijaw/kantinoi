@@ -5,9 +5,9 @@ class transaksi extends CI_Model {
     {
         $data = $this->db->query("select coalesce((max(nomor_tr_penjualan)+1),1) as nomor_transaksi_penjualan from tr_penjualan where status_hold != '1' and (status_muncul = '1' or status_hold = 3) and created_at like '".date('Y-m-d')."%'");
         $dataecho = $data->row_array();
-        if(strlen($dataecho['nomor_transaksi_penjualan']) < 7 ){
+        if(strlen($dataecho['nomor_transaksi_penjualan']) < 10 ){
             $datafix = array(
-                'nomor_transaksi_penjualan' => date('ymd').$dataecho['nomor_transaksi_penjualan']
+                'nomor_transaksi_penjualan' => date('ymd')."000".$dataecho['nomor_transaksi_penjualan']
             );
         }else{
             $datafix = $dataecho;

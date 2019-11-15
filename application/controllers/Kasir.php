@@ -85,10 +85,11 @@ class Kasir extends CI_Controller {
       foreach($holding as $key => $value){
         echo "<tr>
                 <td width=\"95%\">".$value['nomor_tr_penjualan']."</td>
-                <td width=\"5%\" style=\"text-align:center\"><a target=\"_blank\" href=\"".base_url('/kasir/printout?number=').$value['nomor_tr_penjualan']."\"><button class=\"btn btn-primary btn-sm\"><i class=\"fa fa-check\"></i></button></a></td>
+                <td width=\"5%\" style=\"text-align:center\"><button onclick='opennewtabfinished(`".base_url('/kasir/printout?number=').$value['nomor_tr_penjualan']."`)' id=\"stokfinishedpoll".$key."\" class=\"hooverwak btn btn-primary btn-sm\"><i class=\"fa fa-check\"></i></button></td>
               </tr>";
       }
       echo "</table>";
+      echo "<script> $('#stokfinishedpoll0').focus(); function opennewtabfinished(url){ window.open(url, url); } </script>";
     }
 
     public function printout()
