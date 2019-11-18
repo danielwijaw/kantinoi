@@ -132,7 +132,7 @@ class Kasirtr extends CI_Controller {
             $this->db->where('created_at', $_GET['created_at']);
             $this->db->update('tr_stokbarang', $dataupdatestok);
             // MEMBALIKAN ITEM BARANG
-            $this->db->set('jumlahbarang', 'jumlahbarang+'.$_GET['jumlah_barang']);
+            $this->db->set('jumlahbarang', 'jumlahbarang+'.$_GET['jumlah_barang'], FALSE);
             $this->db->where('reg_stokbarang', $_GET['id_barang']);
             $this->db->update('tm_stokbarang');
             echo "Berhasil";
