@@ -602,7 +602,7 @@
                 data: {'id':id, 'nama_barang':nama_barang, 'id_barang':id_barang, 'created_at':created_at, 'jumlah_barang':jumlah_barang},
                 success: function(data) {
                     console.log(data);
-                    // window.location.reload(true);
+                    window.location.reload(true);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest.responseText); 
@@ -717,6 +717,30 @@
         success: function(data) {
             $('#barang_here').html(data);    
             $('#caribarangkasir').val("");    
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.responseText); 
+            if (XMLHttpRequest.status == 0) {
+            alert(' Check Your Network.');
+            } else if (XMLHttpRequest.status == 404) {
+            alert('Requested URL not found.');
+            } else if (XMLHttpRequest.status == 500) {
+            alert('Internel Server Error.');
+            }  else {
+            alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+            }     
+        }
+        });
+    }
+    
+    function bedahtransaksi(){
+    var tanggal_bedah_tr = $("#tanggal_bedah_tr").val();
+    $( "#print_here" ).html( "LOADING....." );
+        $.ajax({
+        url: "<?php echo base_url('/kasir/finished/?tanggal_tr=') ?>"+tanggal_bedah_tr,
+        success: function(data) {
+            $('#print_here').html(data);    
+            $('#tanggal_bedah_tr').val("");    
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest.responseText); 

@@ -76,7 +76,13 @@ class Kasir extends CI_Controller {
 
     public function finished()
     {
-      $holding = $this->transaksi->getfinished();
+      if(!isset($_GET['tanggal_tr'])){
+        $data = date('Y-m-d');
+      }else{
+        $data = $_GET['tanggal_tr'];
+      }
+      $holding = $this->transaksi->getfinished($data);
+      echo "<input id='tanggal_bedah_tr' type='text' placeholder='2019-12-12'>&nbsp;<button onclick='bedahtransaksi()' class='btn btn-sm btn-primary'>Pilih</button>&nbsp;<br/><label>Format Tanggal 2019-12-12</label>";
       echo "<table class=\"table\" width=\"100%\">";
       echo "<tr>
               <td style=\"font-weight: bold\">Nomor Transaksi</td>

@@ -4,7 +4,12 @@
             <tr>
                 <td width="50%"><h3 class="box-title titlealert">Report Transaksi Kasir Penjualan</h3></td>
                 <td width="15%">&nbsp;</td>
-                <td width="8%">
+                <td width="8%"> 
+                    <select class="form-control" id="pilihankasir" width="100%" name="pilihankasir">
+                        <option value='0'>Report By Barang</option>
+                        <option value='1'>Report By Kasir</option>
+                    </select>
+                    &nbsp;
                     <select class="form-control" width="100%" name="admin_kasir" id="admin_kasir"></select>
                 </td>
                 <td>&nbsp;</td>
@@ -59,8 +64,9 @@
     {
         var tanggal = $('input[name="datetransaksikasir"]').val();
         var admin = $('#admin_kasir').val();
+        var pilihankasir = $('#pilihankasir').val();
         $.ajax({
-            url: "<?php echo base_url('/report/transaksikasirout?date='); ?>"+tanggal+"&admin="+admin,
+            url: "<?php echo base_url('/report/transaksikasirout?date='); ?>"+tanggal+"&admin="+admin+"&pilihankasir="+pilihankasir,
             type: "GET",
             contentType: false,       
             cache: false,             
@@ -87,6 +93,7 @@
         var newWindow = window.open("","_blank");
         var tanggal = $('input[name="datetransaksikasir"]').val();
         var admin = $('#admin_kasir').val();
-        newWindow.location.href = "<?php echo base_url('/report/transaksikasirout?date='); ?>"+tanggal+"&admin="+admin+"&print=1";
+        var pilihankasir = $('#pilihankasir').val();
+        newWindow.location.href = "<?php echo base_url('/report/transaksikasirout?date='); ?>"+tanggal+"&admin="+admin+"&print=1"+"&pilihankasir="+pilihankasir;
     }
 </script>

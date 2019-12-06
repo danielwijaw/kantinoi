@@ -220,7 +220,7 @@ class Attribute extends CI_Controller {
 			$button = "<ul class='pagination'>";
 			for ($i = $start_number; $i <= $end_number; $i++) {
 				$link_active = ($page == $i)? ' class="active"' : '';
-				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?page='.$i)."`, `barang_here`)' href='javascript:void(0)'>$i</a></li>";
+				$button .= "<li ".$link_active."><a onclick='ajaxpaging(`".base_url('/attribute/barangkasir?cari='.$_GET['cari'].'&page='.$i)."`, `barang_here`)' href='javascript:void(0)'>$i</a></li>";
 			} 
 			$button .= "</ul>";
 			if($total <= 5){
@@ -318,13 +318,17 @@ class Attribute extends CI_Controller {
 				id_tr_stokbarang DESC
             ");
 		$result = $query->row_array();
-		$harga = json_decode($result['harga_default'], true);   
-		echo "<label>Harga Barang Pembelian</label>";
-		echo "<input readonly='readonly' type='text' class='form-control' value='".rupiah($harga['harga_barang'])." * ".$harga['jumlah_barang']." = ".rupiah($harga['harga_barang'] * $harga['jumlah_barang'])."'>";
-		echo "<br/><label>PPN & Diskon Barang Pembelian</label>";
-		echo "<input readonly='readonly' type='text' class='form-control' value='".$harga['ppn_barang']."% & ".rupiah($harga['diskon_barang'])."'>";
-		echo "<br/><label>Total Harga Beli per ".$harga['tanggal']."</label>";
-		echo "<input readonly='readonly' type='text' class='form-control' value='".rupiah(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100)) )." / ".rupiah((($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'])."'><br/>";
+		$harga = json_decode($result['harga_default'], true);
+		if(isset($_GET['jsononly'])){
+			echo (($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'];
+		}else{
+			echo "<label>Harga Barang Pembelian</label>";
+			echo "<input readonly='readonly' type='text' class='form-control' value='".rupiah($harga['harga_barang'])." * ".$harga['jumlah_barang']." = ".rupiah($harga['harga_barang'] * $harga['jumlah_barang'])."'>";
+			echo "<br/><label>PPN & Diskon Barang Pembelian</label>";
+			echo "<input readonly='readonly' type='text' class='form-control' value='".$harga['ppn_barang']."% & ".rupiah($harga['diskon_barang'])."'>";
+			echo "<br/><label>Total Harga Beli per ".$harga['tanggal']."</label>";
+			echo "<input readonly='readonly' type='text' class='form-control' value='".rupiah(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100)) )." / ".rupiah((($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'])."'><br/>";
+		}   
 	}
 
 	public function nomorfakturcuk(){
