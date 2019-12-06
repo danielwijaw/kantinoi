@@ -201,14 +201,18 @@ class mastermodel extends CI_Model {
     }
 
     public function getdatastokbarangcountsearch($validasi, $cari) {
-        error_reporting(0);
-        $where = "status_muncul = '".$validasi."' and (reg_stokbarang like '%".$cari."%' or stokbarang like '%".$cari."%' or jumlahbarang like '%".$cari."%' or satuan like '%".$cari."%' or nama_supplier like '%".$cari."%' or jenisbarang like '%".$cari."%')";
-        $this->db->select('allcount');
-        $this->db->from('v_countstokbarang');
-        $this->db->where($where);
-        $query = $this->db->get();
-        $result = $query->result_array();
-        return $result[0]['allcount'];
+        $this->db->group_start();
+        $this->db->like('stokbarang', $cari);
+        $this->db->or_like('reg_stokbarang', $cari);
+        $this->db->or_like('jumlahbarang', $cari);
+        $this->db->or_like('satuan', $cari);
+        $this->db->or_like('nama_supplier', $cari);
+        $this->db->or_like('jenisbarang', $cari);
+        $this->db->group_end();
+        $this->db->where(['status_muncul'=>$validasi]);
+        $this->db->from('v_stokbarang');
+        $result = $this->db->count_all_results();
+        return $result;
     }
 
     public function getdatastokbarangsearch($validasi, $rowno, $rowperpage, $cari)

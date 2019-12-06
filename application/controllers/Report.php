@@ -50,16 +50,19 @@ class Report extends CI_Controller {
 		}
 		$query = $this->db->query("
 		SELECT
-			* 
+			tr_penjualan.*, tr_stokbarang.harga_default 
 		FROM
-			tr_penjualan 
+			tr_penjualan
+		LEFT JOIN tr_stokbarang
+			ON tr_penjualan.id_barang = tr_stokbarang.reg_stokbarang
 		WHERE
 			payment_method = 'tunai' 
-			AND status_hold != '4'
-			AND nomor_tr_penjualan != ''
-			AND SUBSTR( deleted_at, 1, 10 ) >= '".$tanggalawal."' 
-			AND SUBSTR( deleted_at, 1, 10 ) <= '".$tanggalakhir."'
+			AND tr_penjualan.status_hold != '4'
+			AND tr_penjualan.nomor_tr_penjualan != ''
+			AND SUBSTR( tr_penjualan.deleted_at, 1, 10 ) >= '".$tanggalawal."' 
+			AND SUBSTR( tr_penjualan.deleted_at, 1, 10 ) <= '".$tanggalakhir."'
 			".$admin."
+		GROUP BY tr_penjualan.id_tr_penjualan
 		ORDER BY nomor_tr_penjualan
 		");
 		$result = $query->result_array();
