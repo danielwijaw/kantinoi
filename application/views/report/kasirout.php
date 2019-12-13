@@ -31,7 +31,7 @@
         <?php foreach($result as $key => $value){ $harga = json_decode($value['harga_default'], true); ?>
         <?php 
             $harga_beli = (int)(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'];    
-            $batine = (int)($harga_beli*$value['jumlah_barang'])-$value['harga_fix']*$value['jumlah_barang'];
+            $batine = (int)($value['harga_fix']*$value['jumlah_barang'])-($harga_beli*$value['jumlah_barang']);
             $ngitungbati[] = $batine;
         ?>
         <tr>
@@ -67,7 +67,7 @@
         $harga_beli = (int)(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'];   
         $metune[$value['created_by']]['pendapatan'][] = (int)$value['harga_fix']*$value['jumlah_barang'];
         $metune[$value['created_by']]['harga_beli'][] = $harga_beli;
-        $metune[$value['created_by']]['provit'][] = (int)($harga_beli*$value['jumlah_barang'])-$value['harga_fix']*$value['jumlah_barang'];
+        $metune[$value['created_by']]['provit'][] = (int)($value['harga_fix']*$value['jumlah_barang'])-($harga_beli*$value['jumlah_barang']);
     };
 ?>
 <body <?php if($_GET['print']=='1'){ echo 'onload="window.print()"';} ?>>

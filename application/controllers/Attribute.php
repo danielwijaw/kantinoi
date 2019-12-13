@@ -486,4 +486,153 @@ class Attribute extends CI_Controller {
 		  ];
 		$this->load->view('/transaksi/printfaktur', $data);
 	}
+
+	public function changetypedata(){
+		// tm_hargabarang
+		echo "Start Hargabarang";
+		$harga_barang = $this->db->query('ALTER TABLE tm_hargabarang CHANGE reg_stokbarang reg_stokbarang BIGINT(64) NOT NULL');
+		if($harga_barang){
+			echo "Start Jenisbarang";
+			$jenis_barang = $this->db->query('ALTER TABLE tm_jenisbarang CHANGE reg_jenisbarang reg_jenisbarang BIGINT(64) NOT NULL');
+			if($jenis_barang){
+				echo "Start Pelanggan";
+				$pelanggan = $this->db->query('ALTER TABLE tm_pelanggan CHANGE reg_pelanggan reg_pelanggan BIGINT(64) NOT NULL');
+				if($pelanggan){
+					echo "Start Stokbarang";
+					$stokbarang = $this->db->query('ALTER TABLE tm_stokbarang CHANGE reg_stokbarang reg_stokbarang BIGINT(64) NOT NULL, CHANGE reg_supplier reg_supplier BIGINT(64) NOT NULL, CHANGE reg_jenisbarang reg_jenisbarang BIGINT(64) NOT NULL');
+					if($stokbarang){
+						echo "Start Supplier";
+						$supplier = $this->db->query('ALTER TABLE tm_supplier CHANGE reg_supplier reg_supplier BIGINT(64) NOT NULL');
+						if($supplier){
+							echo "Start User";
+							$user = $this->db->query('ALTER TABLE tm_user CHANGE nip nip BIGINT(64) NOT NULL');
+							if($user){
+								echo "Start Transaction hargabarang";
+								$tr_hargabarang = $this->db->query('ALTER TABLE tr_hargabarang CHANGE id_tr_hargabarang id_tr_hargabarang BIGINT(64) NOT NULL, CHANGE reg_hargabarang reg_hargabarang BIGINT(64) NOT NULL');
+								if($tr_hargabarang){
+									echo "Start Transaction penjualan";
+									$tr_penjualan = $this->db->query('ALTER TABLE tr_penjualan CHANGE id_tr_penjualan id_tr_penjualan BIGINT(64) NOT NULL, CHANGE nomor_tr_penjualan nomor_tr_penjualan BIGINT(64) NOT NULL, CHANGE id_barang id_barang BIGINT(64) NOT NULL, CHANGE id_pelanggan id_pelanggan BIGINT(64) NOT NULL');
+									if($tr_penjualan){
+										echo "Start Transaction stokbarang";
+										$tr_stokbarang = $this->db->query('ALTER TABLE tr_stokbarang CHANGE id_tr_stokbarang id_tr_stokbarang BIGINT(64) NOT NULL, CHANGE nomor_tr nomor_tr BIGINT(64) NOT NULL, CHANGE reg_stokbarang reg_stokbarang BIGINT(64) NOT NULL, CHANGE stok_awal stok_awal BIGINT(64) NOT NULL, CHANGE stok_perbarui stok_perbarui BIGINT(64) NOT NULL');	
+										if($tr_stokbarang){
+											echo "Finished Change Type Data";
+										}else{
+											echo "Updating field tr_stokbarang failed";
+										}
+									}else{
+										echo "Updating field tr_penjualan failed";
+									}
+								}else{
+									echo "Updating field tr_hargabarang failed";
+								}
+							}else{
+								echo "Updating field user failed";
+							}
+						}else{
+							echo "Updating field supplier failed";
+						}
+					}else{
+						echo "Updating field stokbarang failed";
+					}
+				}else{
+					echo "Updating field pelanggan failed";
+				}
+			}else{
+				echo "Updating field Jenisbarang failed";
+			}
+		}else{
+			echo "Updating field hargabarang failed";
+		}
+
+	}
+
+	public function recoverytrpenjualan(){
+		if(isset($_GET['limit'])){
+			$limit = $_GET['limit'];
+		}else{
+			$limit = 50;
+		}
+		if(isset($_GET['offset'])){
+			$offset = $_GET['offset'];
+		}else{
+			$offset = 0;
+		}
+		$query = $this->db->query("
+			SELECT
+			a.id_tr_penjualan,
+			a.nomor_tr_penjualan,
+			a.id_barang,
+			a.nama_barang,
+			b.stokbarang,
+			b.reg_stokbarang 
+		FROM
+			tr_penjualan AS a,
+			tm_stokbarang AS b 
+		WHERE
+			a.nama_barang = b.stokbarang and
+			a.id_barang = '2147483647' 
+		GROUP BY
+			nama_barang 
+		ORDER BY
+			id_tr_penjualan ASC 
+			LIMIT ".$limit."
+			OFFSET ".$offset."
+		")->result_array();
+		foreach($query as $key => $value){
+			$data[] = [
+				'nama_barang' 		=> $value['nama_barang'],
+				'id_barang'			=> $value['reg_stokbarang'],
+			];
+		}
+		$offsetfix = $offset+$limit;
+		echo $offsetfix;
+		$this->db->update_batch('tr_penjualan', $data, 'nama_barang');
+		header( "refresh:10;url=".base_url('attribute/recoverytrpenjualan?offset=0') );
+	}
+
+	public function recoverytrstokbarang(){
+		if(isset($_GET['limit'])){
+			$limit = $_GET['limit'];
+		}else{
+			$limit = 50;
+		}
+		if(isset($_GET['offset'])){
+			$offset = $_GET['offset'];
+		}else{
+			$offset = 0;
+		}
+		$query = $this->db->query("
+		SELECT
+			a.id_tr_stokbarang,
+			a.nomor_tr,
+			a.reg_stokbarang,
+			a.created_at,
+			b.nama_barang,
+			c.reg_stokbarang as reg_stokbarangfix
+		FROM
+			tr_stokbarang AS a,
+			tr_penjualan AS b,
+			tm_stokbarang as c
+		WHERE
+			a.reg_stokbarang = '2147483647' and
+			a.nomor_tr = b.nomor_tr_penjualan and
+			a.created_at = b.created_at and
+			b.id_barang = c.reg_stokbarang
+		ORDER BY
+			a.id_tr_stokbarang ASC 
+		LIMIT ".$limit."
+		OFFSET ".$offset."
+		")->result_array();
+		foreach($query as $key => $value){
+			$data[] = [
+				'id_tr_stokbarang' 		=> $value['id_tr_stokbarang'],
+				'reg_stokbarang'		=> $value['reg_stokbarangfix'],
+			];
+		}
+		$offsetfix = $offset+$limit;
+		echo $offsetfix;
+		$this->db->update_batch('tr_stokbarang', $data, 'id_tr_stokbarang');
+		header( "refresh:10;url=".base_url('attribute/recoverytrstokbarang?offset=0') );
+	}
 }
