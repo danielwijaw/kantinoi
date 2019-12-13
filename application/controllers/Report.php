@@ -54,7 +54,7 @@ class Report extends CI_Controller {
 		FROM
 			tr_penjualan
 		LEFT JOIN tr_stokbarang
-			ON tr_penjualan.id_barang = tr_stokbarang.reg_stokbarang
+			ON tr_penjualan.id_barang = tr_stokbarang.reg_stokbarang and tr_stokbarang.nomor_tr = '0' and tr_stokbarang.stok_perbarui != '0' and tr_stokbarang.harga_default != ''
 		WHERE
 			payment_method = 'tunai' 
 			AND tr_penjualan.status_hold != '4'
