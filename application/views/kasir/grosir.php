@@ -458,13 +458,18 @@
                     $("input[name='kode_barang']").focus();
                     return false;
                 }else{
-                    alert("Nama Barang = "+jsonurl['stokbarang']+" Harga Grosir = "+jsonurl['hargabarang_grosir']+" Harga Retail = "+jsonurl['hargabarang_retail']);
-                    $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
-                    $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
-                    $("input[name='harga_barang_retail']").val(jsonurl['hargabarang_retail']);
-                    $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
-                    $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
-                    $("input[name='jumlah_barang']").focus();
+                    if(jsonurl['hargabarang_grosir']===null){
+                        alert("Harga dari "+jsonurl['stokbarang']+" belum diinput ");
+                        return false;
+                    }else{
+                        alert("Nama Barang = "+jsonurl['stokbarang']+" Harga Grosir = "+jsonurl['hargabarang_grosir']+" Harga Retail = "+jsonurl['hargabarang_retail']);
+                        $("input[name='jumlah_barang_stok']").val(jsonurl['jumlahbarang']);
+                        $("input[name='harga_barang_grosir']").val(jsonurl['hargabarang_grosir']);
+                        $("input[name='harga_barang_retail']").val(jsonurl['hargabarang_retail']);
+                        $("input[name='nama_barang_stok']").val(jsonurl['stokbarang']);
+                        $("input[name='satuan_barang_stok']").val(jsonurl['satuan']);
+                        $("input[name='jumlah_barang']").focus();
+                    }
                 }
             }
             console.log(jsonurl);
