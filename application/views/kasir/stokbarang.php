@@ -81,7 +81,7 @@
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="jumlah_barang"></td>
                                 </tr>
                                 <tr>
-                                    <td>Harga Satuan Barang Datang</td>
+                                    <td id="hargalamaboss">Harga Satuan Barang Datang</td>
                                     <td>:</td>
                                     <td><input type="text" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control clean" name="total_harga"></td>
                                 </tr>
@@ -372,6 +372,24 @@
         console.log(id);
         $("input[name='id_barang']").val(id['reg_stok']);
         $("input[name='barang_awal']").val(id['stok']);
+        $.ajax({
+            url: "<?php echo base_url('/attribute/getdatahargabelicuk/?id=') ?>"+id['reg_stok']+"&jsononly=true",
+            success: function(data) {
+                $('#hargalamaboss').html("Harga Satuan Barang Datang<br/><b>Harga Sebelumnya / Barang = "+data+"</b>");        
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.responseText); 
+                if (XMLHttpRequest.status == 0) {
+                alert(' Check Your Network.');
+                } else if (XMLHttpRequest.status == 404) {
+                alert('Requested URL not found.');
+                } else if (XMLHttpRequest.status == 500) {
+                alert('Internel Server Error.');
+                }  else {
+                alert('Unknow Error.\n' + XMLHttpRequest.responseText);
+                }     
+            }
+        });
     }
     function insertsu()
     {
