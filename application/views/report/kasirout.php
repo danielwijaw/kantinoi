@@ -69,6 +69,10 @@
     foreach($result as $key => $value){
         $harga = json_decode($value['harga_default'], true); 
         $harga_beli = (int)(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'];   
+        if($value['harga_default']==""){
+            $harga_beli = 0;
+            $batine = 0;
+        }
         $metune[$value['created_by']]['pendapatan'][] = (int)$value['harga_fix']*$value['jumlah_barang'];
         $metune[$value['created_by']]['harga_beli'][] = $harga_beli;
         $metune[$value['created_by']]['provit'][] = (int)($value['harga_fix']*$value['jumlah_barang'])-($harga_beli*$value['jumlah_barang']);
