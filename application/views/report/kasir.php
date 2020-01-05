@@ -62,6 +62,7 @@
     });
     function filterkasir()
     {
+        $("#datatable").html("PLEASE WAIT LOADING DATA....");
         var tanggal = $('input[name="datetransaksikasir"]').val();
         var admin = $('#admin_kasir').val();
         var pilihankasir = $('#pilihankasir').val();
