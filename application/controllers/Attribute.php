@@ -635,4 +635,20 @@ class Attribute extends CI_Controller {
 		$this->db->update_batch('tr_stokbarang', $data, 'id_tr_stokbarang');
 		header( "refresh:10;url=".base_url('attribute/recoverytrstokbarang?offset=0') );
 	}
+
+	public function createindex_stokbarang(){
+		$query = $this->db->query("
+			CREATE INDEX stokbarang On tr_stokbarang(`harga_default`(50), `stok_perbarui`, `nomor_tr`, `reg_stokbarang`)
+		");
+
+		print_r($query);
+	}
+
+	public function createindex_penjualan(){
+		$query = $this->db->query("
+			CREATE INDEX penjualan On tr_penjualan(`id_barang`, `deleted_at`, `nomor_tr_penjualan`, `status_hold`, `payment_method`, `id_tr_penjualan`)
+		");
+
+		print_r($query);
+	}
 }

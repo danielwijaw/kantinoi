@@ -2,7 +2,6 @@
 <head>
     <title>PRINT OUT KASIR <?php echo $_GET['tanggal'][0]." - ".$_GET['tanggal'][1] ?></title>
     <link rel="stylesheet" href="/style1.min.css">
-    <script src="/jquery/dist/jquery.min.js"></script>
 </head>
 <?php if($_GET['pilihankasir']==0){ ?>
 <body <?php if($_GET['print']=='1'){ echo 'onload="window.print()"';} ?>>
@@ -34,6 +33,12 @@
             $batine = (int)($value['harga_fix']*$value['jumlah_barang'])-($harga_beli*$value['jumlah_barang']);
             if($value['harga_default']==""){
                 $harga_beli = 0;
+                $batine = 0;
+            }
+            if(is_nan($harga_beli)){
+                $harga_beli = 0;
+            }
+            if(is_nan($batine)){
                 $batine = 0;
             }
             $ngitungbati[] = $batine;
@@ -71,6 +76,12 @@
         $harga_beli = (int)(($harga['harga_barang']*$harga['jumlah_barang']) - $harga['diskon_barang'] + ($harga['jumlah_barang']*($harga['harga_barang']*$harga['ppn_barang']/100))) / $harga['jumlah_barang'];   
         if($value['harga_default']==""){
             $harga_beli = 0;
+            $batine = 0;
+        }
+        if(is_nan($harga_beli)){
+            $harga_beli = 0;
+        }
+        if(is_nan($batine)){
             $batine = 0;
         }
         $metune[$value['created_by']]['pendapatan'][] = (int)$value['harga_fix']*$value['jumlah_barang'];
